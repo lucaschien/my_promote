@@ -146,12 +146,15 @@ html, body {
 	width: 100px;
 	height: 100px;
 	z-index: 8;
-	background: red url(images/closed_btn.png) no-repeat center center;
+	background: green url(images/closed_btn.png) no-repeat center center;
 	background-repeat: no-repeat;
 	background-position: center center;
 	cursor:pointer;
 	display:none;
-	border: 1px solid red;
+	border: 1px solid green;
+}
+#closed:hover, #closed:active {
+	background-color: yellow;
 }
 
 /*前面大弧度區塊*/
@@ -597,7 +600,7 @@ $(function(){
 		}
 		
 		var i = 0,
-			maxi = getDom.length;
+			  maxi = getDom.length;
 		getDom.first().show("fast",function next_fn(){
 			if(i<maxi-1){
 				i++;
@@ -651,12 +654,11 @@ $(function(){
 		
 	})
 	//事件:關閉關看作品
-	$("body").off("click","#closed");
-	$("body").on("click","#closed",function(){
+	$("#closed").click(function() {
 		$(".sroll_body").html("").css("top",0);
 		$(".bar").css("top",0);
 		$("#show_detail_area, #closed").fadeOut("fast");
-	})
+	});
 	
 	
 	//網頁禁止選取
