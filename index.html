@@ -140,18 +140,18 @@ html, body {
 	overflow:hidden;
 }
 #closed{
-	position: absolute;
+	position: fixed;
 	right:15px;
-	top:5px;
+	top:15px;
 	width: 100px;
 	height: 100px;
-	z-index: 8;
-	background: green url(images/closed_btn.png) no-repeat center center;
+	z-index: 9999;
+	background: red url(images/closed_btn.png) no-repeat center center;
 	background-repeat: no-repeat;
 	background-position: center center;
 	cursor:pointer;
 	display:none;
-	border: 1px solid green;
+	border: 1px solid red;
 }
 #closed:hover, #closed:active {
 	background-color: yellow;
@@ -356,13 +356,13 @@ html, body {
     	<div id="closed"></div>
     
     	<!--套件html-->
-        <div class="bar_area">
+      <div class="bar_area">
     		<div class="bar"></div>
     	</div>
     	<!--套件html-->
-        <div class="sroll_body">
-        	<!--實際內容區塊在這-->
-        </div>
+			<div class="sroll_body">
+				<!--實際內容區塊在這-->
+			</div>
     </div>
 
     <div class="wrapper">
