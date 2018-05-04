@@ -145,7 +145,7 @@ html, body {
 	top:5px;
 	width: 20px;
 	height: 20px;
-	z-index: 5;
+	z-index: 8;
 	background-image: url(images/closed_btn.png);
 	background-repeat: no-repeat;
 	background-position: center center;
@@ -412,23 +412,23 @@ html, body {
 
 <script>
 
-function content_load_fn(){
+function content_load_fn() {
 	$(".main_loading").slideDown(500);
 	var getAllImg = $(".content_area img");
 	//檢查圖片是否都載入完成
 	var Index = 0;//圖片起始索引數
 	var totalImg = getAllImg.length;//所有圖片數
-	$.each(getAllImg,function(i, item){
-		item.onload = function(){
+	$.each(getAllImg, function (i, item) {
+		item.onload = function () {
 			Index++;
-			var percent = Math.floor((Index / totalImg)*100 );
-			$(".main_loading").html("資料載入中"+percent+"%")	;		
-			if( Index >= totalImg){
-				$(".main_loading").slideUp(500,function(){
-					$(".content_area").fadeIn(500,function(){
+			var percent = Math.floor((Index / totalImg) * 100);
+			$(".main_loading").html("資料載入中" + percent + "%");
+			if (Index >= totalImg) {
+				$(".main_loading").slideUp(500, function () {
+					$(".content_area").fadeIn(500, function () {
 						$("#show_detail_area").myScrollbar();//使用scroll套件
 					});
-				});	
+				});
 			}
 		}
 	})
