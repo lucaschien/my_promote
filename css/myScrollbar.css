@@ -1,0 +1,40 @@
+.sroll_area{
+	min-width:40px;
+	min-height:40px;
+	overflow:hidden;
+	/*這個box-sizing是為了方便計算數據*/
+	-moz-box-sizing: border-box;
+	webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	
+	-ms-touch-action: none;/*winwdow8 觸控*/
+}
+.sroll_body{/*注意不要有padding或margin不然js的計算會有問題*/
+	position:absolute;
+	top:0px;
+	left:0px;
+	right:0px;
+	min-height:100%;
+	z-index:1;
+}
+.bar_area{
+	position:absolute;
+	top:0px;
+	right:0px;
+	height:100%;
+	width:10px;
+	background-color:rgba(134, 134, 134, 0.2);
+	z-index:2;
+	border-radius:10px;
+}
+.bar{
+	position:absolute;
+	top:0%;
+	left:1px;
+	height:0px;/*預設從0開始之後由js換算*/
+	min-height:30px;/*限定最小高度*/
+	width:8px;
+	background-color:rgba(0, 0, 0, 0.5);
+	border-radius:10px;
+	cursor:pointer;
+}

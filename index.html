@@ -1,0 +1,667 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Lucas</title>
+<script type="text/javascript" src="js/jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+<script type="text/javascript" src="js/jquery.ui.touch-punch.min.js"></script>
+<script type="text/javascript" src="js/jquery.TouchScrollX.js"></script>
+<script type="text/javascript" src="js/jquery.myScrollbar.js"></script>
+<link href="css/myScrollbar.css" rel="stylesheet" type="text/css">
+<link href="css/touchscrollx.css" rel="stylesheet" type="text/css">
+<style>
+*{
+	-moz-box-sizing: border-box;
+	webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+ul, li{
+	padding:0px;
+	margin:0px;
+	list-style:none;
+}
+html, body {
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+	height: 100%;
+	font-family:"微軟正黑體","LiHei Pro";
+	background-color: #2f3134;
+}
+.clear{
+	clear: both;
+}
+.wrapper{
+	position: relative;
+	background-color: #ccc;
+	height:100%;
+	max-height:650px;
+	overflow: hidden;
+	/*min-width:320px;
+	min-height:480px;*/
+	display:none;
+	top:50%;
+	margin-top:-325px;
+}
+
+/*作品集大區塊*/
+.works_area{
+	overflow:hidden;
+	position:absolute;
+	top:15px;
+	left:15px;
+	right:15px;
+	z-index:2;
+	height:480px;
+	/*border:1px solid #fff;*/
+}
+.works_area li{
+	position:relative;
+	display:inline-block;
+	width:320px;
+	height:436px;
+	float:left;
+	margin-right:1px;
+	color:#fff;
+	cursor:move;
+}
+
+.photo_area{
+	height:328px;
+	background: url(images/works_bg.png)repeat;
+	background-color:rgba(0, 0, 0, 0.4);
+	cursor:pointer;
+}
+.photo_area img{
+	opacity:0.5;
+}
+.text_area{
+	height:108px;
+	padding:10px;
+	background-color:rgba(0, 0, 0, 0.8);
+	color:#5d6162;
+	font-size:26px;
+	position:relative;
+}
+.times_bar{
+	background-color:rgba(0, 0, 0, 0.8);
+	position:absolute;
+	top:437px;
+	width:99999px;/*寫死的*/
+	height:24px;
+	padding:0 5px;
+	line-height:24px;
+	font-size:12px;
+	color:#5d6162;
+	display:none;
+}
+/*產品分類按鈕區塊*/
+.worksType_btn_area{
+	background-color:rgba(0, 0, 0, 0.2);
+	position:absolute;
+	top:452px;
+	left:15px;
+	right:15px;
+	z-index:3;
+	text-align:center;
+	color:#000;
+	transition: all 0.6s ease-in-out;
+}
+.worksType_btn_area .btn{
+	padding:3px 15px 3px 15px;
+	display:inline-block;
+	font-size:13px;
+	cursor:pointer;
+	transition: all 0.6s ease-in-out;
+	border-right:1px solid rgba(0, 0, 0, 0.2);
+}
+.worksType_btn_area .btn:first-child{
+	border-left:1px solid rgba(0, 0, 0, 0.2);
+}
+.worksType_btn_area .btn:hover{
+	color:#fff;
+	background-color:rgba(0, 0, 0, 0.5);
+	transition: all 0.1s ease-in-out;
+}
+
+/*作品放大區塊*/
+#show_detail_area{
+	position:fixed;
+	left:15px;
+	right:15px;
+	bottom:15px;
+	top:15px;
+	/*height:500px;*/
+	z-index:5;
+	display:none;
+	/*box-shadow:0 0 8px rgba(0, 0, 0, 0.8);*/
+	background-color:rgba(0, 0, 0, 0.5);
+	overflow:hidden;
+}
+#closed{
+	position: absolute;
+	right:15px;
+	top:5px;
+	width: 20px;
+	height: 20px;
+	z-index: 5;
+	background-image: url(images/closed_btn.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+	cursor:pointer;
+	display:none;
+}
+
+/*前面大弧度區塊*/
+.front_view_area{
+	position: absolute;
+	top: 510px;
+	left: 0px;
+	right: 0px;
+	bottom:0px;
+	z-index: 3;
+	background-image: url(images/front_bg.png);
+	background-repeat: no-repeat;
+	background-position: center top;
+	padding:0 15px;
+}
+.front_view{}
+.front_left{
+	position: absolute;
+	left:15px;
+	bottom:10px;
+	background-image: url(images/front_left.png);
+	background-repeat: no-repeat;
+	background-position: left bottom;
+	width:319px;
+	height:28px;
+	background-size:100% auto;
+	transition: all 1s ease-in-out;
+}
+.front_right{
+	position: absolute;
+	right:15px;
+	bottom:10px;
+	background-image: url(images/front_right.png);
+	background-repeat: no-repeat;
+	background-position: right bottom;
+	width:178px;
+	height:32px;
+	background-size:100% auto;
+	transition: all 1s ease-in-out;
+}
+
+/*logo區塊*/
+.logo{
+	background-color: #2f3134;
+	position: absolute;
+	z-index: 1;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom:0px;
+	background-image: url(images/logo.png);
+	background-repeat: no-repeat;
+	background-position: center top;
+	background-size:auto auto;
+	transition: all 1s ease-in-out;
+}
+/*一開始載入的loading區塊*/
+.main_loading{
+	text-align:center;
+	font-size:16px;
+	color:#9c9c9c;
+	position:fixed;
+	left:0px;
+	right:0px;
+	top:50%;
+	height:80px;
+	margin-top:-40px;
+	line-height:80px;
+	z-index:6;
+	background-color:rgba(0, 0, 0, 0.2);
+	display:none;
+}
+
+/*操作提示*/
+.OperationTips_area{
+	height: 200px;
+    left: 50%;
+    margin-left: -100px;
+    margin-top: -100px;
+    position: absolute;
+    top: 50%;
+    width: 200px;
+	z-index:4;
+}
+.OperationTips{
+	display:inline-block;
+	width:200px;
+	height:200px;
+	background-color:rgba(167, 194, 202, 0.5);
+	border-radius:100px;
+	text-align:center;
+	background-image: url(images/OperationTips_bg.png);
+	background-position: center 68px;
+	background-repeat: no-repeat;
+	color:#fff;
+	padding-top:120px;
+	font-size:17px;
+}
+
+/*當瀏覽器尺寸在619px以下時*/
+@media all and (max-height: 619px){
+	.front_view_area{
+		display:none;
+	}
+	.wrapper{
+		margin-top: 0px;
+  		max-height: 650px;
+		top:auto;
+	}
+}
+@media all and (max-height: 600px){
+	.logo{
+		top:-10px;
+	}
+}
+@media all and (max-height: 580px){
+	.works_area{
+		height:480px;
+		top:0px;
+		left:0px;
+		right:0px;
+	}
+	.logo{
+		top:-65px;
+	}
+	.worksType_btn_area{
+		background-color:rgba(0, 0, 0, 0.6);
+		top:436px;
+		left:0px;
+		right:0px;
+	}
+	.worksType_btn_area .btn{
+		color:#fff;
+	}
+}
+@media all and (max-width: 1000px){
+	.front_left{
+		width:150px;
+		bottom:5px;
+	}
+	.front_right{
+		width:150px;
+		height:20px;
+		bottom:0px;
+	}
+}
+@media all and (max-width: 400px){
+	.wrapper{
+		margin-top: 0px;
+  		max-height: 650px;
+		top:auto;
+	}
+	.worksType_btn_area .btn{
+		padding:3px 7px;
+	}
+	#show_detail_area{
+		left:0px;
+		right:0px;
+		top:0px;
+		bottom:0px;
+	}
+}
+@media all and (max-width: 320px){
+	.works_area{
+		height:480px;
+		left:0px;
+		right:0px;
+		top:0px;
+	}
+	.worksType_btn_area{
+		top:436px;
+		left:0px;
+		right:0px;
+	}
+}
+
+/*改變套件樣式*/
+.bar_area{
+	background-color:rgba(0,0,0,0.5);
+}
+.bar{
+	background-color:rgba(255,255,255,0.6);
+}
+
+/*在各內頁共用*/
+.content_area{
+	text-align:center;
+	display:none;
+}
+</style>
+</head>
+<body>
+	
+    <!--主畫面loading-->
+    <div class="main_loading">資料載入中...</div>
+    
+    <!--作品放大區塊-->
+    <div id="show_detail_area">
+    	<div id="closed"></div>
+    
+    	<!--套件html-->
+        <div class="bar_area">
+    		<div class="bar"></div>
+    	</div>
+    	<!--套件html-->
+        <div class="sroll_body">
+        	<!--實際內容區塊在這-->
+        </div>
+    </div>
+
+    <div class="wrapper">
+    
+        <!--操作提示-->
+        <div class="OperationTips_area">
+            <div class="OperationTips">Mouse<br>down + move</div>
+        </div>
+        
+        <!--作品大區塊-->
+        <div class="works_area">
+            <ul class="jquery_scrollX_box">
+                <!--<li id="works_0" class="jquery_scrollX_list">
+                    <div class="photo_area"><img src="worklist/0.jpg"></div>
+                    <div class="text_area">web</div>
+                </li>-->
+                <!--
+                <div class="times_bar">
+                    <span style="display:inline-block; margin:0 100px 0 0;">2013</span>
+                    <span style="display:inline-block; margin:0 100px 0 0;">2014</span>
+                </div>
+                -->
+            </ul>
+        </div>
+        
+        
+        <!--產品分類按鈕區塊-->
+        <div class="worksType_btn_area">
+            <div class="btn" worktype="all">All</div
+            ><div class="btn" worktype="s">System</div
+            ><div class="btn" worktype="w">Web</div
+            ><div class="btn" worktype="g">Game</div
+            ><div class="btn" worktype="p">Graphic Design</div>
+        </div>
+        
+        
+        <!--前面大弧度區塊-->
+        <div class="front_view_area">
+            <!-- 前面弧度 -->
+            <div class="front_view">
+                <div class="front_left"><!--左icon--></div>
+                <div class="front_right"><!--右版權--></div>
+            </div>	
+        </div>
+        
+        
+        <!--logo-->
+        <div class="logo"></div>
+    
+    </div>
+
+<script>
+
+function content_load_fn(){
+	$(".main_loading").slideDown(500);
+	var getAllImg = $(".content_area img");
+	//檢查圖片是否都載入完成
+	var Index = 0;//圖片起始索引數
+	var totalImg = getAllImg.length;//所有圖片數
+	$.each(getAllImg,function(i, item){
+		item.onload = function(){
+			Index++;
+			var percent = Math.floor((Index / totalImg)*100 );
+			$(".main_loading").html("資料載入中"+percent+"%")	;		
+			if( Index >= totalImg){
+				$(".main_loading").slideUp(500,function(){
+					$(".content_area").fadeIn(500,function(){
+						$("#show_detail_area").myScrollbar();//使用scroll套件
+					});
+				});	
+			}
+		}
+	})
+}
+
+$(function(){
+	//進場動畫
+	$(".main_loading").slideDown(500);
+	
+
+	//設定作品數據
+	var demoJson = [
+		//系統類
+		{imgurl : "worklist/system0.jpg", worktype:"s", linkurl : "works/system0.html", worktxt : "System" },
+		{imgurl : "worklist/system1.jpg", worktype:"s", linkurl : "works/system1.html", worktxt : "System" },
+		{imgurl : "worklist/system2.jpg", worktype:"s", linkurl : "works/system2.html", worktxt : "System" },
+		{imgurl : "worklist/system3.jpg", worktype:"s", linkurl : "works/system3.html", worktxt : "System" },
+		{imgurl : "worklist/system4.jpg", worktype:"s", linkurl : "works/system4.html", worktxt : "System" },
+		{imgurl : "worklist/system5.jpg", worktype:"s", linkurl : "works/system5.html", worktxt : "System Mobile" },
+		//遊戲類
+		{imgurl : "worklist/game0.jpg", worktype:"g", linkurl : "works/html_game/game1.html", worktxt : "Game" },
+		{imgurl : "worklist/game1.jpg", worktype:"g", linkurl : "works/html_game/game2.html", worktxt : "Game Canvas" },
+		{imgurl : "worklist/game2.jpg", worktype:"g", linkurl : "works/flash_game/game1.html", worktxt : "Game Flash" },
+		{imgurl : "worklist/game3.jpg", worktype:"g", linkurl : "works/flash_game/game2.html", worktxt : "Game Flash" },
+		//網頁類
+		{imgurl : "worklist/web0.jpg", worktype:"w", linkurl : "works/web0/index.html", worktxt : "Web" },
+		{imgurl : "worklist/web1.jpg", worktype:"w", linkurl : "works/web1/www/index.html", worktxt : "Web" },
+		{imgurl : "worklist/web2.jpg", worktype:"w", linkurl : "works/web2/index.html", worktxt : "Web" },
+		{imgurl : "worklist/web3.jpg", worktype:"w", linkurl : "works/web3/index.html", worktxt : "Web" },
+		/*{imgurl : "worklist/web4.jpg", worktype:"w", linkurl : "works/web4/index.html", worktxt : "Web" },*/
+		//平面類
+		{imgurl : "worklist/p0.jpg", worktype:"p", linkurl : "works/graphic0.html", worktxt : "DM" },
+		{imgurl : "worklist/p1.jpg", worktype:"p", linkurl : "works/graphic1.html", worktxt : "DM" },
+		{imgurl : "worklist/p2.jpg", worktype:"p", linkurl : "works/graphic2.html", worktxt : "DM" },
+		{imgurl : "worklist/p3.jpg", worktype:"p", linkurl : "works/graphic3.html", worktxt : "Poster" },
+		{imgurl : "worklist/p4.jpg", worktype:"p", linkurl : "works/graphic4.html", worktxt : "Box" },
+		{imgurl : "worklist/p5.jpg", worktype:"p", linkurl : "works/graphic5.html", worktxt : "DM" },
+		{imgurl : "worklist/p6.jpg", worktype:"p", linkurl : "works/graphic6.html", worktxt : "Illustration" },
+		{imgurl : "worklist/p7.jpg", worktype:"p", linkurl : "works/graphic7.html", worktxt : "Poster" },
+		{imgurl : "worklist/p8.jpg", worktype:"p", linkurl : "works/graphic8.html", worktxt : "CI - logo" },
+		{imgurl : "worklist/p9.jpg", worktype:"p", linkurl : "works/graphic9.html", worktxt : "CI - BI" },
+		{imgurl : "worklist/p10.jpg", worktype:"p", linkurl : "works/graphic10.html", worktxt : "CI - BI" }
+	];
+	
+	
+	//先檢查版型的圖片是否載入完成
+	var bgImg1 = new Image();
+		bgImg1.src = "images/closed_btn.png";
+	var bgImg2 = new Image();
+		bgImg2.src = "images/front_bg.png";
+	var bgImg3 = new Image();
+		bgImg3.src = "images/front_left.png";
+	var bgImg4 = new Image();
+		bgImg4.src = "images/front_right.png";
+	var bgImg5 = new Image();
+		bgImg5.src = "images/logo.png";
+	var bgImg6 = new Image();
+		bgImg6.src = "images/OperationTips_bg.png";
+	var bgImg7 = new Image();
+		bgImg7.src = "images/works_bg.png";
+	
+	var bgimgLoad = 0;//記算樣版圖片是否都載入完成用	
+	bgImg1.onload = function() { bgimgLoad += 10;}
+	bgImg2.onload = function() { bgimgLoad += 10; }
+	bgImg3.onload = function() { bgimgLoad += 10; }
+	bgImg4.onload = function() { bgimgLoad += 10; }
+	bgImg5.onload = function() { bgimgLoad += 40; }
+	bgImg6.onload = function() { bgimgLoad += 10; }
+	bgImg7.onload = function() { bgimgLoad += 10; }
+	
+	var checkImgInterval = setInterval(function(){
+		
+		if( bgimgLoad >=100 ){
+			clearInterval(checkImgInterval);
+			
+			//在檢查列表中的圖片是否都載入完成
+			var Index = 0;//圖片起始索引數
+			var totalImg = demoJson.length;//所有圖片數
+			$.each(demoJson,function(i, item){
+				var img = new Image();
+				img.src = item.imgurl;
+				img.onload = function(){
+					Index++;
+					var percent = Math.floor((Index / totalImg)*100 );
+					$(".main_loading").html("資料載入中"+percent+"%")	;		
+					if( Index >= totalImg){
+						$(".main_loading").slideUp(500);
+						$(".wrapper").fadeIn();
+						init();
+					}
+				}
+			})
+			
+		}
+		
+	},500);
+	
+	
+	
+	function init(){
+		
+		//組dome
+		var liHTML = "";
+		$.each(demoJson,function(i, item){
+			liHTML+=" <li id='works_"+i+"' class='jquery_scrollX_list' worktype='"+item.worktype+"'>";
+			liHTML+=" 	<div class='photo_area' linkurl='"+item.linkurl+"' worktype='"+item.worktype+"'><img src='"+item.imgurl+"'></div>";
+			liHTML+=" 	<div class='text_area'>"+item.worktxt+"</div>";
+			liHTML+=" </li>";
+		})
+		$(".jquery_scrollX_box").prepend(liHTML);
+		
+		
+		//提示訊息
+		var OperationTipsTime_i = 5;
+		$("body").mousemove(function(){
+			OperationTipsTime_i = 0;
+		})
+		setInterval(function(){
+			OperationTipsTime_i++;
+			if(OperationTipsTime_i < 4){
+				$(".OperationTips_area").fadeOut(450);
+			}else{
+				$(".OperationTips_area").fadeIn(450);
+			}
+		}, 1000)
+
+		
+		$(".works_area").TouchScrollX();//左右拖曳套件
+		
+		//瀏覽器尺寸改變
+		$(window).resize(function(){
+			$(".works_area").TouchScrollX();//左右拖曳套件
+		});
+	}
+	
+	
+	
+	//事件:一個小區塊的滑鼠移入效果
+	$(".works_area").off("mouseover","li");
+	$(".works_area").on("mouseover","li",function(){
+		$(this).find("img").css("opacity","1");
+		$(this).find(".text_area").css({"color":"#ccc", "background-color":"rgba(0, 0, 0, 0.9)"});
+	});
+	$(".works_area").off("mouseout","li");
+	$(".works_area").on("mouseout","li",function(){
+		$(this).find("img").css("opacity","0.5");
+		$(this).find(".text_area").css({"color":"#5d6162", "background-color":"rgba(0, 0, 0, 0.8)"});
+	});
+
+	
+	//事件:點擊作品分類
+	$(".worksType_btn_area").off("click",".btn");
+	$(".worksType_btn_area").on("click",".btn",function(){
+		$(".jquery_scrollX_box").css({"width":"500000","left":"0px"});//懶得算了直接寫一個很大的數字
+
+		$(".works_area li").stop(true).hide();
+		
+		var getWorkType=$(this).attr("worktype");
+		var getDom=null;
+
+		if(getWorkType=="all"){
+			getDom = $(".works_area li");
+		}else{
+			getDom = $(".works_area li[worktype='"+getWorkType+"']");
+		}
+		
+		var i = 0,
+			maxi = getDom.length;
+		getDom.first().show("fast",function next_fn(){
+			if(i<maxi-1){
+				i++;
+				$(getDom[i]).show("fast",next_fn);	
+			}else{
+				$(".jquery_scrollX_box").css({"width":"auto","left":"0px"});
+				$(".works_area").TouchScrollX();
+			}
+		});
+	
+	})
+	
+	
+	//事件:點擊觀看作品
+	$(".works_area").off("click",".photo_area");
+	$(".works_area").on("click",".photo_area",function(){
+		
+		var getURL = $(this).attr("linkurl");
+		var getWorktype = $(this).attr("worktype");
+		
+		//系統秀截圖
+		if(getWorktype == "s"){
+			$("#closed").fadeIn("fast");
+			$("#show_detail_area").fadeIn("fast",function(){
+				$(".sroll_body").load(getURL,function(){
+					content_load_fn();
+				});
+			});
+		}
+		
+		//遊戲做外部連結
+		if(getWorktype == "g"){
+			window.open(getURL);
+		}
+		
+		//網頁做外部連結
+		if(getWorktype == "w"){
+			window.open(getURL);
+		}
+		
+		//平面秀截圖
+		console.log(getURL);
+		if(getWorktype == "p"){
+			$("#closed").fadeIn("fast");
+			$("#show_detail_area").fadeIn("fast",function(){
+				$(".sroll_body").load(getURL,function(){
+					content_load_fn();
+				});
+			});
+		}
+		
+	})
+	//事件:關閉關看作品
+	$("body").off("click","#closed");
+	$("body").on("click","#closed",function(){
+		$(".sroll_body").html("").css("top",0);
+		$(".bar").css("top",0);
+		$("#show_detail_area, #closed").fadeOut("fast");
+	})
+	
+	
+	//網頁禁止選取
+	$(document).disableSelection();
+	
+})
+</script>
+</body>
+</html>

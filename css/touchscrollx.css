@@ -1,0 +1,4 @@
+.jquery_scrollX_box{}
+.jquery_scrollX_list{}
+.jquery_scrollX_box{ -ms-touch-action: none;/*for windows8觸控*/ }/*套件用*/
+.jquery_scrollX_list{ -ms-touch-action: none;/*for windows8觸控*/ }/*套件用*/
