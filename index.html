@@ -128,10 +128,10 @@ html, body {
 /*作品放大區塊*/
 #show_detail_area{
 	position:fixed;
-	left:15px;
-	right:15px;
-	bottom:15px;
-	top:15px;
+	left:0px;
+	right:0px;
+	bottom:0px;
+	top:0px;
 	/*height:500px;*/
 	z-index:5;
 	display:none;
@@ -207,7 +207,7 @@ html, body {
 	background-size:auto auto;
 	transition: all 1s ease-in-out;
 }
-/*一開始載入的loading區塊*/
+/* 一開始載入的loading區塊 */
 .main_loading{
 	text-align:center;
 	font-size:16px;
@@ -220,11 +220,11 @@ html, body {
 	margin-top:-40px;
 	line-height:80px;
 	z-index:6;
-	background-color:rgba(0, 0, 0, 0.2);
+	background-color:rgba(0, 0, 0, 0.5);
 	display:none;
 }
 
-/*操作提示*/
+/* 操作提示 */
 .OperationTips_area{
 	height: 200px;
     left: 50%;
@@ -250,7 +250,7 @@ html, body {
 	font-size:17px;
 }
 
-/*當瀏覽器尺寸在619px以下時*/
+/* RWD 當瀏覽器尺寸在619px以下時 */
 @media all and (max-height: 619px){
 	.front_view_area{
 		display:none;
@@ -344,8 +344,8 @@ html, body {
 </head>
 <body>
 	
-    <!--主畫面loading-->
-    <div class="main_loading">資料載入中...</div>
+    <!--主畫面 ajax loading -->
+    <div class="main_loading">資料載入中</div>
     
     <!--作品放大區塊-->
     <div id="show_detail_area">
@@ -412,42 +412,60 @@ html, body {
 
 <script>
 
-function content_load_fn() {
-	$(".main_loading").slideDown(500);
-	var getAllImg = $(".content_area img");
-	//檢查圖片是否都載入完成
-	var Index = 0;//圖片起始索引數
-	var totalImg = getAllImg.length;//所有圖片數
+//載入平面設計或系統設計的作品html
+function content_load_fn(callback) {
+	var getAllImg = $(".content_area img"),
+      $main_loading = $(".main_loading"),
+      Index = 0;//圖片起始索引數
+	    totalImg = getAllImg.length;//所有圖片數
+
+	$main_loading.slideDown(500);
+
+  //檢查圖片是否都載入完成
 	$.each(getAllImg, function (i, item) {
 		item.onload = function () {
 			Index++;
 			var percent = Math.floor((Index / totalImg) * 100);
-			$(".main_loading").html("資料載入中" + percent + "%");
+			$main_loading.html("資料載入中" + percent + "%");
 			if (Index >= totalImg) {
-				$(".main_loading").slideUp(500, function () {
-					$(".content_area").fadeIn(500, function () {
-						$("#show_detail_area").myScrollbar();//使用scroll套件
+				$main_loading.slideUp(500, function () {
+          callback();
+					$(".content_area").fadeIn(700, function () {
+						$("#show_detail_area").myScrollbar({_scrollVal: 150});//使用scroll套件
 					});
 				});
 			}
 		}
-	})
+	});
 }
 
 $(function(){
+  //快取DOM
+  var $wrapper = $(".wrapper"),
+      $works_area = $(".works_area"),
+      $jquery_scrollX_box = $(".jquery_scrollX_box"),
+      $sroll_body = $('.sroll_body'),
+      $bar = $(".bar"),
+      $main_loading = $(".main_loading"),
+      $show_detail_area = $("#show_detail_area"),
+      $closed = $("#closed");
+
 	//進場動畫
-	$(".main_loading").slideDown(500);
-	
+	$main_loading.slideDown(500);
 
 	//設定作品數據
 	var demoJson = [
 		//系統類
+		{imgurl : "worklist/system9.jpg", worktype:"s", linkurl : "works/system9.html", worktxt : "System" },
+		{imgurl : "worklist/system6.jpg", worktype:"s", linkurl : "works/system6.html", worktxt : "System" },
+        {imgurl : "worklist/system8.jpg", worktype:"s", linkurl : "works/system8.html", worktxt : "System" },
+		{imgurl : "worklist/system7.jpg", worktype:"s", linkurl : "works/system7.html", worktxt : "System" },
 		{imgurl : "worklist/system0.jpg", worktype:"s", linkurl : "works/system0.html", worktxt : "System" },
 		{imgurl : "worklist/system1.jpg", worktype:"s", linkurl : "works/system1.html", worktxt : "System" },
-		{imgurl : "worklist/system2.jpg", worktype:"s", linkurl : "works/system2.html", worktxt : "System" },
 		{imgurl : "worklist/system3.jpg", worktype:"s", linkurl : "works/system3.html", worktxt : "System" },
 		{imgurl : "worklist/system4.jpg", worktype:"s", linkurl : "works/system4.html", worktxt : "System" },
-		{imgurl : "worklist/system5.jpg", worktype:"s", linkurl : "works/system5.html", worktxt : "System Mobile" },
+		{imgurl : "worklist/system2.jpg", worktype:"s", linkurl : "works/system2.html", worktxt : "System" },
+		/*{imgurl : "worklist/system5.jpg", worktype:"s", linkurl : "works/system5.html", worktxt : "System Mobile" },*/
 		//遊戲類
 		{imgurl : "worklist/game0.jpg", worktype:"g", linkurl : "works/html_game/game1.html", worktxt : "Game" },
 		{imgurl : "worklist/game1.jpg", worktype:"g", linkurl : "works/html_game/game2.html", worktxt : "Game Canvas" },
@@ -472,194 +490,155 @@ $(function(){
 		{imgurl : "worklist/p9.jpg", worktype:"p", linkurl : "works/graphic9.html", worktxt : "CI - BI" },
 		{imgurl : "worklist/p10.jpg", worktype:"p", linkurl : "works/graphic10.html", worktxt : "CI - BI" }
 	];
-	
-	
-	//先檢查版型的圖片是否載入完成
-	var bgImg1 = new Image();
-		bgImg1.src = "images/closed_btn.png";
-	var bgImg2 = new Image();
-		bgImg2.src = "images/front_bg.png";
-	var bgImg3 = new Image();
-		bgImg3.src = "images/front_left.png";
-	var bgImg4 = new Image();
-		bgImg4.src = "images/front_right.png";
-	var bgImg5 = new Image();
-		bgImg5.src = "images/logo.png";
-	var bgImg6 = new Image();
-		bgImg6.src = "images/OperationTips_bg.png";
-	var bgImg7 = new Image();
-		bgImg7.src = "images/works_bg.png";
-	
-	var bgimgLoad = 0;//記算樣版圖片是否都載入完成用	
-	bgImg1.onload = function() { bgimgLoad += 10;}
-	bgImg2.onload = function() { bgimgLoad += 10; }
-	bgImg3.onload = function() { bgimgLoad += 10; }
-	bgImg4.onload = function() { bgimgLoad += 10; }
-	bgImg5.onload = function() { bgimgLoad += 40; }
-	bgImg6.onload = function() { bgimgLoad += 10; }
-	bgImg7.onload = function() { bgimgLoad += 10; }
-	
-	var checkImgInterval = setInterval(function(){
-		
-		if( bgimgLoad >=100 ){
+
+	//先檢查框架版型的圖片是否載入完成
+  var bgimgLoad = 0;// 計算框架版型圖片是否都載入完成用	
+  var layoutImg = ['closed_btn.png', 'front_bg.png', 
+  'front_left.png', 'front_right.png', 'logo.png', 
+  'OperationTips_bg.png', 'works_bg.png'];
+  $.each(layoutImg, function (i, item) {
+    var itemImage = new Image();
+    itemImage.src = 'images/' + item;
+    itemImage.onload = function() { 
+      bgimgLoad += 1; 
+    }
+  });
+	var checkImgInterval = setInterval(function() {
+    //框架圖片都載入完成
+		if( bgimgLoad >= layoutImg.length ) {
 			clearInterval(checkImgInterval);
 			
-			//在檢查列表中的圖片是否都載入完成
+			//再檢查列表中的圖片是否都載入完成
 			var Index = 0;//圖片起始索引數
-			var totalImg = demoJson.length;//所有圖片數
-			$.each(demoJson,function(i, item){
+			var totalImg = demoJson.length; //所有圖片數
+			$.each(demoJson, function(i, item) {
 				var img = new Image();
 				img.src = item.imgurl;
 				img.onload = function(){
 					Index++;
 					var percent = Math.floor((Index / totalImg)*100 );
-					$(".main_loading").html("資料載入中"+percent+"%")	;		
-					if( Index >= totalImg){
-						$(".main_loading").slideUp(500);
-						$(".wrapper").fadeIn();
-						init();
+					$main_loading.html("資料載入中" + percent + "%");
+					if( Index >= totalImg) {
+						$main_loading.slideUp(500);
+						$wrapper.fadeIn();
+						listInit();
 					}
 				}
-			})
-			
+			});
 		}
-		
 	},500);
-	
-	
-	
-	function init(){
-		
+
+	//列表的li初始化
+	function listInit() {
 		//組dome
 		var liHTML = "";
-		$.each(demoJson,function(i, item){
-			liHTML+=" <li id='works_"+i+"' class='jquery_scrollX_list' worktype='"+item.worktype+"'>";
-			liHTML+=" 	<div class='photo_area' linkurl='"+item.linkurl+"' worktype='"+item.worktype+"'><img src='"+item.imgurl+"'></div>";
-			liHTML+=" 	<div class='text_area'>"+item.worktxt+"</div>";
-			liHTML+=" </li>";
+		$.each(demoJson, function(i, item) {
+			liHTML += " <li id='works_"+i+"' class='jquery_scrollX_list' worktype='"+item.worktype+"'>";
+			liHTML += " 	<div class='photo_area' linkurl='"+item.linkurl+"' worktype='"+item.worktype+"'><img src='"+item.imgurl+"'></div>";
+			liHTML += " 	<div class='text_area'>"+item.worktxt+"</div>";
+			liHTML += " </li>";
 		})
-		$(".jquery_scrollX_box").prepend(liHTML);
+		$jquery_scrollX_box.prepend(liHTML);
 		
 		
 		//提示訊息
-		var OperationTipsTime_i = 5;
-		$("body").mousemove(function(){
+		var OperationTipsTime_i = 5,
+				$OperationTips_area = $(".OperationTips_area");
+		$("body").mousemove(function() {
 			OperationTipsTime_i = 0;
 		})
 		setInterval(function(){
 			OperationTipsTime_i++;
 			if(OperationTipsTime_i < 4){
-				$(".OperationTips_area").fadeOut(450);
+				$OperationTips_area.fadeOut(450);
 			}else{
-				$(".OperationTips_area").fadeIn(450);
+				$OperationTips_area.fadeIn(450);
 			}
 		}, 1000)
 
 		
-		$(".works_area").TouchScrollX();//左右拖曳套件
+		$works_area.TouchScrollX();//左右拖曳套件
 		
 		//瀏覽器尺寸改變
 		$(window).resize(function(){
-			$(".works_area").TouchScrollX();//左右拖曳套件
+			$works_area.TouchScrollX();//左右拖曳套件
 		});
 	}
-	
-	
-	
+
 	//事件:一個小區塊的滑鼠移入效果
-	$(".works_area").off("mouseover","li");
-	$(".works_area").on("mouseover","li",function(){
-		$(this).find("img").css("opacity","1");
-		$(this).find(".text_area").css({"color":"#ccc", "background-color":"rgba(0, 0, 0, 0.9)"});
+	$works_area.off("mouseover", "li");
+	$works_area.on("mouseover", "li", function () {
+		$(this).find("img").css("opacity", "1");
+		$(this).find(".text_area").css({ "color": "#ccc", "background-color": "rgba(0, 0, 0, 0.9)" });
 	});
-	$(".works_area").off("mouseout","li");
-	$(".works_area").on("mouseout","li",function(){
-		$(this).find("img").css("opacity","0.5");
-		$(this).find(".text_area").css({"color":"#5d6162", "background-color":"rgba(0, 0, 0, 0.8)"});
+	$works_area.off("mouseout", "li");
+	$works_area.on("mouseout", "li", function () {
+		$(this).find("img").css("opacity", "0.5");
+		$(this).find(".text_area").css({ "color": "#5d6162", "background-color": "rgba(0, 0, 0, 0.8)" });
 	});
 
-	
 	//事件:點擊作品分類
-	$(".worksType_btn_area").off("click",".btn");
-	$(".worksType_btn_area").on("click",".btn",function(){
-		$(".jquery_scrollX_box").css({"width":"500000","left":"0px"});//懶得算了直接寫一個很大的數字
+	$(".worksType_btn_area").off("click", ".btn");
+	$(".worksType_btn_area").on("click", ".btn", function () {
+		var getWorkType = $(this).attr("worktype"),
+		    getDom = null,
+		    maxi,
+		    i = 0;
 
-		$(".works_area li").stop(true).hide();
-		
-		var getWorkType=$(this).attr("worktype");
-		var getDom=null;
+		$jquery_scrollX_box.css({ "width": "500000px", "left": "0px" }); //直接寫一個很大的數字反正套件會再算過
+		$works_area.find("li").stop(true).hide();
 
-		if(getWorkType=="all"){
-			getDom = $(".works_area li");
-		}else{
-			getDom = $(".works_area li[worktype='"+getWorkType+"']");
+		if (getWorkType == "all") {
+			getDom = $works_area.find("li");
+		} else {
+			getDom = $works_area.find("li[worktype='" + getWorkType + "']");
 		}
-		
-		var i = 0,
-			  maxi = getDom.length;
-		getDom.first().show("fast",function next_fn(){
-			if(i<maxi-1){
+    maxi = getDom.length;
+
+		getDom.first().show("fast", function next_fn() {
+			if (i < maxi - 1) {
 				i++;
-				$(getDom[i]).show("fast",next_fn);	
-			}else{
-				$(".jquery_scrollX_box").css({"width":"auto","left":"0px"});
-				$(".works_area").TouchScrollX();
+				$(getDom[i]).show("fast", next_fn);
+			} else {
+				$jquery_scrollX_box.css({ "width": "auto", "left": "0px" });
+				$works_area.TouchScrollX();
 			}
 		});
-	
-	})
-	
-	
+	});
+
 	//事件:點擊觀看作品
-	$(".works_area").off("click",".photo_area");
-	$(".works_area").on("click",".photo_area",function(){
-		
+	$works_area.off("click", ".photo_area");
+	$works_area.on("click", ".photo_area", function() {
 		var getURL = $(this).attr("linkurl");
 		var getWorktype = $(this).attr("worktype");
-		
-		//系統秀截圖
-		if(getWorktype == "s"){
-			$("#closed").fadeIn("fast");
-			$("#show_detail_area").fadeIn("fast",function(){
-				$(".sroll_body").load(getURL,function(){
-					content_load_fn();
-				});
-			});
-		}
-		
-		//遊戲做外部連結
-		if(getWorktype == "g"){
-			window.open(getURL);
-		}
-		
-		//網頁做外部連結
-		if(getWorktype == "w"){
-			window.open(getURL);
-		}
-		
-		//平面秀截圖
 		console.log(getURL);
-		if(getWorktype == "p"){
-			$("#closed").fadeIn("fast");
-			$("#show_detail_area").fadeIn("fast",function(){
-				$(".sroll_body").load(getURL,function(){
-					content_load_fn();
-				});
-			});
-		}
+
+		//系統秀截圖 or 平面秀截圖
+		if (getWorktype === "s" || getWorktype === "p") {
+      $closed.fadeIn("fast");
+      $sroll_body.load(getURL, function () {
+        content_load_fn(function () {
+          $show_detail_area.fadeIn("fast");
+        });
+      });
+    }
 		
-	})
-	//事件:關閉關看作品
-	$("#closed").click(function() {
-		$(".sroll_body").html("").css("top",0);
-		$(".bar").css("top",0);
-		$("#show_detail_area, #closed").fadeOut("fast");
+		//遊戲做外部連結 or 網頁做外部連結
+    if (getWorktype === "g" || getWorktype === "w") {
+      window.open(getURL);
+    }
 	});
-	
-	
-	//網頁禁止選取
+
+	//事件:關閉關看作品
+	$closed.click(function() {
+		$sroll_body.html("").css("top",0);
+		$bar.css("top",0);
+    $closed.fadeOut("fast");
+    $show_detail_area.fadeOut("fast");
+	});
+
+	//整個網頁禁止選取
 	$(document).disableSelection();
-	
 })
 </script>
 </body>

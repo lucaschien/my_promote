@@ -1,10 +1,10 @@
-//^^這是我自己寫的scrollbar套件喔  支援ie9, firefox, chrome, macbook觸控面板
+//^^這是我自己寫的scrollbar套件喔  支援ie9, firefox, chrome, macbook 觸控面板
 (function ($) {
 
   //預設值(此時只是區域變數不屬於myScrollbar的屬性)
   var defalutOptions = {
     _ishide: false,  //要不要滑鼠移除範圍就隱藏scrollbar
-    _scrollVal: 40   //每一個次滑鼠滾輪可以捲動的高度
+    _scrollVal: 60   //每一個次滑鼠滾輪可以捲動的高度
   };
 
   $.fn.myScrollbar = function (options) {
