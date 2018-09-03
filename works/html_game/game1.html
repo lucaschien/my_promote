@@ -495,6 +495,7 @@ $(function(){
 html {
     display: block;
     overscroll-behavior-y: contain;
+    user-select: none;
 }
 body { 
     padding:0px; 
@@ -511,7 +512,8 @@ body {
 	font-size: 12px;
 	margin: 0 auto;
     cursor:pointer;
-    /* -ms-touch-action: none; */
+    -ms-touch-action: none;
+    user-select: none;
 }
 /*關卡選擇介面*/
 .game_first_view{
@@ -525,6 +527,7 @@ body {
 	padding-top:30px;
 	font-size:24px;
 	z-index:4;
+    user-select: none;
 }
 /*過關,失敗介面*/
 .win_view, .fail_view{
@@ -538,6 +541,7 @@ body {
 	padding-top:30px;
 	z-index:3;
 	display:none;
+    user-select: none;
 }
 .win_view{ background-color: rgba(255, 153, 51, 0.8); }
 .fail_view{ background-color: rgba(115, 98, 148, 0.8); }
