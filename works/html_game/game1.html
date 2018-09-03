@@ -496,24 +496,31 @@ html {
     -webkit-user-select:none;
     touch-callout: none;
     -webkit-touch-callout: none;
+    height: 100%;
+    margin: 0 auto;
+    word-wrap: break-word;
 }
 body { 
     padding:0px; 
-    margin:0px; 
     font-family: "Microsoft YaHei"; 
     overscroll-behavior-y: contain;
     user-select: none;
     -webkit-user-select:none;
     touch-callout: none;
     -webkit-touch-callout: none;
-    background-color: red;
+    
+    height: 100%;
+    margin: 0 auto;
+    word-wrap: break-word;
+    background-color: pink;
 }
 
 .game_area{
     position: fixed;
     left: calc(50% - 150px);
 	background-color: #a78c71;
-	width: 300px;
+    max-width: 300px;
+    width: 100%;
 	font-size: 12px;
 	margin: 0 auto;
     cursor:pointer;
