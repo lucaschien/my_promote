@@ -492,18 +492,25 @@ $(function(){
 
 </script>
 <style>
-
-body, html{ padding:0px; margin:0px; font-family: "Microsoft YaHei"; width:100%; height:100%; cursor:pointer; -ms-touch-action: none;}
-body {
-    overscroll-behavior-y: contain;
-    background-color: red;
+html {
+    display: block;
 }
+body { 
+    padding:0px; 
+    margin:0px; 
+    font-family: "Microsoft YaHei"; 
+    overscroll-behavior-y: contain;
+    background-color: yellow;
+}
+
 .game_area{
 	background-color: #a78c71;
 	width: 300px;
 	position: relative;
 	font-size: 12px;
 	margin: 0 auto;
+    cursor:pointer;
+    -ms-touch-action: none;
 }
 /*關卡選擇介面*/
 .game_first_view{
