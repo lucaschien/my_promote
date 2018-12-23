@@ -457,7 +457,10 @@ $(function(){
 					"type": "text",
 					"text": "Hello啊, " + profile.displayName
 				};
-				liff.sendMessages(msg);
+				alert(JSON.stringify(msg));
+				liff.sendMessages(msg).then(function (_v) {
+					alert(JSON.stringify(_v));
+				});
 
 			}).catch(function (error) {
 				alert(JSON.stringify(error));
