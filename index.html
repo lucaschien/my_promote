@@ -346,7 +346,8 @@ html, body {
 <body>
 		<div style="background-color: #fff; position: fixed; padding: 10px; 
 		top: 0; left: 0; right: 0; z-index: 9999;">
-			<button onclick="testCall()">測試傳送訊息2</button>
+			<button onclick="testCall()" style="font-size: 26px;">測試傳送訊息</button>
+			<button onclick="testClose()" style="font-size: 26px;">測試關閉</button>
 		</div>
     <!--主畫面 ajax loading -->
     <div class="main_loading">資料載入中</div>
@@ -451,13 +452,17 @@ function testCall() {
 	}];
 	alert(JSON.stringify(msg));
 	liff.sendMessages(msg).then(function () {
-		liff.closeWindow();
+		alert('YA!訊息已送出.');
 	}).catch(function (error) {
 		alert("Error getting profile: ");
 		alert(JSON.stringify(error));
 		liff.closeWindow();
 	});;
 }
+function testClose() {
+	liff.closeWindow();
+}
+
 
 $(function(){
 
