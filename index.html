@@ -3,7 +3,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Lucas</title>
-<script type="text/javascript" src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
 <script type="text/javascript" src="js/jquery-1.8.1.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui.js"></script>
 <script type="text/javascript" src="js/jquery.ui.touch-punch.min.js"></script>
@@ -344,11 +343,7 @@ html, body {
 </style>
 </head>
 <body>
-		<div style="background-color: #fff; position: fixed; padding: 10px; 
-		top: 0; left: 0; right: 0; z-index: 9999;">
-			<button onclick="testCall()" style="font-size: 26px;">測試傳送訊息</button>
-			<button onclick="testClose()" style="font-size: 26px;">測試關閉</button>
-		</div>
+	
     <!--主畫面 ajax loading -->
     <div class="main_loading">資料載入中</div>
     
@@ -444,45 +439,7 @@ function content_load_fn(callback) {
 	});
 }
 
-var testLineUserData = null;
-function testCall() {
-	let msg = [{
-		type: "text",
-		text: 'From:' + "你好啊 " + testLineUserData.displayName
-	}];
-	alert(JSON.stringify(msg));
-	liff.sendMessages(msg).then(function () {
-		alert('YA!訊息已送出.');
-	}).catch(function (error) {
-		alert("Error getting profile: ");
-		alert(JSON.stringify(error));
-		liff.closeWindow();
-	});;
-}
-function testClose() {
-	liff.closeWindow();
-}
-
-
 $(function(){
-
-	//實驗 LIFF start 
-	if (liff) {
-		liff.init(function (data) {
-			//alert(JSON.stringify('data: '));
-			//alert(JSON.stringify(data));
-			liff.getProfile().then(function (profile) {
-				//alert(JSON.stringify(profile));
-				testLineUserData = JSON.parse(JSON.stringify(profile));
-			}).catch(function (error) {
-				alert(JSON.stringify(error));
-			});
-		}, function (eror) {
-			alert(JSON.stringify(eror));
-		});
-	}
-	//實驗 LIFF end
-
   //快取DOM
   var $wrapper = $(".wrapper"),
       $works_area = $(".works_area"),
@@ -682,7 +639,6 @@ $(function(){
 
 	//整個網頁禁止選取
 	$(document).disableSelection();
-
 })
 </script>
 </body>
