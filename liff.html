@@ -37,12 +37,12 @@ button {
 <script>
 var lineUserData = null;
 function testCall(_txt) {
-  let txt = (_txt)? _txt : ("你好啊 " + lineUserData.displayName);
+  let txt = (_txt)? _txt : ("測試拿到的line user資料" + JSON.stringify(lineUserData));
 	let msg = [{
 		type: "text",
 		text: txt
 	}];
-  alert(msg);
+  //alert(msg);
 	liff.sendMessages(msg).then(() => {
 		alert('YA!訊息已送出.');
 	}).catch((error) => {
