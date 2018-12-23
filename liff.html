@@ -36,12 +36,13 @@ button {
   </div>
 <script>
 var lineUserData = null;
-function testCall(txt) {
-  let txt = (txt)? txt : "你好啊 " + lineUserData.displayName;
+function testCall(_txt) {
+  let txt = (_txt)? _txt : ("你好啊 " + lineUserData.displayName);
 	let msg = [{
 		type: "text",
 		text: txt
 	}];
+  alert(msg);
 	liff.sendMessages(msg).then(() => {
 		alert('YA!訊息已送出.');
 	}).catch((error) => {
@@ -58,10 +59,10 @@ function onload() {
 	if (liff) {
 		liff.init((data) => {
 			//alert(JSON.stringify('data: '));
-			//alert(JSON.stringify(data));
+			alert(JSON.stringify(data));
 			liff.getProfile().then((profile) => {
 				//alert(JSON.stringify(profile));
-				lineUserData = JSON.parse(JSON.stringify(profile));
+				lineUserData = profile;
 			}).catch((error) => {
 				alert(JSON.stringify(error));
 			});
