@@ -446,13 +446,16 @@ function content_load_fn(callback) {
 var testLineUserData = null;
 function testCall() {
 	let msg = {
-		"type": "text",
-		"text": "你好啊 " + testLineUserData.displayName
+		type: "text",
+		text: "你好啊 " + testLineUserData.displayName
 	};
 	alert(JSON.stringify(msg));
-	liff.sendMessages(msg).then(function (_v) {
-		alert(JSON.stringify(_v));
-	});
+	liff.sendMessages(msg).then(function () {
+		liff.closeWindow();
+	}).catch(function (error) {
+		alert("Error getting profile: ");
+		alert(JSON.stringify(error));
+	});;
 }
 
 $(function(){
