@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Lucas</title>
+<script type="text/javascript" src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
+</head>
+<body onload="onload()">
+  <div style="background-color: #fff; position: fixed; padding: 10px; 
+    top: 0; left: 0; right: 0; z-index: 9999;">
+    <button onclick="testCall()" style="font-size: 26px;">測試傳送訊息</button>
+    <button onclick="testClose()" style="font-size: 26px;">測試關閉</button>
+  </div>
+  
+  實驗 LIFF...
+
+<script>
+var testLineUserData = null;
+function testCall() {
+	let msg = [{
+		type: "text",
+		text: 'From:' + "你好啊 " + testLineUserData.displayName
+	}];
+	alert(JSON.stringify(msg));
+	liff.sendMessages(msg).then(function () {
+		alert('YA!訊息已送出.');
+	}).catch(function (error) {
+		alert("Error getting profile: ");
+		alert(JSON.stringify(error));
+		liff.closeWindow();
+	});;
+}
+function testClose() {
+	liff.closeWindow();
+}
+
+function onload() {
+	if (liff) {
+		liff.init(function (data) {
+			//alert(JSON.stringify('data: '));
+			//alert(JSON.stringify(data));
+			liff.getProfile().then(function (profile) {
+				//alert(JSON.stringify(profile));
+				testLineUserData = JSON.parse(JSON.stringify(profile));
+			}).catch(function (error) {
+				alert(JSON.stringify(error));
+			});
+		}, function (eror) {
+			alert(JSON.stringify(eror));
+		});
+	}
+}
+</script>
+</body>
+</html>
