@@ -447,7 +447,7 @@ var testLineUserData = null;
 function testCall() {
 	let msg = {
 		type: "text",
-		text: "你好啊 " + testLineUserData.displayName
+		text: 'From:' + "你好啊 " + testLineUserData.displayName
 	};
 	alert(JSON.stringify(msg));
 	liff.sendMessages(msg).then(function () {
@@ -455,6 +455,7 @@ function testCall() {
 	}).catch(function (error) {
 		alert("Error getting profile: ");
 		alert(JSON.stringify(error));
+		liff.closeWindow();
 	});;
 }
 
@@ -463,20 +464,15 @@ $(function(){
 	//實驗 LIFF start 
 	if (liff) {
 		liff.init(function (data) {
-			alert(JSON.stringify('data: '));
-			alert(JSON.stringify(data));
-
-			let userId = data.userId;
-			
+			//alert(JSON.stringify('data: '));
+			//alert(JSON.stringify(data));
 			liff.getProfile().then(function (profile) {
-				alert(JSON.stringify(profile));
+				//alert(JSON.stringify(profile));
 				testLineUserData = JSON.parse(JSON.stringify(profile));
 			}).catch(function (error) {
 				alert(JSON.stringify(error));
 			});
-
 		}, function (eror) {
-			alert(JSON.stringify('eror: '));
 			alert(JSON.stringify(eror));
 		});
 	}
