@@ -344,7 +344,10 @@ html, body {
 </style>
 </head>
 <body>
-	
+		<div style="background-color: #fff; position: fixed; padding: 10px; 
+		top: 0; left: 0; right: 0; z-index: 9999;">
+			<button onclick="testCall()">測試傳送訊息</button>
+		</div>
     <!--主畫面 ajax loading -->
     <div class="main_loading">資料載入中</div>
     
@@ -440,6 +443,18 @@ function content_load_fn(callback) {
 	});
 }
 
+var testLineUserData = null;
+function testCall() {
+	let msg = {
+		"type": "text",
+		"text": "你好啊 " + testLineUserData.displayName
+	};
+	alert(JSON.stringify(msg));
+	liff.sendMessages(msg).then(function (_v) {
+		alert(JSON.stringify(_v));
+	});
+}
+
 $(function(){
 
 	//實驗 LIFF start 
@@ -452,16 +467,7 @@ $(function(){
 			
 			liff.getProfile().then(function (profile) {
 				alert(JSON.stringify(profile));
-
-				let msg = {
-					"type": "text",
-					"text": "Hello啊, " + profile.displayName
-				};
-				alert(JSON.stringify(msg));
-				liff.sendMessages(msg).then(function (_v) {
-					alert(JSON.stringify(_v));
-				});
-
+				testLineUserData = JSON.parse(JSON.stringify(profile));
 			}).catch(function (error) {
 				alert(JSON.stringify(error));
 			});
