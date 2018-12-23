@@ -442,23 +442,33 @@ function content_load_fn(callback) {
 
 $(function(){
 
-	//實驗 LIFF
-	liff.init(function (data) {
-		alert(JSON.stringify('data: '));
-		alert(JSON.stringify(data));
+	//實驗 LIFF start 
+	if (liff) {
+		liff.init(function (data) {
+			alert(JSON.stringify('data: '));
+			alert(JSON.stringify(data));
 
-		let userId = data.userId;
-		
-		liff.getProfile().then(function (profile) {
-			alert(JSON.stringify(profile));
-		}).catch(function (error) {
-			alert(JSON.stringify(error));
+			let userId = data.userId;
+			
+			liff.getProfile().then(function (profile) {
+				alert(JSON.stringify(profile));
+
+				let msg = {
+					"type": "text",
+					"text": "Hello啊, " + profile.displayName;
+				};
+				liff.sendMessages(msg);
+
+			}).catch(function (error) {
+				alert(JSON.stringify(error));
+			});
+
+		}, function (eror) {
+			alert(JSON.stringify('eror: '));
+			alert(JSON.stringify(eror));
 		});
-
-	}, function (eror) {
-		alert(JSON.stringify('eror: '));
-		alert(JSON.stringify(eror));
-	});
+	}
+	//實驗 LIFF end
 
   //快取DOM
   var $wrapper = $(".wrapper"),
