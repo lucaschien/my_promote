@@ -4,27 +4,43 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Lucas</title>
 <script type="text/javascript" src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
+<style>
+* {
+  font-family: '微軟黑體';
+}
+html, body {
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+.test-box {
+  display: flex;
+}
+button {
+  flex: 1 1 0;
+  padding: 3rem;
+  font-size: 3rem;
+}
+</style>
 </head>
 <body onload="onload()">
-  <div style="background-color: #fff; position: fixed; padding: 10px; 
-    top: 0; left: 0; right: 0; z-index: 9999;">
-    <button onclick="testCall()" style="font-size: 26px;">測試傳送訊息</button>
-    <button onclick="testClose()" style="font-size: 26px;">測試關閉</button>
+  <div class="test-box ">
+    <button onclick="testCall()">測試傳送訊息</button>
+    <button onclick="testClose()">測試關閉</button>
   </div>
-  
-  實驗 LIFF...
-
 <script>
-var testLineUserData = null;
+var lineUserData = null;
 function testCall() {
 	let msg = [{
 		type: "text",
-		text: 'From:' + "你好啊 " + testLineUserData.displayName
+		text: 'From:' + "你好啊 " + lineUserData.displayName
 	}];
 	alert(JSON.stringify(msg));
-	liff.sendMessages(msg).then(function () {
+	liff.sendMessages(msg).then(() => {
 		alert('YA!訊息已送出.');
-	}).catch(function (error) {
+	}).catch((error) => {
 		alert("Error getting profile: ");
 		alert(JSON.stringify(error));
 		liff.closeWindow();
@@ -36,17 +52,18 @@ function testClose() {
 
 function onload() {
 	if (liff) {
-		liff.init(function (data) {
+		liff.init((data) => {
 			//alert(JSON.stringify('data: '));
 			//alert(JSON.stringify(data));
-			liff.getProfile().then(function (profile) {
+			liff.getProfile().then((profile) => {
 				//alert(JSON.stringify(profile));
-				testLineUserData = JSON.parse(JSON.stringify(profile));
-			}).catch(function (error) {
+				lineUserData = JSON.parse(JSON.stringify(profile));
+			}).catch((error) => {
 				alert(JSON.stringify(error));
 			});
-		}, function (eror) {
-			alert(JSON.stringify(eror));
+		}, (eror) => {
+			//alert(JSON.stringify(eror));
+      console.log(eror);
 		});
 	}
 }
