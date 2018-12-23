@@ -22,22 +22,26 @@ button {
   flex: 1 1 0;
   padding: 3rem;
   font-size: 3rem;
+  color: rgb(122, 122, 122);
+  border: 1px solid rgb(216, 200, 200);
+  border-radius: 0;
 }
 </style>
 </head>
 <body onload="onload()">
   <div class="test-box ">
     <button onclick="testCall()">測試傳送訊息</button>
+    <button onclick="testCall('請問報價')">傳送詢問報價訊息</button>
     <button onclick="testClose()">測試關閉</button>
   </div>
 <script>
 var lineUserData = null;
-function testCall() {
+function testCall(txt) {
+  let txt = (txt)? txt : "你好啊 " + lineUserData.displayName;
 	let msg = [{
 		type: "text",
-		text: 'From:' + "你好啊 " + lineUserData.displayName
+		text: txt
 	}];
-	alert(JSON.stringify(msg));
 	liff.sendMessages(msg).then(() => {
 		alert('YA!訊息已送出.');
 	}).catch((error) => {
