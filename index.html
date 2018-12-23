@@ -3,6 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Lucas</title>
+<script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
 <script type="text/javascript" src="js/jquery-1.8.1.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui.js"></script>
 <script type="text/javascript" src="js/jquery.ui.touch-punch.min.js"></script>
@@ -639,6 +640,32 @@ $(function(){
 
 	//整個網頁禁止選取
 	$(document).disableSelection();
+
+	//而外實驗 LIFF
+	liff.getProfile().then(function (profile) {
+		alert(JSON.stringify(profile));
+		/* liff.sendMessages([
+			{
+				type: 'image',
+				originalContentUrl: 'https://' + document.domain + '/imgs/' + res + '.jpg',
+				previewImageUrl: 'https://' + document.domain + '/imgs/' + res + '_240.jpg'
+			},
+			{
+				type: 'text',
+				text: 'From:' + profile.displayName
+			}
+		]).then(function () {
+			liff.closeWindow();
+		}).catch(function (error) {
+			window.alert('Error sending message: ' + error.message);
+		}); */
+
+	}).catch(function (error) {
+		alert(JSON.stringify(error));
+		//window.alert("Error getting profile: " + error.message);
+	});
+
+
 })
 </script>
 </body>
