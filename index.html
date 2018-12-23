@@ -446,6 +446,18 @@ $(function(){
 	liff.init(function (data) {
 		alert(JSON.stringify('data: '));
 		alert(JSON.stringify(data));
+
+		let userId = data.userId;
+		
+		liff.getProfile().then(function (profile) {
+			alert(JSON.stringify(profile));
+		}).catch(function (error) {
+			alert(JSON.stringify(error));
+		});
+
+	}, function (eror) {
+		alert(JSON.stringify('eror: '));
+		alert(JSON.stringify(eror));
 	});
 
   //快取DOM
@@ -647,14 +659,6 @@ $(function(){
 
 	//整個網頁禁止選取
 	$(document).disableSelection();
-
-	//實驗 LIFF
-	liff.getProfile().then(function (profile) {
-		alert(JSON.stringify(profile));
-	}).catch(function (error) {
-		alert(JSON.stringify(error));
-	});
-
 
 })
 </script>
