@@ -21,11 +21,13 @@ html, body {
 </style>
 </head>
 <body>
+  <button onClick="aa_fn()">重整</button>
   <div id="testWebView"></div>
 <script>
-WebView.loadUrl('https://www.google.com/');
-/* var isHaveWebView = null;
+//WebView.loadUrl('https://www.google.com/');
 var $testWebView = document.getElementById('testWebView');
+/* 
+var isHaveWebView = null;
 if (webview === undefined) {
   isHaveWebView = false;
 } else {
@@ -33,7 +35,12 @@ if (webview === undefined) {
 }
 
 $testWebView.innerHTML = isHaveWebView; */
+$testWebView.innerHTML = 'ccc';
 
+
+function aa_fn() {
+  alert('aaaaaa');
+}
 </script>
 </body>
 </html>
