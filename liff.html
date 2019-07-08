@@ -33,7 +33,6 @@ button {
     <button onclick="testCall()">測試傳送訊息</button>
     <button onclick="testCall('請問報價')">傳送詢問報價訊息</button>
     <button onclick="testClose()">測試關閉</button>
-    <div id="testWebView"></div>
   </div>
 <script>
 var lineUserData = null;
@@ -72,17 +71,6 @@ function onload() {
 		});
 	}
 }
-
-(function() {
-  var isHaveWebView = null;
-  var $testWebView = document.getElementById('testWebView');
-  if (!webView) {
-    isHaveWebView = false;
-  } else {
-    isHaveWebView = true;
-  }
-  $testWebView.innerHTML(isHaveWebView)
-})();
 </script>
 </body>
 </html>
