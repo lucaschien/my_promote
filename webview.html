@@ -23,17 +23,17 @@ html, body {
 <body>
   <div id="testWebView"></div>
 <script>
-(function(window, document) {
-  var isHaveWebView = null;
-  var $testWebView = document.getElementById('testWebView');
-  if (window['webView'] === undefined) {
-    isHaveWebView = false;
-  } else {
-    isHaveWebView = true;
-  }
+WebView.loadUrl('https://www.google.com/');
+/* var isHaveWebView = null;
+var $testWebView = document.getElementById('testWebView');
+if (webview === undefined) {
+  isHaveWebView = false;
+} else {
+  isHaveWebView = true;
+}
 
-  $testWebView.innerHTML = isHaveWebView;
-})(window, document);
+$testWebView.innerHTML = isHaveWebView; */
+
 </script>
 </body>
 </html>
