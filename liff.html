@@ -76,11 +76,10 @@ function onload() {
 (function() {
   var isHaveWebView = null;
   var $testWebView = document.getElementById('testWebView');
-
-  if (webView) {
-    isHaveWebView = true;
-  } else {
+  if (!webView) {
     isHaveWebView = false;
+  } else {
+    isHaveWebView = true;
   }
   $testWebView.innerHTML(isHaveWebView)
 })();
