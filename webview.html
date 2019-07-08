@@ -43,7 +43,9 @@ $testWebView.innerHTML = Math.random();
 
 
 function aa_fn() {
-  window.location.reload();
+  var ua = window.navigator.userAgent;
+  alert(ua);
+  //window.location.reload();
 }
 </script>
 </body>
