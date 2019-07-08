@@ -41,10 +41,17 @@ if (webview === undefined) {
 $testWebView.innerHTML = isHaveWebView; */
 $testWebView.innerHTML = Math.random();
 
+function isWebview() {
+	var useragent = navigator.userAgent;
+	var regex = '/(WebView|(iPhone|iPod|iPad)(?!.*Safari\/)|Android.*(wv|.0.0.0))/gi';
+	return Boolean(useragent.match(regex));
+}
 
 function aa_fn() {
-  var ua = window.navigator.userAgent;
-  alert(ua);
+  alert(isWebview());
+  //var ua = window.navigator.userAgent;
+  //alert(ua);
+
   //window.location.reload();
 }
 </script>
