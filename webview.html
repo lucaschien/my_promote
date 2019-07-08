@@ -26,13 +26,13 @@ html, body {
 (function(window, document) {
   var isHaveWebView = null;
   var $testWebView = document.getElementById('testWebView');
-  /* if (!webView) {
+  if (window['webView'] === undefined) {
     isHaveWebView = false;
   } else {
     isHaveWebView = true;
-  } */
+  }
 
-  $testWebView.innerHTML = 'aaaa';
+  $testWebView.innerHTML = isHaveWebView;
 })(window, document);
 </script>
 </body>
