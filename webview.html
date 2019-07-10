@@ -55,7 +55,7 @@ function isWebview() {
 function openInWebview () {
   var txt = '';
   var ua = navigator.userAgent.toLowerCase();
-  txt += us;
+  txt += ua;
   if (ua.match(/MicroMessenger/i) == 'micromessenger') { // 微信浏览器判断
     txt += ' a';
     $testWebView.innerHTML = txt;
