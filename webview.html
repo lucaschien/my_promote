@@ -90,9 +90,17 @@ function openInWebview () {
   }
 }
 
+function openInLINE () {
+  var u = navigator.userAgent,
+      ua = navigator.userAgent.toLowerCase();
+  $testWebView.innerHTML = ua;
+  // 如果是 Line 內建瀏覽器
+  return (u.indexOf("Line") > -1)  
+}
+
 
 function aa_fn() {
-  alert(openInWebview());
+  alert(openInLINE());
   //var ua = window.navigator.userAgent;
   //alert(ua);
 
