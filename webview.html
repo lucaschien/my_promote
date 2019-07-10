@@ -44,7 +44,6 @@ if (webview === undefined) {
 }
 
 $testWebView.innerHTML = isHaveWebView; */
-$testWebView.innerHTML = Math.random();
 
 function isWebview() {
 	var useragent = navigator.userAgent;
@@ -59,22 +58,28 @@ function openInWebview () {
   txt += us;
   if (ua.match(/MicroMessenger/i) == 'micromessenger') { // 微信浏览器判断
     txt += ' a';
+    $testWebView.innerHTML = txt;
     return false
   } else if (ua.match(/QQ/i) == 'qq') { // QQ浏览器判断
     txt += ' b';
+    $testWebView.innerHTML = txt;
     return false
   } else if (ua.match(/WeiBo/i) == "weibo") {
     txt += ' c';
+    $testWebView.innerHTML = txt;
     return false
   } else {
     if (ua.match(/Android/i) != null) {
       txt += ' d';
+      $testWebView.innerHTML = txt;
       return ua.match(/browser/i) == null
     } else if (ua.match(/iPhone/i) != null) {
       txt += ' e';
+      $testWebView.innerHTML = txt;
       return ua.match(/safari/i) == null
     } else {
       txt += ' f';
+      $testWebView.innerHTML = txt;
       return (ua.match(/macintosh/i) == null && ua.match(/windows/i) == null)
     }
   }
