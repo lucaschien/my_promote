@@ -40,7 +40,9 @@ button {
     <button onclick="testCall('請問報價')">傳送詢問報價訊息</button>
     <button onclick="testClose()">測試關閉</button>
   </div>
-  <a class="aLink" href="https://lucaschien.github.io/my_promote/liff.html">重新聯結網頁</a>
+  
+  <div class="aLink"></div>
+  <!-- <a href="https://lucaschien.github.io/my_promote/liff.html">重新聯結網頁</a> -->
 <script>
 var lineUserData = null;
 function testCall(_txt) {
@@ -77,6 +79,15 @@ function onload() {
       console.log(eror);
 		});
 	}
+
+
+  setTimeout(function () {
+    var $a = document.createElement('A');
+    $a.setAttribute('href', 'https://lucaschien.github.io/my_promote/liff.html');
+    $a.innerHTML = "重新聯結網頁!";
+    document.getElementsByClassName('aLink')[0].appendChild($a);
+  }, 10000);
+
 }
 </script>
 </body>
