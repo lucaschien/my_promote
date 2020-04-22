@@ -38,6 +38,10 @@ button {
   border: 1px solid pink;
   padding: 10px;
 }
+#result {
+  border: 1px solid green;
+  padding: 10px;
+}
 
 </style>
 </head>
@@ -49,6 +53,7 @@ button {
   </div>
 
   <div id="lookInfoBox"></div>
+
   <div id="result"></div>
   
   <div class="aLink"></div>
@@ -111,6 +116,8 @@ function onload() {
           'scope:' + data.scope + '<br>' +
           'client_id:' + data.client_id + '<br>' +
           'expires_in:' + data.expires_in + '<br>';
+      }).catch((error) => {
+        alert('fetch 錯誤:'+ JSON.stringify(error));
       });
 
     }).catch((error) => {
