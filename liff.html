@@ -35,7 +35,7 @@ button {
 }
 
 #lookInfoBox {
-  border: 1px solid green;
+  border: 1px solid yellow;
   padding: 10px;
 }
 
@@ -76,13 +76,15 @@ function testClose() {
 }
 function onload() {
   alert('liff');
-  alert(liff);
+  alert(JSON.stringify(liff));
 	if (liff) {
-    const accessToken = liff.getAccessToken();
+    alert('111');
+    /* const accessToken = liff.getAccessToken();
     alert('accessToken');
     if (accessToken) {
 
-    }
+    } */
+
 		/* liff.init((data) => {
 			//alert(JSON.stringify('data: '));
 			//alert(JSON.stringify(data));
@@ -102,12 +104,12 @@ function onload() {
 	}
 
 
-  setTimeout(function () {
+  /* setTimeout(function () {
     var $a = document.createElement('A');
     $a.setAttribute('href', 'https://lucaschien.github.io/my_promote/liff.html');
     $a.innerHTML = "重新聯結網頁!";
     document.getElementsByClassName('aLink')[0].appendChild($a);
-  }, 10000);
+  }, 10000); */
 
 }
 </script>
