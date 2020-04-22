@@ -35,7 +35,7 @@ button {
 }
 
 #lookInfoBox {
-  border: 1px solid yellow;
+  border: 1px solid pink;
   padding: 10px;
 }
 #result {
@@ -95,19 +95,17 @@ function onload() {
       info = info + 'isLoggedIn: ' + liff.isLoggedIn() + ' \r\n, ';
       info = info + 'getOS: ' + liff.getOS() + ' \r\n, ';
       info = info + 'getAccessToken: ' + liff.getAccessToken() + ' \r\n, ';
-      info = info + 'getDecodedIDToken: ' + liff.getDecodedIDToken() + ' \r\n, ';
       $lookInfoBox.innerHTML = info;
 
       //透過 token 取得使用者資訊
-      /* var parm = {
-        accessToken: liff.getAccessToken()
-      };
-      fetch('https://ibottestapi.azurewebsites.net/api/liff/verify', {
+      let accessToken = liff.getAccessToken();
+      fetch('https://api.line.me/v2/profile', {
         body: JSON.stringify(parm),
         headers: {
-          'content-type': 'application/json'
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`
         },
-        method: 'POST'
+        method: 'GET'
       }).then(response => {
         return response.json();
       }).then(data => {
@@ -118,7 +116,7 @@ function onload() {
           'expires_in:' + data.expires_in + '<br>';
       }).catch((error) => {
         alert('fetch 錯誤:'+ JSON.stringify(error));
-      }); */
+      });
 
     }).catch((error) => {
       alert('liff init error: ' + JSON.stringify(error));
