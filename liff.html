@@ -35,7 +35,7 @@ button {
 }
 
 #lookInfoBox {
-  border: 1px solid red;
+  border: 1px solid green;
   padding: 10px;
 }
 
@@ -75,8 +75,15 @@ function testClose() {
 	liff.closeWindow();
 }
 function onload() {
+  alert('liff');
+  alert(liff);
 	if (liff) {
-		liff.init((data) => {
+    const accessToken = liff.getAccessToken();
+    alert('accessToken');
+    if (accessToken) {
+
+    }
+		/* liff.init((data) => {
 			//alert(JSON.stringify('data: '));
 			//alert(JSON.stringify(data));
 			liff.getProfile().then((profile) => {
@@ -91,7 +98,7 @@ function onload() {
 		}, (eror) => {
 			//alert(JSON.stringify(eror));
       console.log(eror);
-		});
+		}); */
 	}
 
 
