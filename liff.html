@@ -35,7 +35,7 @@ button {
 }
 
 #lookInfoBox {
-  border: 1px solid pink;
+  border: 1px solid red;
   padding: 10px;
 }
 #result {
@@ -88,17 +88,18 @@ function testClose() {
 function onload() {
 	if (liff) {
     liff.init({ liffId: '1633210473-BZ1zNNWk' }).then(() => {
+      alert('liff...' + JSON.stringify(liff));
+      let accessToken = liff.getAccessToken();
       let info = '';
       info = info + 'getLanguage: ' + liff.getLanguage() + ' \r\n, ';
       info = info + 'getVersion: ' + liff.getVersion() + ' \r\n, ';
       info = info + 'isInClient: ' + liff.isInClient() + ' \r\n, ';
       info = info + 'isLoggedIn: ' + liff.isLoggedIn() + ' \r\n, ';
       info = info + 'getOS: ' + liff.getOS() + ' \r\n, ';
-      info = info + 'getAccessToken: ' + liff.getAccessToken() + ' \r\n, ';
+      info = info + 'getAccessToken: ' + accessToken + ' \r\n, ';
       $lookInfoBox.innerHTML = info;
 
       //透過 token 取得使用者資訊
-      let accessToken = liff.getAccessToken();
       fetch('https://api.line.me/v2/profile', {
         body: JSON.stringify(parm),
         headers: {
