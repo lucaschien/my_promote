@@ -35,7 +35,7 @@ button {
 }
 
 #lookInfoBox {
-  border: 1px solid red;
+  border: 1px solid pink;
   padding: 10px;
 }
 
@@ -51,7 +51,7 @@ button {
   <div id="lookInfoBox"></div>
   
   <div class="aLink"></div>
-  <!-- <a href="https://lucaschien.github.io/my_promote/liff.html">重新聯結網頁</a> -->
+
 <script>
 var lineUserData = null;
 $lookInfoBox = document.getElementById('lookInfoBox');
@@ -78,11 +78,18 @@ function onload() {
   alert('liff');
   alert(JSON.stringify(liff));
 	if (liff) {
-    liff.init({ liffId: 'U97658166d5ab0534f860ca04ecb2f28f' }).then((data) => {
-      // start to use LIFF's api
-      alert(JSON.stringify(data));
-    }).catch((err) => {
-      alert(JSON.stringify(err));
+    liff.init({ liffId: 'U97658166d5ab0534f860ca04ecb2f28f' }).then(() => {
+      
+      liff.getProfile().then((profile) => {
+				alert(JSON.stringify(profile));
+				lineUserData = profile;
+        $lookInfoBox.innerHTML = JSON.stringify(profile);
+			}).catch((error) => {
+				alert(JSON.stringify(error));
+			});
+
+    }).catch((error) => {
+      alert(JSON.stringify(error));
     });
 
 		/* liff.init((data) => {
