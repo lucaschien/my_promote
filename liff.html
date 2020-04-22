@@ -34,7 +34,7 @@ button {
 }
 
 #lookInfoBox {
-  border: 1px solid red;
+  border: 1px solid green;
   padding: 10px;
 }
 
@@ -82,7 +82,7 @@ function onload() {
 				//alert(JSON.stringify(profile));
 				lineUserData = profile;
 
-        $lookInfoBox.innerHTML = profile;
+        $lookInfoBox.innerHTML = JSON.stringify(profile);
 
 			}).catch((error) => {
 				alert(JSON.stringify(error));
