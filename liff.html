@@ -35,7 +35,7 @@ button {
 }
 
 #lookInfoBox {
-  border: 1px solid green;
+  border: 1px solid blue;
   padding: 10px;
 }
 
@@ -83,7 +83,8 @@ function onload() {
       info = info + 'getVersion: ' + liff.getVersion() + ' \n, ';
       info = info + 'isInClient: ' + liff.isInClient() + ' \n, ';
       info = info + 'isLoggedIn: ' + liff.isLoggedIn() + ' \n, ';
-      info = info + 'getOS: ' + liff.getOS() + ' \n, ';
+      info = info + 'getOS: ' + liff.getOS() + ' \n\n\n\n\n, ';
+      info = info + 'getAccessToken: ' + liff.getAccessToken() + ' \n, ';
 
       $lookInfoBox.innerHTML = info;
 
