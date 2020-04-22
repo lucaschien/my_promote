@@ -78,12 +78,12 @@ function onload() {
   alert('liff');
   alert(JSON.stringify(liff));
 	if (liff) {
-    alert('111');
-    /* const accessToken = liff.getAccessToken();
-    alert('accessToken');
-    if (accessToken) {
-
-    } */
+    liff.init({ liffId: 'U97658166d5ab0534f860ca04ecb2f28f' }).then((data) => {
+      // start to use LIFF's api
+      alert(JSON.stringify(data));
+    }).catch((err) => {
+      alert(JSON.stringify(err));
+    });
 
 		/* liff.init((data) => {
 			//alert(JSON.stringify('data: '));
