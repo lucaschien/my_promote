@@ -34,13 +34,24 @@ button {
   margin: 30px;
 }
 
-#lookInfoBox {
-  border: 1px solid yellow;
-  padding: 10px;
+#liffInfoBox {
+  border: 1px solid pink;
+  padding: 20px;
+  margin-bottom: 20px;
 }
-#result {
+#liffInfoBox::before {
+  content: 'liff初始化時的資料';
+  display: block;
+  margin-bottom: 20px;
+}
+#userProfileBox {
   border: 1px solid blue;
-  padding: 10px;
+  padding: 20px;
+}
+#userProfileBox::before {
+  content: '使用者資訊';
+  display: block;
+  margin-bottom: 20px;
 }
 
 </style>
@@ -54,13 +65,14 @@ button {
 
   <div id="lookInfoBox"></div>
 
-  <div id="result"></div>
+  <div id="userProfileBox"></div>
   
   <div class="aLink"></div>
 
 <script>
 var lineUserData = null;
-$lookInfoBox = document.getElementById('lookInfoBox');
+var $liffInfoBox = document.getElementById('liffInfoBox');
+var $userProfileBox = document.getElementById('userProfileBox');
 
 //透過 liff 發話
 function testCall(_txt) {
@@ -88,16 +100,14 @@ function testClose() {
 function onload() {
 	if (liff) {
     liff.init({ liffId: '1633210473-BZ1zNNWk' }).then(() => {
-      alert('liff...' + JSON.stringify(liff));
       let accessToken = liff.getAccessToken();
-      let info = '';
-      info = info + 'getLanguage: ' + liff.getLanguage() + ' \r\n, ';
-      info = info + 'getVersion: ' + liff.getVersion() + ' \r\n, ';
-      info = info + 'isInClient: ' + liff.isInClient() + ' \r\n, ';
-      info = info + 'isLoggedIn: ' + liff.isLoggedIn() + ' \r\n, ';
-      info = info + 'getOS: ' + liff.getOS() + ' \r\n, ';
-      info = info + 'getAccessToken: ' + accessToken + ' \r\n, ';
-      $lookInfoBox.innerHTML = info;
+      $liffInfoBox.innerHTML +=
+        'getLanguage: ' + liff.getLanguage() + '<br>' +
+        'getVersion: ' + liff.getVersion() + '<br>' +
+        'isInClient: ' + liff.isInClient() + '<br>' +
+        'isLoggedIn: ' + liff.isLoggedIn() + '<br>' +
+        'getOS: ' + liff.getOS() + '<br>' +
+        'getAccessToken: ' + accessToken + '<br>';
 
       //透過 token 取得使用者資訊
       fetch('https://api.line.me/v2/profile', {
@@ -109,12 +119,10 @@ function onload() {
       }).then(response => {
         return response.json();
       }).then((data) => {
-        alert('fetch: ' + JSON.stringify(data));
-        var result = document.getElementById('result');
-        result.innerHTML +=
-          'scope:' + data.scope + '<br>' +
-          'client_id:' + data.client_id + '<br>' +
-          'expires_in:' + data.expires_in + '<br>';
+        $userProfileBox.innerHTML +=
+          'userId:' + data.userId + '<br>' +
+          'displayName:' + data.displayName + '<br>' +
+          'pictureUrl:' + data.pictureUrl + '<br>';
       });
 
     }).catch((error) => {
@@ -122,14 +130,15 @@ function onload() {
     });
 
 
-		/* liff.init((data) => {
+    /* 原本 sdk 1.0 的 code
+    liff.init((data) => {
 			//alert(JSON.stringify('data: '));
 			//alert(JSON.stringify(data));
 			liff.getProfile().then((profile) => {
 				//alert(JSON.stringify(profile));
 				lineUserData = profile;
 
-        $lookInfoBox.innerHTML = JSON.stringify(profile);
+        $liffInfoBox.innerHTML = JSON.stringify(profile);
 
 			}).catch((error) => {
 				alert(JSON.stringify(error));
