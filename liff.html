@@ -35,7 +35,7 @@ button {
 }
 
 #lookInfoBox {
-  border: 1px solid green;
+  border: 1px solid pink;
   padding: 10px;
 }
 
@@ -76,20 +76,19 @@ function testClose() {
 }
 function onload() {
   alert('liff');
-  alert(JSON.stringify(liff));
 	if (liff) {
     liff.init({ liffId: 'U97658166d5ab0534f860ca04ecb2f28f' }).then(() => {
       let info = '';
-      info = info + 'getLanguage: ' + liff.getLanguage();
-      info = info + 'getVersion: ' + liff.getVersion();
-      info = info + 'isInClient: ' + liff.isInClient();
-      info = info + 'isLoggedIn: ' + liff.isLoggedIn();
-      info = info + 'getOS: ' + liff.getOS();
+      info = info + 'getLanguage: ' + liff.getLanguage() + ' \n, ';
+      info = info + 'getVersion: ' + liff.getVersion() + ' \n, ';
+      info = info + 'isInClient: ' + liff.isInClient() + ' \n, ';
+      info = info + 'isLoggedIn: ' + liff.isLoggedIn() + ' \n, ';
+      info = info + 'getOS: ' + liff.getOS() + ' \n, ';
 
       $lookInfoBox.innerHTML = info;
 
     }).catch((error) => {
-      alert(JSON.stringify(error));
+      alert('init: ' + JSON.stringify(error));
     });
 
 		/* liff.init((data) => {
