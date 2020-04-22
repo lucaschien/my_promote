@@ -32,6 +32,12 @@ button {
   display: inline-block;
   margin: 30px;
 }
+
+#lookInfoBox {
+  border: 1px solid red;
+  padding: 10px;
+}
+
 </style>
 </head>
 <body onload="onload()">
@@ -40,11 +46,15 @@ button {
     <button onclick="testCall('請問報價')">傳送詢問報價訊息</button>
     <button onclick="testClose()">測試關閉</button>
   </div>
+
+  <div id="lookInfoBox"></div>
   
   <div class="aLink"></div>
   <!-- <a href="https://lucaschien.github.io/my_promote/liff.html">重新聯結網頁</a> -->
 <script>
 var lineUserData = null;
+$lookInfoBox = document.getElementById('lookInfoBox');
+
 function testCall(_txt) {
   let txt = (_txt)? _txt : ("測試拿到的line user資料" + JSON.stringify(lineUserData));
 	let msg = [{
@@ -71,6 +81,9 @@ function onload() {
 			liff.getProfile().then((profile) => {
 				//alert(JSON.stringify(profile));
 				lineUserData = profile;
+
+        $lookInfoBox.innerHTML = profile;
+
 			}).catch((error) => {
 				alert(JSON.stringify(error));
 			});
