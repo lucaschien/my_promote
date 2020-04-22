@@ -35,7 +35,7 @@ button {
 }
 
 #lookInfoBox {
-  border: 1px solid red;
+  border: 1px solid yellow;
   padding: 10px;
 }
 #result {
@@ -101,27 +101,26 @@ function onload() {
 
       //透過 token 取得使用者資訊
       fetch('https://api.line.me/v2/profile', {
-        body: JSON.stringify(parm),
+        method: 'GET',
         headers: {
           'content-type': 'application/json',
           'Authorization': `Bearer ${accessToken}`
         },
-        method: 'GET'
       }).then(response => {
         return response.json();
-      }).then(data => {
+      }).then((data) => {
+        alert('fetch: ' + JSON.stringify(data));
         var result = document.getElementById('result');
         result.innerHTML +=
           'scope:' + data.scope + '<br>' +
           'client_id:' + data.client_id + '<br>' +
           'expires_in:' + data.expires_in + '<br>';
-      }).catch((error) => {
-        alert('fetch 錯誤:'+ JSON.stringify(error));
       });
 
     }).catch((error) => {
       alert('liff init error: ' + JSON.stringify(error));
     });
+
 
 		/* liff.init((data) => {
 			//alert(JSON.stringify('data: '));
