@@ -35,7 +35,7 @@ button {
 }
 
 #liffInfoBox {
-  border: 2px solid pink;
+  border: 2px solid yellow;
   padding: 20px;
   margin: 20px;
   font-size: 2rem;
@@ -230,7 +230,7 @@ function onload() {
       //送出ajax
       var send = function (base64URL) {
         //ajax  注意: 每次啟ngrok這個host的路徑都要手動改, 且要https
-        fetch('https://552deaaf.ngrok.io/api/upload/scanQRcode', {
+        fetch('https://39eb79ef.ngrok.io/api/upload/scanQRcode', {
           method: 'POST',
           cache: 'no-cache',
           headers: { 'content-type': 'application/json' },
