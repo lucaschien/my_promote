@@ -73,13 +73,33 @@ button {
   <div id="liffInfoBox"></div>
 
   <div id="userProfileBox"></div>
+
+  <!-- 實驗: 手機網頁掃描 QRcode api -->
+  <input type="file" accept="image/*" capture="camera" id="cameraInput">
+  <div id="qrCodeContent"></div>
   
   <div class="aLink"></div>
 
 <script>
+/*
+https://ithelp.ithome.com.tw/articles/10229840
+https://engineering.linecorp.com/zh-hant/blog/liff-our-latest-product-for-third-party-developers-ch/
+
+https://developers.line.biz/en/docs/social-api/getting-user-profiles/#before-you-begin
+
+打開QR碼閱讀器
+https://developers.line.biz/en/docs/liff/developing-liff-apps/#developing-a-liff-app
+
+*/
+
 var lineUserData = null;
 var $liffInfoBox = document.getElementById('liffInfoBox');
 var $userProfileBox = document.getElementById('userProfileBox');
+/* 實驗: 搭配我自己正在學習nodejs的 lucas-studio 中的掃描 QRcode api,
+   因此我local端要起 lucas-studio, 也要起 ngrok
+*/
+var $cameraInput = document.getElementById('cameraInput');
+var $qrCodeContent = document.getElementById('qrCodeContent');
 
 //透過 liff 發話
 function testCall(_txt) {
@@ -155,6 +175,86 @@ function onload() {
 			//alert(JSON.stringify(eror));
       console.log(eror);
 		}); */
+
+
+    // click 手機拍照按鈕 (for 掃描 QRcode)
+    $cameraInput.addEventListener('change', () => {
+      //圖片畫質壓縮比率，size單位為MB
+      var getCompressRate = function (allowMaxSize, fileSize) {
+        var compressRate = 1;
+        if (fileSize / allowMaxSize > 4) {
+          compressRate = 0.5;
+        } else if (fileSize / allowMaxSize > 3) {
+          compressRate = 0.6;
+        } else if (fileSize / allowMaxSize > 2) {
+          compressRate = 0.7;
+        } else if (fileSize > allowMaxSize) {
+          compressRate = 0.8;
+        } else {
+          compressRate = 0.9;
+        }
+        return compressRate;
+      };
+
+      //建立base64的圖片資料, res代表上傳的base64圖片資料，fileSize圖片的k數
+      var createBase64URL = function (res, fileSize) { 
+        var img = new Image(),
+            maxW = 480; //設定最大寬度
+        img.onload = function () {
+          //建立 canvas 物件
+          var cvs = document.createElement('canvas'),
+            ctx = cvs.getContext('2d');
+          //限制圖片大小
+          if (img.width > maxW) {
+            img.height *= maxW / img.width;
+            img.width = maxW;
+          }
+          cvs.width = img.width;
+          cvs.height = img.height;
+          ctx.clearRect(0, 0, cvs.width, cvs.height);
+          ctx.drawImage(img, 0, 0, img.width, img.height);
+          var compressRate = getCompressRate(1, fileSize);
+          console.log('畫質壓縮比', compressRate);
+          //document.body.appendChild(cvs); //開發期間可以在body將canvas印出來看看
+          var base64URL = cvs.toDataURL('image/jpeg', compressRate);
+          send(base64URL); //ajax
+        }
+        img.src = res;
+      };
+
+      //送出ajax
+      var send = function (base64URL) {
+        //ajax  注意: 每次啟ngrok這個host的路徑都要手動改
+        fetch('http://552deaaf.ngrok.io/api/upload/scanQRcode', {
+          method: 'POST',
+          cache: 'no-cache',
+          headers: { 'content-type': 'application/json' },
+          mode: 'cors',
+          body: JSON.stringify({'base64URL': base64URL})
+        }).then((response) => {
+          if(response.ok) {
+            return response.json();
+          }
+          throw new Error('Network response was not ok.');
+        }).then((response) => {
+          var msg = (response.errorCode === '99660001')? '新增成功' : '新增失敗';
+          alert(msg);
+          $qrCodeContent.innerHTML = response.data;
+          getUploadImgListFn();
+        }).catch((err) => {
+          console.error('There has been a problem: ', err);
+        });
+      };
+
+      //建立讀取檔案物件
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        var fileSize = Math.round($cameraInput.files[0]/1024/1024) ; //以MB為單位
+        createBase64URL(e.target.result, fileSize);
+      };
+      reader.readAsDataURL($cameraInput.files[0]);
+    });
+
 	}
 
   setTimeout(function () {
