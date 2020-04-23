@@ -29,13 +29,13 @@ button {
 }
 
 .aLink {
-  font-size: 26px;
+  font-size: 2rem;
   display: inline-block;
   margin: 30px;
 }
 
 #liffInfoBox {
-  border: 2px solid pink;
+  border: 2px solid red;
   padding: 20px;
   margin: 20px;
   font-size: 2rem;
@@ -61,6 +61,11 @@ button {
   margin-bottom: 20px;
 }
 
+#qrCodeContent {
+  font-size: 2rem;
+  margin-bottom: 60px;
+}
+
 </style>
 </head>
 <body onload="onload()">
@@ -75,7 +80,7 @@ button {
   <div id="userProfileBox"></div>
 
   <!-- 實驗: 手機網頁掃描 QRcode api -->
-  <input type="file" accept="image/*" capture="camera" id="cameraInput">
+  <input type="file" accept="image/*" capture="camera" id="scanQRcodeInput">
   <div id="qrCodeContent"></div>
   
   <div class="aLink"></div>
@@ -98,7 +103,7 @@ var $userProfileBox = document.getElementById('userProfileBox');
 /* 實驗: 搭配我自己正在學習nodejs的 lucas-studio 中的掃描 QRcode api,
    因此我local端要起 lucas-studio, 也要起 ngrok
 */
-var $cameraInput = document.getElementById('cameraInput');
+var $scanQRcodeInput = document.getElementById('scanQRcodeInput');
 var $qrCodeContent = document.getElementById('qrCodeContent');
 
 //透過 liff 發話
@@ -178,7 +183,7 @@ function onload() {
 
 
     // click 手機拍照按鈕 (for 掃描 QRcode)
-    $cameraInput.addEventListener('change', () => {
+    $scanQRcodeInput.addEventListener('change', () => {
       //圖片畫質壓縮比率，size單位為MB
       var getCompressRate = function (allowMaxSize, fileSize) {
         var compressRate = 1;
@@ -237,7 +242,7 @@ function onload() {
           }
           throw new Error('Network response was not ok.');
         }).then((response) => {
-          var msg = (response.errorCode === '99660001')? '新增成功' : '新增失敗';
+          var msg = (response.errorCode === '99660001')? '掃描成功' : '掃描失敗';
           alert(msg);
           $qrCodeContent.innerHTML = response.data;
         }).catch((err) => {
@@ -248,10 +253,10 @@ function onload() {
       //建立讀取檔案物件
       var reader = new FileReader();
       reader.onload = function (e) {
-        var fileSize = Math.round($cameraInput.files[0]/1024/1024) ; //以MB為單位
+        var fileSize = Math.round($scanQRcodeInput.files[0]/1024/1024) ; //以MB為單位
         createBase64URL(e.target.result, fileSize);
       };
-      reader.readAsDataURL($cameraInput.files[0]);
+      reader.readAsDataURL($scanQRcodeInput.files[0]);
     });
 
 	}
