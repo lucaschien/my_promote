@@ -35,7 +35,7 @@ button {
 }
 
 #liffInfoBox {
-  border: 2px solid blue;
+  border: 2px solid pink;
   padding: 20px;
   margin: 20px;
   font-size: 2rem;
@@ -240,7 +240,6 @@ function onload() {
           var msg = (response.errorCode === '99660001')? '新增成功' : '新增失敗';
           alert(msg);
           $qrCodeContent.innerHTML = response.data;
-          getUploadImgListFn();
         }).catch((err) => {
           console.error('There has been a problem: ', err);
         });
