@@ -7,7 +7,8 @@
 <link rel="stylesheet" href="./css/reset.css">
 <link rel="stylesheet" href="./css/main.css">
 <script type="text/javascript" src="./js/jquery.js"></script>
-<script type="text/javascript" src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+<!-- <script type="text/javascript" src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script> -->
+<script type="text/javascript" src="hhttps://static.line-scdn.net/liff/edge/versions/2.3.0/sdk.js"></script>
 
 </head>
 <body onload="onload()">
@@ -96,8 +97,8 @@
     }
     var urlSearch = window.location.search;
     var storeId = urlSearch.slice(9, urlSearch.length);
-    $('#userProfileBox').append(`<div>storeId: ${storeId}</div>`);
-    $('#userProfileBox').append(`<div>window.location.pathname: ${window.location.pathname}</div>`);
+    $('#userProfileBox').append(`<div><br>storeId: ${storeId}</div>`);
+    $('#userProfileBox').append(`<div>window.location.pathname: ${window.location.pathname}<br><br></div>`);
 
     $('#testNo').click(() => {
       $('.recording').removeClass('logged');
