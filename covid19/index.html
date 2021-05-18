@@ -82,23 +82,16 @@
 
 <script>
 $(function() {
+  var testHref = 'https://lucaschien.github.io/my_promote/covid19/index.html?liff.state=%3FstoreId%3Daaaa%26liffId%3D1633210473-BZ1zNNWk';
   $('#userProfileBox').append(`<div>window.location.href: ${JSON.stringify(window.location.href)}<br><br></div>`);
+
   var isLogded = false; // 記住是否已登入用
   var userModel = {};   // 記住使用者在資料庫中資料用
   var storeModel = {};  // 記住店家在資料庫中資料用
 
   // 解析瀏覽器url參數
   function parseURLparm() {
-    /* var href = 'https://lucaschien.github.io/my_promote/covid19/index.html?liff.state=%3FstoreId%3Daaaa%26liffId%3D1633210473-BZ1zNNWk'; */
     var href = window.location.href;
-    
-    //注意這是為了解決 liff 會有轉址的關係的處理
-    if (href.indexOf('liff.state') > 0) {
-      href = href.slice(href.indexOf('liff.state'), href.length);
-    }
-    console.log('href', href);
-    href = decodeURIComponent(href);
-
     var vars = {}, hash;
     var hashes = href.slice(href.indexOf('?') + 1).split('&');
     for (var i = 0; i < hashes.length; i++) {
@@ -109,8 +102,6 @@ $(function() {
     }
     return vars;
   }
-
-
 
   // 取得 liff 使用者基本資料
   function getUserProfile(accessToken) {
@@ -144,7 +135,6 @@ $(function() {
   // liff 初始化
   function onload() {
     var urlParm = parseURLparm();
-    console.log('urlParm >>> ', urlParm);
     var storeId = urlParm.storeId;
     var liffId = urlParm.liffId;
     $('#userProfileBox').append(`<div><br>storeId: ${storeId}</div>`);
@@ -152,7 +142,7 @@ $(function() {
 
     if (liff) {
       // TODO... 由於 app 中 liff 打開之後後面的url參數會被轉碼... 這部分還要研究所以先寫死 1633210473-BZ1zNNWk
-      liff.init({ liffId: liffId }).then(() => {
+      liff.init({ liffId: '1633210473-BZ1zNNWk' }).then(() => {
         var accessToken = liff.getAccessToken();
         $('#userProfileBox').append(`<div>accessToken: ${accessToken}<br><br></div>`);
         getUserProfile(accessToken);
