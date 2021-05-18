@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>eyesmedia covid19 - 28日足跡查詢</title>
+<link rel="stylesheet" href="./css/reset.css">
+<link rel="stylesheet" href="./css/main.css">
+<script type="text/javascript" src="./js/jquery.js"></script>
+<script type="text/javascript" src="https://static.line-scdn.net/liff/edge/versions/2.10.0/sdk.js"></script>
+
+</head>
+<body>
+  <div class="app">
+    <div class="main footprint">
+      <div class="main-content">
+        <h3>28日足跡查詢</h3>
+        <div class="introduction-box">依照「COVID-19(武漢肺炎)」防疫新生活運動：實聯制措施指引，基於個資法保護，僅顯示最近20筆資料，其餘資料封存於伺服器，最多存放28天就會主動進行刪除。</div>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>填寫時間</th>
+              <th>地點</th>
+              <th>備註</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <div class="note-box">
+          備註：
+          <ul>
+            <li>1. 為維持國內疫情之穩定控制，艾斯移動股份有限公司 配合政府「COVID19（武漢肺炎）」 防疫新生活運動，採行實聯制措施。依據「個人資料保護法之特定目的 及個人資料之類別」代號 012 公共衛生或傳染病防治之特定目的，蒐集 以上個人資料，且不得為目的外利用。所蒐集之資料僅保存 28 日，屆 期銷毀。感謝您的配合。</li>
+            <li>2. 個人資料利用之對象及方式：為防堵疫情而有必要時，得提供衛生主管 機關依傳染病防治法等規定進行疫情調查及聯繫使用。</li>
+            <li>3. 當事人就其個人資料得依個人資料保護法規定，向 艾斯移動股份有限公司（資料蒐 集機關）行使權利，包括查詢或請求閱覽、請求製給複製本、請求補充 或更正、請求停止處理或利用、請求刪除等。相關權利行使方式：以電子郵件(E-mail)寄送至：mobiics@mobii.ai</li>
+            <li>4. 當事人如無法配合本實聯制作業，將○○○○○（請說明對其權益之影 響，如無法進入場館或參與活動等）。</li>
+            <li>5. 本實聯制其他相關措施說明，請參閱 http://at.cdc.tw/8QI4hA。</li>
+          </ul>
+        </div>
+
+
+        <div id="userProfileBox"></div>
+  
+      </div>
+    </div>
+  </div>
+
+<script>
+$(function() {
+  var isLogded = false; // 記住是否已登入用
+  var userModel = {};   // 記住使用者在資料庫中資料用
+  var storeModel = {};  // 記住店家在資料庫中資料用
+
+  // 解析瀏覽器url參數
+  function parseURLparm() {
+    var vars = {}, hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for (var i = 0; i < hashes.length; i++) {
+      hash = hashes[i].split('=');
+      if (Array.isArray(hash[0], vars) > -1) {
+        vars[hash[0]] = hash[1];
+      }
+    }
+    return vars;
+  }
+
+  // 取得 liff 使用者基本資料
+  function getUserProfile(accessToken) {
+    //透過 token 取得使用者資訊
+    fetch('https://api.line.me/v2/profile', {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
+      },
+    }).then(response => {
+      return response.json();
+    }).then((data) => {
+      // TODO... 開發測試用
+      $('#userProfileBox').append(`<div>https://api.line.me/v2/profile:'${JSON.stringify(data)}'<br><br></div>`);
+      $('#userProfileBox').append(
+        'userId:' + data.userId + '<br>' +
+        'displayName:' + data.displayName + '<br>' +
+        'pictureUrl:' + data.pictureUrl + '<br>'
+      );
+
+    });
+  }
+  
+  // liff 初始化
+  function onload() {
+    var urlParm = parseURLparm();
+    var urlSearch = window.location.search;
+    var storeId = urlParm.storeId;
+    var liffId = urlParm.liffId;
+    $('#userProfileBox').append(`<div><br>storeId: ${storeId}</div>`);
+    $('#userProfileBox').append(`<div>liffId: ${liffId}<br><br></div>`);
+
+    if (liff) {
+      liff.init({ liffId: liffId }).then(() => {
+        var accessToken = liff.getAccessToken();
+        getUserProfile(accessToken);
+      }).catch((error) => {
+        alert('liff init error: ' + JSON.stringify(error));
+      });
+    }
+  }
+
+  // TODO... 測試用
+  var trHTML = '';
+  for (var i = 0; i <= 10; i++) {
+    trHTML += '<tr>';
+    trHTML += '  <td>'+ (i+1) +'</td>';
+    trHTML += '  <td>2021/05/17 11:56</td>';
+    trHTML += '  <td>XXX大樓</td>';
+    trHTML += '  <td>36.3</td>';
+    trHTML += '</tr>';
+  }
+  $('table tbody').append(trHTML);
+
+  onload();
+});
+</script>
+</body>
+</html>
