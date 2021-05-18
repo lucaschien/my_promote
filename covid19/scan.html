@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>test covid19</title>
+<link rel="stylesheet" href="./css/main.css">
+<script type="text/javascript" src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+
+</head>
+<body onload="onload()">
+
+  <div id="userProfileBox"></div>
+
+<script>
+  var $userProfileBox = document.getElementById('userProfileBox');
+  function onload() {
+    
+    if (liff) {
+      liff.init({ liffId: '1633210473-BZ1zNNWk' }).then(() => {
+        var accessToken = liff.getAccessToken();
+
+        var test = '';
+        test +=
+          'getLanguage: ' + liff.getLanguage() + '<br>' +
+          'getVersion: ' + liff.getVersion() + '<br>' +
+          'isInClient: ' + liff.isInClient() + '<br>' +
+          'isLoggedIn: ' + liff.isLoggedIn() + '<br>' +
+          'getOS: ' + liff.getOS() + '<br>' +
+          'getAccessToken: ' + accessToken + '<br>';
+        alert(test);
+
+        //透過 token 取得使用者資訊
+        fetch('https://api.line.me/v2/profile', {
+          method: 'GET',
+          headers: {
+            'content-type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+          },
+        }).then(response => {
+          return response.json();
+        }).then((data) => {
+          lineUserData = data;
+          $userProfileBox.innerHTML +=
+            'userId:' + data.userId + '<br>' +
+            'displayName:' + data.displayName + '<br>' +
+            'pictureUrl:' + data.pictureUrl + '<br>';
+        });
+
+      }).catch((error) => {
+        alert('liff init error: ' + JSON.stringify(error));
+      });
+    }
+
+  }
+</script>
+</body>
+</html>
