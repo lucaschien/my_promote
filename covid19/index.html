@@ -7,8 +7,8 @@
 <link rel="stylesheet" href="./css/reset.css">
 <link rel="stylesheet" href="./css/main.css">
 <script type="text/javascript" src="./js/jquery.js"></script>
-<!-- <script type="text/javascript" src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script> -->
-<script type="text/javascript" src="https://static.line-scdn.net/liff/edge/versions/2.10.0/sdk.js"></script>
+<script type="text/javascript" src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+<!-- <script type="text/javascript" src="https://static.line-scdn.net/liff/edge/versions/2.10.0/sdk.js"></script> -->
 
 </head>
 <body>
@@ -79,6 +79,7 @@
 
 <script>
 $(function() {
+  $('#userProfileBox').append(`<div>window.location.href: ${JSON.stringify(window.location.href)}<br><br></div>`);
   var isLogded = false; // 記住是否已登入用
   var userModel = {};   // 記住使用者在資料庫中資料用
   var storeModel = {};  // 記住店家在資料庫中資料用
