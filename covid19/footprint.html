@@ -98,7 +98,8 @@ $(function() {
     $('#userProfileBox').append(`<div>liffId: ${liffId}<br><br></div>`);
 
     if (liff) {
-      liff.init({ liffId: liffId }).then(() => {
+      // TODO... 由於 app 中 liff 打開之後後面的url參數會被轉碼... 這部分還要研究所以先寫死 1633210473-BZ1zNNWk
+      liff.init({ liffId: '1633210473-BZ1zNNWk' }).then(() => {
         var accessToken = liff.getAccessToken();
         getUserProfile(accessToken);
       }).catch((error) => {
