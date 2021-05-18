@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>test covid19 </title>
+<link rel="stylesheet" href="./css/reset.css">
+<link rel="stylesheet" href="./css/main.css">
+<script type="text/javascript" src="./js/jquery.js"></script>
+<script type="text/javascript" src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+
+</head>
+<body onload="onload()">
+
+  <div class="app">
+    <div class="main recording">
+      <div class="main-banner">防疫新生活｜實聯制</div>
+      <div class="main-content">
+        <!-- 已登入介面 -->
+        <div id="logged">
+          <label class="label-box">
+            <h5>姓名<span class="require">*</span></h5>
+            王小明
+          </label>
+          <label class="label-box">
+            <h5>手機號碼<span class="require">*</span></h5>
+            0915555555
+          </label>
+        </div>
+
+        <!-- 未登入介面 -->
+        <div id="notLogin">
+          <label class="label-box">
+            <h5>姓名<span class="require">*</span></h5>
+            <input type="text">
+          </label>
+          <label class="label-box">
+            <h5>手機號碼*<span class="require">*</span></h5>
+            <input type="tel">
+          </label>
+
+          <label>
+            <input type="checkbox">我已閱讀並同意提供<a href="javascript:;">個資授權</a>
+          </label>
+
+          <button type="button" id="notLogin-send-btn">送出</button>
+        </div>
+
+        
+        <button id="testNo">未登入</button>
+        <button id="testYes">已登入</button>
+
+
+        <div id="userProfileBox"></div>
+  
+      </div>
+    </div>
+  </div>
+
+<script>
+  function onload() {
+  
+    if (liff) {
+      // TODO... 這個 liffId 之後要請ＰＭ提供
+      liff.init({ liffId: '1633210473-BZ1zNNWk' }).then(() => {
+        var accessToken = liff.getAccessToken();
+
+        //透過 token 取得使用者資訊
+        fetch('https://api.line.me/v2/profile', {
+          method: 'GET',
+          headers: {
+            'content-type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+          },
+        }).then(response => {
+          return response.json();
+        }).then((data) => {
+          $('#userProfileBox').append(
+            'userId:' + data.userId + '<br>' +
+            'displayName:' + data.displayName + '<br>' +
+            'pictureUrl:' + data.pictureUrl + '<br>'
+          );
+
+
+        });
+
+      }).catch((error) => {
+        alert('liff init error: ' + JSON.stringify(error));
+      });
+    }
+
+    function parseUrl( url ) {
+      var a = document.createElement('a');
+      a.href = url;
+      return a;
+    }
+    var urlSearch = window.location.search;
+    var storeId = urlSearch.slice(9, urlSearch.length);
+    $('#userProfileBox').append(`<div>storeId: ${storeId}</div>`);
+    $('#userProfileBox').append(`<div>window.location.pathname: ${window.location.pathname}</div>`);
+
+    $('#testNo').click(() => {
+      $('.recording').removeClass('logged');
+      $('.recording').addClass('notLogin');
+    });
+    $('#testYes').click(() => {
+      $('.recording').removeClass('notLogin');
+      $('.recording').addClass('logged');
+    });
+
+  }
+</script>
+</body>
+</html>
