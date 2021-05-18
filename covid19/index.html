@@ -12,7 +12,6 @@
 
 </head>
 <body onload="onload()">
-  2.10.0
   <div class="app">
     <div class="main recording">
       <div class="main-banner">防疫新生活｜實聯制</div>
@@ -47,10 +46,8 @@
           <button type="button" id="notLogin-send-btn">送出</button>
         </div>
 
-        
         <button id="testNo">未登入</button>
         <button id="testYes">已登入</button>
-
 
         <div id="userProfileBox"></div>
   
@@ -98,6 +95,7 @@
     var urlSearch = window.location.search;
     var storeId = urlSearch.slice(9, urlSearch.length);
     $('#userProfileBox').append(`<div><br>storeId: ${storeId}</div>`);
+    var liffId = window.location.pathname.splice('/');
     $('#userProfileBox').append(`<div>window.location.pathname: ${window.location.pathname}<br><br></div>`);
 
     $('#testNo').click(() => {
