@@ -95,7 +95,8 @@
     var urlSearch = window.location.search;
     var storeId = urlSearch.slice(9, urlSearch.length);
     $('#userProfileBox').append(`<div><br>storeId: ${storeId}</div>`);
-    var liffId = window.location.pathname.splice('/');
+    var liffId = window.location.pathname.split('/');
+    alert(liffId.toString());
     $('#userProfileBox').append(`<div>window.location.pathname: ${window.location.pathname}<br><br></div>`);
 
     $('#testNo').click(() => {
