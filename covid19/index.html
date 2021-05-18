@@ -137,6 +137,7 @@ $(function() {
     if (liff) {
       liff.init({ liffId: liffId }).then(() => {
         var accessToken = liff.getAccessToken();
+        $('#userProfileBox').append(`<div>accessToken: ${accessToken}<br><br></div>`);
         getUserProfile(accessToken);
       }).catch((error) => {
         alert('liff init error: ' + JSON.stringify(error));
