@@ -134,6 +134,7 @@ input[type=button], button {
   border-radius: 50px;
   cursor: pointer;
   width: 100%;
+  font-size: 16px;
 }
 input[type=button]:disabled, button:disabled {
   border-color: #C4C4C4;

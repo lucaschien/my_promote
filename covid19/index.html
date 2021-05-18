@@ -100,6 +100,56 @@ $(function() {
     return vars;
   }
 
+  // 
+  function convertUrlFromConcatToReplace(concatenateModeUrl, endpointUrl) {
+    if (!concatenateModeUrl || !endpointUrl) {
+      throw new TypeError('`concatenateModeUrl` and `endpointUrl` are required');
+    }
+    const concatenateURL = new URL(concatenateModeUrl);
+    const endpointURL = new URL(endpointUrl);
+    const {
+      pathname: concatenateModeUrlPathname,
+      searchParams: concatenateModeUrlSearchParams,
+    } = concatenateURL;
+    const {
+      pathname: endpointUrlPathname,
+      searchParams: endpointUrlSearchParams,
+    } = endpointURL;
+    concatenateURL.pathname = concatenateModeUrlPathname.replace(
+      endpointUrlPathname,
+      '',
+    );
+    const concatenateModeUrlSearchParamsEntries = [
+      ...concatenateModeUrlSearchParams.entries(),
+    ];
+    let endpointUrlSearchParamsEntries = [...endpointUrlSearchParams.entries()];
+    const newSearchParamsEntries = concatenateModeUrlSearchParamsEntries.reduce(
+      (ret, entry) => {
+        const index = endpointUrlSearchParamsEntries.findIndex(
+          ([key, val]) => key === entry[0] && val === entry[1],
+        );
+        if (index !== -1) {
+          endpointUrlSearchParamsEntries = endpointUrlSearchParamsEntries.filter(
+            (_, i) => i !== index,
+          );
+          return ret;
+        }
+        return [...ret, entry];
+      },
+      [],
+    );
+    [...concatenateModeUrlSearchParams.keys()].forEach((key) => {
+      concatenateModeUrlSearchParams.delete(key);
+    });
+    newSearchParamsEntries.forEach(([k, v]) => {
+      concatenateModeUrlSearchParams.append(k, v);
+    });
+    const url = concatenateURL.toString();
+    return url;
+  }
+
+
+
   // 取得 liff 使用者基本資料
   function getUserProfile(accessToken) {
     //透過 token 取得使用者資訊
@@ -140,7 +190,7 @@ $(function() {
 
     if (liff) {
       // TODO... 由於 app 中 liff 打開之後後面的url參數會被轉碼... 這部分還要研究所以先寫死 1633210473-BZ1zNNWk
-      liff.init({ liffId: '1633210473-BZ1zNNWk' }).then(() => {
+      liff.init({ liffId: liffId }).then(() => {
         var accessToken = liff.getAccessToken();
         $('#userProfileBox').append(`<div>accessToken: ${accessToken}<br><br></div>`);
         getUserProfile(accessToken);
