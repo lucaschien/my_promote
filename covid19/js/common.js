@@ -43,5 +43,4 @@ function showEndpointTypeBlock (endpointType) {
     $('.main').addClass('qrcode');
   }
 
-
 }

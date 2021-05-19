@@ -134,11 +134,12 @@
 
           <img id="qrcodeImg" src="https://cdn.eyesmedia.com.tw/sit/images/convid19qrcode/7b8e733f-c8dc-4d33-a863-ccd9cd79db59123">
           
-          <a class="download-link" href="https://cdn.eyesmedia.com.tw/sit/images/convid19qrcode/7b8e733f-c8dc-4d33-a863-ccd9cd79db59123" download>下載QRcode</a>
+          <!-- <a class="download-link" href="https://cdn.eyesmedia.com.tw/sit/images/convid19qrcode/7b8e733f-c8dc-4d33-a863-ccd9cd79db59123" download>下載QRcode</a> -->
+          <a class="download-link" href="javascript:;" >下載QRcode</a>
 
         </div>
 
-        <br><br>
+        <br><br><br>
 
         <div id="userProfileBox"></div>
   
@@ -245,6 +246,29 @@ $(function() {
   // event click 交通類的送出按鈕
   $('#traffic-send-btn').click(() => {
     console.log('交通類的送出按鈕');
+  });
+
+  // event click 下載qrcode按鈕
+  $('.download-link').click(() => {
+    var canvas = document.createElement('canvas'),
+        ctx = canvas.getContext("2d"),
+        img = new Image(),
+        base64 = '';
+
+    img.onload = function() {
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.drawImage(img, 0, 0, img.width, img.height);
+
+      canvas.toBlob(blob => {
+        let link = document.createElement('a')
+        link.href = window.URL.createObjectURL(blob)
+        link.download = 'qrcode-img' // resource name
+        link.click()
+      }, "image/png", "1");
+    };
+    img.setAttribute("crossOrigin", 'Anonymous');
+    img.src = 'https://cdn.eyesmedia.com.tw/sit/images/convid19qrcode/7b8e733f-c8dc-4d33-a863-ccd9cd79db59123';
   });
 
 
