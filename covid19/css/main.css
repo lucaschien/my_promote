@@ -45,19 +45,25 @@ a {
 .recording .main-banner {
   background-color: #466A5E;
 }
-.recording.notLogin .main-banner {
-  background-color: #466A5E;
-}
-.recording.logged .main-banner {
-  background-color: #fd5f00;
-}
-.recording #notLogin, .recording #logged { /* 已登入未登入先隱藏起來 */
+.recording .main-banner span {
   display: none;
 }
-.recording.notLogin #notLogin { /* 未登入打開 */
+.recording .main-banner span.show {
+  display: inline;
+}
+.recording.notLogin .main-banner { /* 未登入 */
+  background-color: #466A5E;
+}
+.recording.logged .main-banner { /* 已登入 */
+  background-color: #fd5f00;
+}
+.recording #notLogin, .recording #logged { /* 已登入 未登入 表單先隱藏起來 */
+  display: none;
+}
+.recording.notLogin #notLogin { /* 未登入 表單打開 */
   display: block;
 }
-.recording.logged #logged { /* 已登入打開 */
+.recording.logged #logged { /* 已登入 表單打開 */
   display: block;
 }
 .recording h3 {
@@ -95,6 +101,47 @@ a {
   padding-bottom: 8px;
   padding-left: 13px;
   text-indent: -13px;
+}
+
+/* 店家申請頁 一般類/交通類 單元專用 */
+.store .main-banner {
+  background-color: #6ABFDD;
+}
+.store .main-banner span {
+  display: none;
+}
+.store .main-banner span.show {
+  display: inline;
+}
+.store.normal .main-banner { /* 一般類 */
+  background-color: #6ABFDD;
+}
+.store.traffic .main-banner { /* 交通類 */
+  background-color: #81D39A;
+}
+.store #normalForm, .store #trafficForm { /* 一般類 交通類 表單先隱藏起來 */
+  display: none;
+}
+.store.normal #normalForm { /* 一般類 表單打開 */
+  display: block;
+}
+.store.traffic #trafficForm { /* 交通類 表單打開 */
+  display: block;
+}
+.store h4 {
+  margin-bottom: 25px;
+}
+
+/* 店家申請頁 一般類完成 單元專用 */
+.store-normal-complete .main-banner {
+  background-color: #6ABFDD;
+}
+.store-normal-complete h4 {
+  margin-bottom: 25px;
+}
+.store-normal-complete .callCenter-btn {
+  color: #fd5f00;
+  background-color: #fff;
 }
 
 /* scan 單元專用 */
@@ -195,8 +242,13 @@ table tr:nth-of-type(2n) td {
 }
 
 .width-half {
-  width: 48%;
+  width: 47%;
 }
+
+.text-center {
+  text-align: center;
+}
+
 
 label.label-box {
   display: block;
@@ -212,6 +264,62 @@ label.label-box h5 span.require {
 label.label-box .display-value {
   display: block;
   padding: 10px 10px 20px 10px;
+}
+
+
+/* dialog */
+.dialog-box {
+  display: none;
+}
+.dialog-box.show {
+  display: block;
+}
+.dialog-box .dialog-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 1;
+}
+.dialog-box .dialog-content {
+  position: fixed;
+  top: calc(50% - 45%);
+  left: calc(50% - 45%);
+  width: 90%;
+  /* max-width: 500px; */
+  height: 90%;
+  overflow: scroll;
+  background-color: #fff;
+  z-index: 1;
+  padding: 20px;
+}
+/* for 個資授權 dialog */
+.dialog-box.authorization .dialog-content h5{
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
+.dialog-box.authorization .dialog-content .content-body {
+  height: 80%;
+  overflow: scroll;
+}
+.dialog-box.authorization .dialog-content button {
+  margin-top: 20px;
+}
+/* for dialog */
+.dialog-box.complete {
+
+}
+.dialog-box.complete .dialog-content .content-body {
+  height: 80%;
+  overflow: scroll;
+  font-size: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around
 }
 
 

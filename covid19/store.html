@@ -1,0 +1,212 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>eyesmedia covid19 - 防疫新生活</title>
+<link rel="stylesheet" href="./css/reset.css">
+<link rel="stylesheet" href="./css/main.css">
+<script type="text/javascript" src="./js/jquery.js"></script>
+<script type="text/javascript" src="./js/common.js"></script>
+<script src="https://static.line-scdn.net/liff/edge/versions/2.8.0/sdk.js"></script>
+
+</head>
+<body>
+  <div class="app">
+    <div class="main store traffic">
+      <div class="main-banner">
+        店家申請單 | 
+        <span class="show" id="normal-banner-word">一般類</span>
+        <span id="traffic-banner-word">交通類</span>
+      </div>
+      <div class="main-content">
+
+        <h4 class="text-center">首次使用需要先填寫資料，一個Line帳號只能申請一次。</h4>
+
+        <!-- 一般類介面 -->
+        <div id="normalForm">
+          <label class="label-box">
+            <h5>招牌名稱<span class="require">*</span></h5>
+            <input type="text" placeholder="請輸入" require>
+          </label>
+          <label class="label-box">
+            <h5>登記公司/店家名稱</h5>
+            <input type="text" placeholder="請輸入">
+          </label>
+          <label class="label-box">
+            <h5>統一編號</h5>
+            <input type="tel" placeholder="請輸入">
+          </label>
+          <label class="label-box">
+            <h5>營業地址<span class="require">*</span></h5>
+            <input type="text" placeholder="請輸入" require>
+          </label>
+          <label class="label-box">
+            <h5>聯絡人姓名<span class="require">*</span></h5>
+            <input type="text" placeholder="請輸入" require>
+          </label>
+          <label class="label-box">
+            <h5>聯絡電話<span class="require">*</span></h5>
+            <input type="tel" placeholder="例:0912345678" require>
+          </label>
+
+          <button type="button" id="normal-send-btn" disabled>送出申請</button>
+        </div>
+
+        <!-- 交通類介面 -->
+        <div id="trafficForm">
+          <label class="label-box">
+            <h5>公車/客運路線<span class="require">*</span></h5>
+            <input type="text" placeholder="例:000" require>
+          </label>
+          <label class="label-box">
+            <h5>公車/客運車號<span class="require">*</span></h5>
+            <input type="text" placeholder="例:123-AB" require>
+          </label>
+          <label class="label-box">
+            <h5>登記公司名稱</h5>
+            <input type="text" placeholder="請輸入">
+          </label>
+          <label class="label-box">
+            <h5>統一編號</h5>
+            <input type="text" placeholder="請輸入">
+          </label>
+          <label class="label-box">
+            <h5>營業地址<span class="require">*</span></h5>
+            <input type="text" placeholder="請輸入" require>
+          </label>
+          <label class="label-box">
+            <h5>聯絡人姓名<span class="require">*</span></h5>
+            <input type="text" placeholder="請輸入" require>
+          </label>
+          <label class="label-box">
+            <h5>聯絡電話<span class="require">*</span></h5>
+            <input type="text" placeholder="例:0912345678" require>
+          </label>
+
+          <button type="button" id="traffic-send-btn" disabled>送出申請</button>
+        </div>
+
+        <br><br>
+
+        <div id="userProfileBox"></div>
+  
+      </div>
+    </div>
+
+  </div>
+
+<script>
+$(function() {
+  $('#userProfileBox').append(`<div>window.location.href: ${JSON.stringify(window.location.href)}<br><br></div>`);
+
+  var isNormal = true; // 記住是否為一般類
+  var storeModel = {};  // 記住店家在資料庫中資料用
+
+  // 取得 liff 使用者基本資料
+  function getUserProfile(accessToken) {
+    //透過 token 取得使用者資訊
+    fetch('https://api.line.me/v2/profile', {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
+      },
+    }).then(response => {
+      return response.json();
+    }).then((data) => {
+
+      // TODO... 開發測試用
+      $('#userProfileBox').append(`<div>https://api.line.me/v2/profile:'${JSON.stringify(data)}'<br><br></div>`);
+      $('#userProfileBox').append(
+        'userId:' + data.userId + '<br>' +
+        'displayName:' + data.displayName + '<br>' +
+        'pictureUrl:' + data.pictureUrl + '<br>'
+      );
+
+    });
+  }
+  
+  // liff 初始化
+  function onload() {
+    var urlParm = parseURLparm();
+    var storeId = urlParm.storeId;
+    var liffId = urlParm.liffId;
+    var storeType = urlParm.storeType;
+    isNormal = (storeType === 'STANDARD')? true : false;
+    $('#userProfileBox').append(`<div><br>isNormal: ${isNormal}</div>`);
+    $('#userProfileBox').append(`<div><br>storeId: ${storeId}</div>`);
+    $('#userProfileBox').append(`<div>liffId: ${liffId}</div>`);
+    $('#userProfileBox').append(`<div>storeType: ${storeType}<br><br></div>`);
+
+    if (isNormal) {
+      $('.store').removeClass('traffic');
+      $('.store').addClass('normal');
+      $('#normal-banner-word').addClass('show');
+      $('#traffic-banner-word').removeClass('show');
+    } else {
+      $('.store').removeClass('normal');
+      $('.store').addClass('traffic');
+      $('#normal-banner-word').removeClass('show');
+      $('#traffic-banner-word').addClass('show');
+    }
+
+    if (liff) {
+      // TODO... 由於 app 中 liff 打開之後後面的url參數會被轉碼... 這部分還要研究所以先寫死 1633210473-BZ1zNNWk
+      liff.init({ liffId: '1633210473-BZ1zNNWk' }).then(() => {
+        var accessToken = liff.getAccessToken();
+        $('#userProfileBox').append(`<div>accessToken: ${accessToken}<br><br></div>`);
+        getUserProfile(accessToken);
+      }).catch((error) => {
+        alert('liff init error: ' + JSON.stringify(error));
+      });
+    }
+  }
+
+  // event 一般類的表單欄位檢查是有值用
+  $('#normalForm').find('input[require]').change((event) => {
+    var isFull = true;
+    $.each($('#normalForm').find('input[require]'), function(i, item) {
+      if (!$(item).val()) {
+        isFull = false;
+      }
+    });
+    if (isFull) {
+      $('#normal-send-btn').removeAttr('disabled');
+    } else {
+      $('#normal-send-btn').attr('disabled', true);
+    }
+  });
+
+  // event 交通類的表單欄位檢查是有值用
+  $('#trafficForm').find('input[require]').change((event) => {
+    var isFull = true;
+    $.each($('#trafficForm').find('input[require]'), function(i, item) {
+      if (!$(item).val()) {
+        isFull = false;
+      }
+    });
+    if (isFull) {
+      $('#traffic-send-btn').removeAttr('disabled');
+    } else {
+      $('#traffic-send-btn').attr('disabled', true);
+    }
+  });
+
+
+  // event click 一般類的送出按鈕
+  $('#normal-send-btn').click(() => {
+    console.log('一般類的送出按鈕');
+  });
+
+  // event click 交通類的送出按鈕
+  $('#traffic-send-btn').click(() => {
+    console.log('交通類的送出按鈕');
+  });
+
+
+  onload();
+});
+</script>
+</body>
+</html>
