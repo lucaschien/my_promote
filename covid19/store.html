@@ -1,97 +1,117 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>eyesmedia covid19 - 防疫新生活</title>
-<link rel="stylesheet" href="./css/reset.css">
-<link rel="stylesheet" href="./css/main.css">
-<script type="text/javascript" src="./js/jquery.js"></script>
-<script type="text/javascript" src="./js/common.js"></script>
-<script src="https://static.line-scdn.net/liff/edge/versions/2.8.0/sdk.js"></script>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Mobii! 綠色城市生活優惠平台</title>
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="./css/main.css">
+  <script type="text/javascript" src="./js/jquery.js"></script>
+  <script type="text/javascript" src="./js/moment.js"></script>
+  <script type="text/javascript" src="./js/common.js"></script>
+  <script src="https://static.line-scdn.net/liff/edge/versions/2.8.0/sdk.js"></script>
 
 </head>
 <body>
   <div class="app">
     <div class="main store">
-      <div class="endpointType-block endpointType_STANDARD">
-        <div class="main-banner">店家申請單 | 一般類</div>
-      </div>
-      <div class="endpointType-block endpointType_TRAFFIC">
-        <div class="main-banner">店家申請單 | 交通類</div>
-      </div>
-      <div class="endpointType-block endpointType_QRCODE">
-        <div class="main-banner">店家專屬QRcode</div>
+      
+      <div class="main-banner">
+        <div class="endpointType-block endpointType_STANDARD">
+          <img src="./image/a2.png">
+        </div>
+        <div class="endpointType-block endpointType_TRAFFIC"> 
+          <img src="./image/a3.png">
+        </div>
+        <div class="endpointType-block endpointType_QRCODE"> 
+          <img src="./image/a4.png">
+        </div>
       </div>
 
       <div class="main-content">
         <!-- 一般類/交通類 共用 -->
         <div class="endpointType-block endpointType_STANDARD endpointType_TRAFFIC">
-          <h4 class="text-center">首次使用需要先填寫資料，一個Line帳號只能申請一次。</h4>
+          <h4>
+            首次使用需要先填寫資料，一個Line帳號只能申請一次，
+            如有申請問題，請洽客服電話：02-27078600#14
+          </h4>
         </div>
 
-        <!-- 一般類介面 -->
+        <!-- 一般類表單介面 -->
         <div class="endpointType-block endpointType_STANDARD">
           <div id="normalForm">
             <label class="label-box">
               <h5>招牌名稱<span class="require">*</span></h5>
-              <input type="text" placeholder="請輸入" require>
+              <input type="text" name="signboardName" placeholder="請輸入" require>
+              <span class="require-text">必填</span>
             </label>
             <label class="label-box">
               <h5>登記公司/店家名稱</h5>
-              <input type="text" placeholder="請輸入">
+              <input type="text" name="company" placeholder="請輸入">
             </label>
             <label class="label-box">
               <h5>統一編號</h5>
-              <input type="tel" placeholder="請輸入">
+              <input type="tel" name="unumber" placeholder="請輸入">
             </label>
             <label class="label-box">
               <h5>營業地址<span class="require">*</span></h5>
-              <input type="text" placeholder="請輸入" require>
+              <input type="text" name="address" placeholder="請輸入" require>
+              <span class="require-text">必填</span>
             </label>
             <label class="label-box">
               <h5>聯絡人姓名<span class="require">*</span></h5>
-              <input type="text" placeholder="請輸入" require>
+              <input type="text" name="contactPerson" placeholder="請輸入" require>
+              <span class="require-text">必填</span>
             </label>
             <label class="label-box">
               <h5>聯絡電話<span class="require">*</span></h5>
-              <input type="tel" placeholder="例:0912345678" require>
+              <input type="tel" name="contactMobile" placeholder="例:0912345678" require>
+              <span class="require-text">必填</span>
             </label>
 
             <button type="button" id="normal-send-btn" disabled>送出申請</button>
+
           </div>
         </div>
 
-        <!-- 交通類介面 -->
+        <!-- 交通類表單介面 -->
         <div class="endpointType-block endpointType_TRAFFIC">
           <div id="trafficForm">
             <label class="label-box">
               <h5>公車/客運路線<span class="require">*</span></h5>
-              <input type="text" placeholder="例:000" require>
+              <input type="text" name="busRoute" placeholder="例:000" require>
+              <span class="require-text">必填</span>
             </label>
             <label class="label-box">
               <h5>公車/客運車號<span class="require">*</span></h5>
-              <input type="text" placeholder="例:123-AB" require>
+              <input type="text" name="busNumber" placeholder="例:123-AB" require>
+              <span class="require-text">必填</span>
             </label>
             <label class="label-box">
               <h5>登記公司名稱</h5>
-              <input type="text" placeholder="請輸入">
+              <input type="text" name="company" placeholder="請輸入">
             </label>
             <label class="label-box">
               <h5>統一編號</h5>
-              <input type="text" placeholder="請輸入">
+              <input type="text" name="unumber" placeholder="請輸入">
             </label>
             <label class="label-box">
               <h5>營業地址<span class="require">*</span></h5>
-              <input type="text" placeholder="請輸入" require>
+              <input type="text" name="address" placeholder="請輸入" require>
+              <span class="require-text">必填</span>
             </label>
             <label class="label-box">
               <h5>聯絡人姓名<span class="require">*</span></h5>
-              <input type="text" placeholder="請輸入" require>
+              <input type="text" name="contactPerson" placeholder="請輸入" require>
+              <span class="require-text">必填</span>
             </label>
             <label class="label-box">
               <h5>聯絡電話<span class="require">*</span></h5>
-              <input type="text" placeholder="例:0912345678" require>
+              <input type="text" name="contactMobile" placeholder="例:0912345678" require>
+              <span class="require-text">必填</span>
             </label>
 
             <button type="button" id="traffic-send-btn" disabled>送出申請</button>
@@ -101,14 +121,15 @@
         <!-- B端28日足跡 -->
         <div class="endpointType-block endpointType_B_FOOTPRINT">
           <h3>28日足跡查詢</h3>
-          <div class="introduction-box">依照「COVID-19(武漢肺炎)」防疫新生活運動：實聯制措施指引，基於個資法保護，僅顯示最近20筆資料，其餘資料封存於伺服器，最多存放28天就會主動進行刪除。</div>
+          <div class="introduction-box">為配合控制國內疫情與疫調，將採行實聯制措施指引，搜集您的個人資料。基於個資保護法，僅顯示20筆資料，其餘資料封存於伺服器，最多存放28天系統將自動刪除。</div>
           <table>
             <thead>
               <tr>
                 <th>#</th>
                 <th>填寫時間</th>
-                <th>地點</th>
-                <th>備註</th>
+                <th>姓名</th>
+                <th>電話</th>
+                <!-- <th>備註</th> -->
               </tr>
             </thead>
             <tbody></tbody>
@@ -116,30 +137,37 @@
           <div class="note-box">
             備註：
             <ul>
-              <li>1. 為維持國內疫情之穩定控制，艾斯移動股份有限公司 配合政府「COVID19（武漢肺炎）」 防疫新生活運動，採行實聯制措施。依據「個人資料保護法之特定目的 及個人資料之類別」代號 012 公共衛生或傳染病防治之特定目的，蒐集 以上個人資料，且不得為目的外利用。所蒐集之資料僅保存 28 日，屆 期銷毀。感謝您的配合。</li>
-              <li>2. 個人資料利用之對象及方式：為防堵疫情而有必要時，得提供衛生主管 機關依傳染病防治法等規定進行疫情調查及聯繫使用。</li>
-              <li>3. 當事人就其個人資料得依個人資料保護法規定，向 艾斯移動股份有限公司（資料蒐 集機關）行使權利，包括查詢或請求閱覽、請求製給複製本、請求補充 或更正、請求停止處理或利用、請求刪除等。相關權利行使方式：以電子郵件(E-mail)寄送至：mobiics@mobii.ai</li>
-              <li>4. 當事人如無法配合本實聯制作業，將○○○○○（請說明對其權益之影 響，如無法進入場館或參與活動等）。</li>
-              <li>5. 本實聯制其他相關措施說明，請參閱 http://at.cdc.tw/8QI4hA。</li>
+              <li>1. 蒐集機關之名稱：艾斯移動股份有限公司</li>
+              <li>2. 蒐集之目的：為防疫與疫調，艾斯移動依據「個人資料保護法之特定目的及個人資料之類別」為代號012公共衛生或傳染病防治之特定目的，且不得為目的外利用。</li>
+              <li>3. 蒐集個人資料項目：符合最少侵害原則，僅在啟用本服務時記錄您的姓名、電話號碼、Line UID、時間與位置資訊。</li>
+              <li>4. 個人資料利用之期間：足跡紀錄將保留自蒐集日起28日內，超過將自動刪除您的足跡紀錄。為簡化實聯登記手續，個資綁定資料不會刪除。</li>
+              <li>5. 個人資料利用之對象及方式：為防堵疫情而有必要時，艾斯移動股份有限公司得將您的資料提供予衛生主管機關，依傳染病防治法等規定進行疫情調查及聯繫使用。</li>
+              <li>6. 當事人權益：您的個人資料得依個人資料保護法規定，您可向艾斯移動股份有限公司行使權利，包括查詢或請求閱覽、請求製給複製本、請求補充或更正、請求蒐集、處理或利用、請求刪除及行使方式。相關權益行使方式，請Mail寄送至：<a href="mailto:mobiics@mobii.ai ">mobiics@mobii.ai</a>。</li>
+              <li>7. 注意須知：如您不同意提供個人資料對其權益之影響，將可能導致無法進入場館或參與活動。</li>
             </ul>
           </div>
         </div>
 
         <!-- 下載QA code -->
         <div class="endpointType-block endpointType_QRCODE">
-          <h4>
-            已完成申請，請自行下載 QRcode，可直接截圖或列印。
-            user (顧客/訪客/乘客)掃描QRcode，完成實聯制登記。
-          </h4>
 
-          <img id="qrcodeImg" src="https://cdn.eyesmedia.com.tw/sit/images/convid19qrcode/7b8e733f-c8dc-4d33-a863-ccd9cd79db59123">
+          <div id="normal-qrcod-box" style="display: none;">
+            <h4>專屬實聯QRcode已完成！</h4>
+            <h5>請自行下載或列印，張貼於明顯之處提供給顧客掃描，即可完成實聯制登記。</h5>
+            <img id="qrcodeImg" src="">
+            <!-- <a class="download-link" href="https://cdn.eyesmedia.com.tw/sit/images/convid19qrcode/7b8e733f-c8dc-4d33-a863-ccd9cd79db59123" download>下載QRcode</a> -->
+            <!-- <a class="download-link" href="javascript:;" >下載QRcode</a> -->
+            <div class="download-note">請長按圖片下載</div>
+          </div>
           
-          <!-- <a class="download-link" href="https://cdn.eyesmedia.com.tw/sit/images/convid19qrcode/7b8e733f-c8dc-4d33-a863-ccd9cd79db59123" download>下載QRcode</a> -->
-          <a class="download-link" href="javascript:;" >下載QRcode</a>
+          <div id="warning-qrcod-box" style="display: none;">
+            <h4>請先完成專屬實聯QRcode申請！</h4>
+            <h5>店家/企業專屬QRcode皆需要先透過申請頁填寫相關資訊才可取得。</h5>
+            <img src="./image/warning-icon.png" style="width: auto; margin: 30px auto;">
+            <button id="closeLiffBtn">確認</button>
+          </div>
 
         </div>
-
-        <br><br><br>
 
         <div id="userProfileBox"></div>
   
@@ -150,13 +178,116 @@
 
 <script>
 $(function() {
+  
   $('#userProfileBox').append(`<div>window.location.href: ${JSON.stringify(window.location.href)}<br><br></div>`);
 
-  var storeModel = {};  // 記住店家在資料庫中資料用
-
+  // 記住店家在資料庫中資料用
+  var storeModel = {
+    clientUserId: '',  // line 提供的 id
+    signboardName: '', // 招牌名稱
+    company: '',       // 登記公司名稱
+    unumber: '',       // 統一編號
+    address: '',       // 地址
+    contactPerson: '', // 聯絡人姓名
+    contactMobile: '', // 聯絡人電話
+    busRoute: '',      // 公車路線 (交通類才有值)
+    busNumber: '',     // 公車車號 （交通類才有值）
+  };  
+  
   var endpointType = null; // 記住當前是哪一個 endpointType 用
   var storeId = null; // 記住當前的店家id
   var liffId = null;  // 記住當前的 liffid
+  var clientUserId = null; // 記住 line liff 提供的 user id
+
+  // ajax 取得28天足跡資料
+  function b28 () {
+    var path = apiPath+'/api/v1/store/queryBindMerchantList/'+storeModel.clientUserId;
+    $('#userProfileBox').append(`<div>呼叫取得28天足跡 path: ${path}<br><br></div>`);
+    fetch(path, {
+      method: 'GET',
+      cache: 'no-cache',
+      mode: 'cors',
+      redirect: 'follow',
+      referrer: 'no-referrer',
+    }).then(response => {
+      return response.json();
+    }).then((result) => {
+      $('#userProfileBox').append(`<div>呼叫取得28天足跡 success: ${JSON.stringify(result)}<br><br></div>`);
+      if (result.errorCode === '996600001' && result.data.length > 0) {
+        var trHTML = '';
+        result.data.forEach((item, i) => {
+          // 時間
+          var dateString = '-'; 
+          if (item.footprintDateTime) {
+            dateString = moment(item.footprintDateTime).format('YYYY/MM/DD HH:mm');
+          }
+          trHTML += '<tr>';
+          trHTML += '  <td>'+ (i+1) +'</td>';
+          trHTML += '  <td>' + dateString + '</td>';
+          trHTML += '  <td>' + item.userName +'</td>';
+          trHTML += '  <td>' + item.mobile +'</td>';
+          /* trHTML += '  <td>' + item.memo + '</td>'; */
+          trHTML += '</tr>';
+        });
+        $('table tbody').append(trHTML);
+      }
+    }).catch((error) => {
+      $('#userProfileBox').append(`<div>呼叫取得28天足跡 error: ${error}<br><br></div>`);
+    });
+  }
+
+  // ajax 產生新的qrcode
+  function creatQrcode() {
+    var path = apiPath+'/api/v1/store/produceQrCode/'+storeId;
+    $('#userProfileBox').append(`<div>呼叫產生qrcode path: ${path}<br><br></div>`);
+    fetch(path, {
+      method: 'GET',
+      cache: 'no-cache',
+      mode: 'cors',
+      redirect: 'follow',
+      referrer: 'no-referrer',
+    }).then(response => {
+      return response.json();
+    }).then((result) => {
+      $('#userProfileBox').append(`<div>呼叫產生qrcode success: ${JSON.stringify(result)}<br><br></div>`);
+      if (result.errorCode === '996600001') {
+        $('#qrcodeImg').attr('src', result.data.url);
+        $('#normal-qrcod-box').show();
+      }
+    }).catch((error) => {
+      $('#userProfileBox').append(`<div>呼叫產生qrcode error: ${error}<br><br></div>`);
+    });
+  }
+  
+  // ajax 取得商家所屬qrcode
+  function getQrcode() {
+     // 使用 clientUserId 取得 qrcode, 就不用透過 storeId 了
+     var path = apiPath+'/api/v1/store/getQrCodeUrl/'+storeModel.clientUserId;
+     $('#userProfileBox').append(`<div>呼叫撈取qrcode path: ${path}<br><br></div>`);
+     fetch(path, {
+      method: 'GET',
+      cache: 'no-cache',
+      mode: 'cors',
+      redirect: 'follow',
+      referrer: 'no-referrer',
+    }).then(response => {
+      return response.json();
+    }).then((result) => {
+      $('#userProfileBox').append(`<div>呼叫撈取qrcode success: ${JSON.stringify(result)}<br><br></div>`);
+      if (result.errorCode === '996600001') {
+        $('#qrcodeImg').attr('src', result.data.url);
+        $('#normal-qrcod-box').show();
+      }
+      if (!result.errorCode || result.errorCode === '289906001') {
+        $('#normal-qrcod-box').hide();
+        $('#warning-qrcod-box').show();
+      }
+    }).catch((error) => {
+      $('#normal-qrcod-box').hide();
+      $('#warning-qrcod-box').show();
+      $('#userProfileBox').append(`<div>呼叫撈取qrcode error: ${error}<br><br></div>`);
+    });
+  }
 
   // 取得 liff 使用者基本資料
   function getUserProfile(accessToken) {
@@ -170,15 +301,32 @@ $(function() {
     }).then(response => {
       return response.json();
     }).then((data) => {
-
       // TODO... 開發測試用
       $('#userProfileBox').append(`<div>https://api.line.me/v2/profile:'${JSON.stringify(data)}'<br><br></div>`);
       $('#userProfileBox').append(
         'userId:' + data.userId + '<br>' +
         'displayName:' + data.displayName + '<br>' +
-        'pictureUrl:' + data.pictureUrl + '<br>'
+        'pictureUrl:' + data.pictureUrl + '<br><br><br>'
       );
 
+      if (data.userId) {
+        storeModel.clientUserId = data.userId;
+      }
+
+      if (endpointType === 'B_FOOTPRINT') {
+        b28();
+      }
+
+      if (endpointType === 'QRCODE') {
+        // 沒有 storeId 代表是直接進入 (舊商家)
+        if (!storeId) {
+          getQrcode();
+        }
+        // 有 storeId 代表是從申請流程進入 (新商家)
+        if (storeId) {
+          creatQrcode();
+        }
+      }
     });
   }
   
@@ -194,10 +342,9 @@ $(function() {
 
     showEndpointTypeBlock (endpointType);
 
-
     if (liff) {
       // TODO... 由於 app 中 liff 打開之後後面的url參數會被轉碼... 這部分還要研究所以先寫死 1633210473-BZ1zNNWk
-      liff.init({ liffId: '1633210473-BZ1zNNWk' }).then(() => {
+      liff.init({ liffId: bLiffId}).then(() => {
         var accessToken = liff.getAccessToken();
         $('#userProfileBox').append(`<div>accessToken: ${accessToken}<br><br></div>`);
         getUserProfile(accessToken);
@@ -207,7 +354,7 @@ $(function() {
     }
   }
 
-  // event 一般類的表單欄位檢查是有值用
+  // event 一般類的表單必填欄位檢查是有值用
   $('#normalForm').find('input[require]').change((event) => {
     var isFull = true;
     $.each($('#normalForm').find('input[require]'), function(i, item) {
@@ -222,7 +369,7 @@ $(function() {
     }
   });
 
-  // event 交通類的表單欄位檢查是有值用
+  // event 交通類的表單必填欄位檢查是有值用
   $('#trafficForm').find('input[require]').change((event) => {
     var isFull = true;
     $.each($('#trafficForm').find('input[require]'), function(i, item) {
@@ -237,15 +384,54 @@ $(function() {
     }
   });
 
+  // event 一般類與交通類 輸入欄位切換時擷取 value
+  $('#normalForm, #trafficForm').find('input').change((event) => {
+    var $target = $(event.target);
+    var value = $target.val();
+    var name = $target.attr('name');
+    storeModel[name] = value;
 
-  // event click 一般類的送出按鈕
-  $('#normal-send-btn').click(() => {
-    console.log('一般類的送出按鈕');
+    // 如果是必填欄位加上必填提示
+    if (($target.attr('require') === '') && !value) {
+      $target.parent().addClass('error');
+    } else {
+      $target.parent().removeClass('error');
+    }
   });
 
-  // event click 交通類的送出按鈕
-  $('#traffic-send-btn').click(() => {
-    console.log('交通類的送出按鈕');
+  // event click 一般類/交通類 的送出按鈕
+  $('#normal-send-btn, #traffic-send-btn').click(() => {
+    console.log('一般類的送出按鈕', storeModel);
+    let path = apiPath+'/api/v1/store/storeInformation';
+    $('#userProfileBox').append(`<div>呼叫storeInformation path: ${path}<br><br></div>`);
+    $('#userProfileBox').append(`<div>呼叫storeInformation body: ${JSON.stringify(storeModel)}<br><br></div>`);
+    
+    $.ajax({
+      cache: false,
+      type: "POST",
+      dataType: 'json',
+      contentType: 'application/json;charset=utf-8',
+      async: false,
+      data: JSON.stringify(storeModel),
+      url: path,
+      success: function(result) {
+        $('#userProfileBox').append(`<div>呼叫storeInformation success: ${JSON.stringify(result)}<br><br></div>`);
+        
+        if (result.errorCode === '996600001') {
+          // 將輸入的值帶去下一頁的url中
+          storeId = result.data.storeId;
+          var storeData = encodeURI(JSON.stringify(result.data));
+          var changeEndpointType = (endpointType === 'STANDARD')? 'STANDARD_COMPLETE' : 'TRAFFIC_COMPLETE';
+          location.href = `./store-complete.html?storeId=${storeId}&liffId=${liffId}&endpointType=${changeEndpointType}&storeData=${storeData}`;
+        } else {
+          alert('申請失敗,請稍後在試.');
+        }
+      },
+      error: function (error) {
+        alert('申請失敗,請稍後在試.');
+        $('#userProfileBox').append(`<div>呼叫storeInformation error: ${JSON.stringify(error)}<br><br></div>`);
+      }
+    });
   });
 
   // event click 下載qrcode按鈕
@@ -271,19 +457,10 @@ $(function() {
     img.src = 'https://cdn.eyesmedia.com.tw/sit/images/convid19qrcode/7b8e733f-c8dc-4d33-a863-ccd9cd79db59123';
   });
 
-
-  // TODO... 測試28日足跡查詢用
-  var trHTML = '';
-  for (var i = 0; i <= 10; i++) {
-    trHTML += '<tr>';
-    trHTML += '  <td>'+ (i+1) +'</td>';
-    trHTML += '  <td>2021/05/17 11:56</td>';
-    trHTML += '  <td>XXX大樓</td>';
-    trHTML += '  <td>36.3</td>';
-    trHTML += '</tr>';
-  }
-  $('table tbody').append(trHTML);
-
+  // event click 尚未註冊為商家時撈取qrcode錯誤的按鈕
+  $('#closeLiffBtn').click(() => {
+    liff.closeWindow();
+  });
 
   onload();
 });

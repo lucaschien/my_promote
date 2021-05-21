@@ -8,7 +8,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: #13334C;
   background-color: #f5f5f5;
-  font-size: 14px;
+  font-size: 16px;
 }
 a {
   color: #008FFF;
@@ -30,11 +30,15 @@ a {
 .main-banner {
   background-color: #C4C4C4;
   text-align: center;
-  padding: 30px;
   color:#fff;
 }
 .main-content {
   padding: 26px;
+}
+
+img {
+  max-width: 100%;
+  vertical-align: top;
 }
 
 /* endpointType 區塊 */
@@ -51,45 +55,44 @@ a {
   background-color: green;
 }
 
-/* 申請通行證/現場登記 單元專用 */
-.recording .main-banner {
-  background-color: #466A5E;
-}
-.recording .main-banner span {
+/* C端 申請通行證/現場登記 單元專用 */
+.user .main-banner {
   display: none;
 }
-.recording .main-banner span.show {
-  display: inline;
+.user.notLogin .main-banner { /* 未登入 */
+  display: block;
 }
-.recording.notLogin .main-banner { /* 未登入 */
-  background-color: #466A5E;
+.user.logged .main-banner { /* 已登入 */
+
 }
-.recording.logged .main-banner { /* 已登入 */
-  background-color: #fd5f00;
-}
-.recording #notLogin, .recording #logged { /* 已登入 未登入 表單先隱藏起來 */
+.user.logged .main-banner img { /* 已登入 */
   display: none;
 }
-.recording.notLogin #notLogin { /* 未登入 表單打開 */
+.user #notLogin, .user #logged { /* 已登入 未登入 表單先隱藏起來 */
+  display: none;
+}
+.user.notLogin #notLogin { /* 未登入 表單打開 */
   display: block;
 }
-.recording.logged #logged { /* 已登入 表單打開 */
+.user.logged #logged { /* 已登入 表單打開 */
   display: block;
 }
-.recording h3 {
+.user h3 {
   margin: 20px 0;
   font-weight: 500;
   text-align: center;
-  font-size: 16px;
+  font-size: 24px;
+  color: #01A89E;
 }
-.recording h4 {
+.user h4 {
   margin: 20px 0 40px 0;
   font-weight: 500;
   text-align: center;
 }
-.recording button {
+.user button {
   margin-top: 20px;
 }
+
 
 /* c端/B端 28日足跡查詢 單元專用*/
 .footprint h3, 
@@ -102,14 +105,14 @@ a {
 .footprint .introduction-box,
 .b-ootprint .introduction-box
 {
-  font-size: 12px;
+  font-size: 14px;
   line-height: 18px;
   margin-bottom: 20px;
 }
 .footprint .note-box,
 .b-footprint .note-box 
 {
-  font-size: 12px;
+  font-size: 14px;
   line-height: 18px;
 }
 .footprint .note-box li, 
@@ -117,12 +120,10 @@ a {
   padding-bottom: 8px;
   padding-left: 13px;
   text-indent: -13px;
+  text-align: justify;
 }
 
 /* 店家申請頁 一般類/交通類 單元專用 */
-.store .main-banner {
-  background-color: #6ABFDD;
-}
 .store .main-banner span {
   display: none;
 }
@@ -137,6 +138,8 @@ a {
 }
 .store h4 {
   margin-bottom: 25px;
+  font-size: 14px;
+  line-height: 16px;
 }
 
 /* 店家專屬QRcode */
@@ -159,17 +162,47 @@ a {
   padding: 20px;
   font-size: 16px;
 }
-
-/* 店家申請頁 一般類完成 單元專用 */
-.store.store-normal-complete .main-banner {
-  background-color: #6ABFDD;
+.store.qrcode .main-content .download-note{
+  text-align: center;
+  color: #FD5F00;
+  font-size: 16px;
 }
-.store.store-normal-complete h4 {
+.store.qrcode h4 {
+  font-size: 18px;
+  text-align: center;
+}
+.store.qrcode h5 {
+  font-size: 16px;
+  text-align: center;
+}
+
+/* 店家申請頁 一般類/交通類完成 單元專用 */
+.store-complete h4 {
   margin-bottom: 25px;
 }
-.store.store-normal-complete .callCenter-btn {
-  color: #fd5f00;
+.store-complete .callCenter-btn {
+  text-align: center;
   background-color: #fff;
+  color: #fd5f00;
+  border: 1px solid #fd5f00;
+  border-radius: 50px;
+  padding: 14px;
+  font-size: 16px;
+  display: inline-block;
+}
+.store-complete .btn-box {
+  display: flex;
+}
+.store-complete #callCenter {
+  padding-left: 5px;
+  padding-right: 5px;
+  background-color: #fff;
+  color: #fd5f00;
+  border: 1px solid #fd5f00;
+}
+.store-complete #gotoQrcode {
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 
@@ -204,7 +237,7 @@ a {
 
 
 
-/* form ui start*/
+/* form ui start */
 input[type=button], button {
   border: 1px solid #fd5f00;
   background-color: #fd5f00;
@@ -242,7 +275,7 @@ input[type="radio"]:disabled, input[type="checkbox"]:disabled {
   /* border-color: #e1e1e1;
   background-color: #e1e1e1; */
 }
-/* form ui end*/
+/* form ui end */
 
 
 
@@ -252,12 +285,12 @@ table {
 }
 table th, table td {
   padding: 10px;
-  font-size: 12px;
+  font-size: 14px;
 }
 table th {
   background-color: #13334C;
   color: #fff;
-  font-size: 14px;
+  font-size: 16px;
 }
 table td {
   background-color: #E5E9F2;
@@ -286,8 +319,14 @@ label.label-box {
   display: block;
   margin-bottom: 20px;
 }
+label.label-box .require-text {
+  display: none;
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
 label.label-box h5 {
-  font-size: 14px;
+  font-size: 16px;
   margin-bottom: 5px;
 }
 label.label-box h5 span.require {
@@ -296,6 +335,12 @@ label.label-box h5 span.require {
 label.label-box .display-value {
   display: block;
   padding: 10px 10px 20px 10px;
+}
+label.label-box.error input{
+  border-color: red;
+}
+label.label-box.error .require-text {
+  display: block;
 }
 
 
@@ -335,8 +380,15 @@ label.label-box .display-value {
   margin-bottom: 30px;
 }
 .dialog-box.authorization .dialog-content .content-body {
-  height: 80%;
+  height: 70%;
   overflow: scroll;
+}
+.dialog-box.authorization .dialog-content li {
+  padding-bottom: 10px;
+  padding-left: 13px;
+  text-indent: -13px;
+  line-height: 18px;
+  text-align: justify;
 }
 .dialog-box.authorization .dialog-content button {
   margin-top: 20px;
@@ -345,10 +397,20 @@ label.label-box .display-value {
 .dialog-box.complete .dialog-content .content-body {
   height: 80%;
   overflow: scroll;
-  font-size: 25px;
+  font-size: 23px;
   display: flex;
   align-items: center;
-  justify-content: space-around
+  /* justify-content: space-around; */
+  justify-content: space-around;
+  flex-direction: column;
+  text-align: center;
+  line-height: 36px;
+}
+.dialog-box.complete .complate-dialog-dbSignboardName {
+  font-weight: 500;
+  text-align: center;
+  font-size: 24px;
+  color: #01A89E;
 }
 
 
@@ -356,4 +418,7 @@ label.label-box .display-value {
 #userProfileBox {
   background-color: rgb(255, 255, 203);
   padding: 20px;
+  word-break: break-all;
+  margin: 20px 0;
+  display: none; 
 }

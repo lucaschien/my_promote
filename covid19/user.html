@@ -1,83 +1,85 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>eyesmedia covid19 - 防疫新生活</title>
-<link rel="stylesheet" href="./css/reset.css">
-<link rel="stylesheet" href="./css/main.css">
-<script type="text/javascript" src="./js/jquery.js"></script>
-<script type="text/javascript" src="./js/common.js"></script>
-<!-- <script type="text/javascript" src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script> -->
-<!-- <script type="text/javascript" src="https://static.line-scdn.net/liff/edge/versions/2.10.0/sdk.js"></script> -->
-
-<script src="https://static.line-scdn.net/liff/edge/versions/2.8.0/sdk.js"></script>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Mobii! 綠色城市生活優惠平台</title>
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="./css/main.css">
+  <script type="text/javascript" src="./js/jquery.js"></script>
+  <script type="text/javascript" src="./js/moment.js"></script>
+  <script type="text/javascript" src="./js/common.js"></script>
+  <script src="https://static.line-scdn.net/liff/edge/versions/2.8.0/sdk.js"></script>
 
 </head>
 <body>
-
   <div class="app">
     <div class="main">
       <!-- 已申請通行證,未申請通行證 -->
-      <div class="endpointType-block endpointType_REISTER">
+      <div class="endpointType-block endpointType_REGISTER">
         <div class="main-banner">
-          防疫新生活｜
-          <span class="show" id="notLogin-banner-word">實聯制</span>
-          <span id="logged-banner-word">現場登記</span>
+          <img src="./image/a1.png">
         </div>
       </div>
       <div class="main-content">
 
         <!-- 已申請通行證,未申請通行證 -->
-        <div class="endpointType-block endpointType_REISTER">
+        <div class="endpointType-block endpointType_REGISTER">
           <!-- 未登入介面 -->
           <div id="notLogin">
             <label class="label-box">
               <h5>姓名<span class="require">*</span></h5>
-              <input type="text" placeholder="請輸入" require>
+              <input type="text" name="userName" placeholder="請輸入" require>
+              <span class="require-text">必填</span>
             </label>
             <label class="label-box">
               <h5>手機號碼<span class="require">*</span></h5>
-              <input type="tel" placeholder="例:0912345678" require>
+              <input type="tel" name="phoneNumber" placeholder="例:0912345678" require>
+              <span class="require-text">必填</span>
             </label>
-            <label class="label-box">
+            <!-- <label class="label-box">
               <h5>備註<span class="require">*</span></h5>
-              <input type="text" placeholder="例如:額溫" require>
-            </label>
+              <input type="text" name="memo" placeholder="例如:額溫" require>
+              <span class="require-text">必填</span>
+            </label> -->
 
             <label>
-              <input type="checkbox" class="check-agree">我已閱讀並同意提供<a class="lookAuthorization" href="javascript:;">個資授權</a>
+              <input type="checkbox" class="check-agree" checked><span>我已閱讀並同意提供<a class="lookAuthorization" href="javascript:;">個人資料授權</a>防疫及疫調使用</span>
             </label>
 
             <button type="button" id="notLogin-send-btn" disabled>送出</button>
           </div>
 
-          <!-- 已登入介面 -->
+          <!-- 已登入介面 --> 
           <div id="logged">
-            <h3>某某某店家</h3>
-            <h4>防疫新生活，輕鬆掃QRcode，一秒完成實聯登記</h4>
+            <h3 id="dbSignboardName">--</h3>
+            <h4>輕鬆掃QR code，一秒完成實聯登記！</h4>
             <label class="label-box">
               <h5>時間<span class="require">*</span></h5>
-              <span class="display-value">2021/05/17 15:46</span>
+              <span class="display-value" id="nowDate"></span>
             </label>
             <label class="label-box">
               <h5>姓名<span class="require">*</span></h5>
-              <span class="display-value">王小明</span>
+              <span class="display-value" id="dbUserName"></span>
             </label>
             <label class="label-box">
               <h5>手機號碼<span class="require">*</span></h5>
-              <span class="display-value">0915555555</span>
+              <span class="display-value" id="dbmobile"></span>
             </label>
-            <label class="label-box">
+            <!-- <label class="label-box">
               <h5>備註<span class="require">*</span></h5>
-              <input type="text" placeholder="例如:額溫" require>
-            </label>
+              <input type="text" name="memo" placeholder="例如:額溫" require>
+              <span class="require-text">必填</span>
+            </label> -->
 
             <label>
-              <input type="checkbox" class="check-agree">我已閱讀並同意提供<a class="lookAuthorization" href="javascript:;">個資授權</a>
+              <input type="checkbox" class="check-agree" checked><span>我同意將上述個人資料予實聯制登記作業。</span>
             </label>
 
-            <button type="button" id="logged-send-btn" disabled>送出</button>
+            <button type="button" id="logged-send-btn">送出</button>
 
           </div>
         </div>        
@@ -85,14 +87,14 @@
          <!-- 28日足跡查詢 -->
         <div class="endpointType-block endpointType_FOOTPRINT">
           <h3>28日足跡查詢</h3>
-          <div class="introduction-box">依照「COVID-19(武漢肺炎)」防疫新生活運動：實聯制措施指引，基於個資法保護，僅顯示最近20筆資料，其餘資料封存於伺服器，最多存放28天就會主動進行刪除。</div>
+          <div class="introduction-box">為配合控制國內疫情與疫調，艾斯移動股份有限公司將採行實聯制措施，依據以下目的搜集您的個人資料。基於個資保護法，僅顯示20筆資料，其餘資料封存於伺服器，最多存放28天系統將自動刪除。</div>
           <table>
             <thead>
               <tr>
                 <th>#</th>
                 <th>填寫時間</th>
                 <th>地點</th>
-                <th>備註</th>
+                <!-- <th>備註</th> -->
               </tr>
             </thead>
             <tbody></tbody>
@@ -100,19 +102,15 @@
           <div class="note-box">
             備註：
             <ul>
-              <li>1. 為維持國內疫情之穩定控制，艾斯移動股份有限公司 配合政府「COVID19（武漢肺炎）」 防疫新生活運動，採行實聯制措施。依據「個人資料保護法之特定目的 及個人資料之類別」代號 012 公共衛生或傳染病防治之特定目的，蒐集 以上個人資料，且不得為目的外利用。所蒐集之資料僅保存 28 日，屆 期銷毀。感謝您的配合。</li>
-              <li>2. 個人資料利用之對象及方式：為防堵疫情而有必要時，得提供衛生主管 機關依傳染病防治法等規定進行疫情調查及聯繫使用。</li>
-              <li>3. 當事人就其個人資料得依個人資料保護法規定，向 艾斯移動股份有限公司（資料蒐 集機關）行使權利，包括查詢或請求閱覽、請求製給複製本、請求補充 或更正、請求停止處理或利用、請求刪除等。相關權利行使方式：以電子郵件(E-mail)寄送至：mobiics@mobii.ai</li>
-              <li>4. 當事人如無法配合本實聯制作業，將○○○○○（請說明對其權益之影 響，如無法進入場館或參與活動等）。</li>
-              <li>5. 本實聯制其他相關措施說明，請參閱 http://at.cdc.tw/8QI4hA。</li>
+              <li>1. 蒐集機關之名稱：艾斯移動股份有限公司</li>
+              <li>2. 蒐集之目的：為防疫與疫調，艾斯移動依據「個人資料保護法之特定目的及個人資料之類別」為代號012公共衛生或傳染病防治之特定目的，且不得為目的外利用。</li>
+              <li>3. 蒐集個人資料項目：符合最少侵害原則，僅在啟用本服務時記錄您的姓名、電話號碼、Line UID、時間與位置資訊。</li>
+              <li>4. 個人資料利用之期間：足跡紀錄將保留自蒐集日起28日內，超過將自動刪除您的足跡紀錄。為簡化實聯登記手續，個資綁定資料不會刪除。</li>
+              <li>5. 個人資料利用之對象及方式：為防堵疫情而有必要時，艾斯移動股份有限公司得將您的資料提供予衛生主管機關，依傳染病防治法等規定進行疫情調查及聯繫使用。</li>
+              <li>6. 當事人權益：您的個人資料得依個人資料保護法規定，您可向艾斯移動股份有限公司行使權利，包括查詢或請求閱覽、請求製給複製本、請求補充或更正、請求蒐集、處理或利用、請求刪除及行使方式。相關權益行使方式，請Mail寄送至：<a href="mailto:mobiics@mobii.ai ">mobiics@mobii.ai</a>。</li>
+              <li>7. 注意須知：如您不同意提供個人資料對其權益之影響，將可能導致無法進入場館或參與活動。</li>
             </ul>
           </div>
-        </div>
-
-        <br><br><br>
-        <div class="endpointType-block endpointType_REISTER">
-          <button id="testNo">開發測試用: 未登入</button>
-          <button id="testYes">開發測試用: 已登入</button>
         </div>
 
         <div id="userProfileBox"></div>
@@ -124,46 +122,17 @@
     <div class="dialog-box authorization">
       <div class="dialog-mask"></div>
       <div class="dialog-content">
-        <h5>個資授權</h5>
+        <h5>為配合控制國內疫情與疫調，艾斯移動股份有限公司將採行實聯制措施，依據以下目的搜集您的個人資料。</h5>
         <div class="content-body">
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
-          XXXXXXXX XXXXX XXXXXXXX XXXXXXX XXXXXXXX XXXXX XXXXXXXXXXXXXXX XXXXX XXXXXXXX XXXXXXX
+          <ul>
+            <li>1. 蒐集機關之名稱：艾斯移動股份有限公司</li>
+            <li>2. 蒐集之目的：為防疫與疫調，艾斯移動依據「個人資料保護法之特定目的及個人資料之類別」為代號012公共衛生或傳染病防治之特定目的，且不得為目的外利用。</li>
+            <li>3. 蒐集個人資料項目：符合最少侵害原則，僅在啟用本服務時記錄您的姓名、電話號碼、Line UID、時間與位置資訊。</li>
+            <li>4. 個人資料利用之期間：足跡紀錄將保留自蒐集日起28日內，超過將自動刪除您的足跡紀錄。為簡化實聯登記手續，個資綁定資料不會刪除。</li>
+            <li>5. 個人資料利用之對象及方式：為防堵疫情而有必要時，艾斯移動股份有限公司得將您的資料提供予衛生主管機關，依傳染病防治法等規定進行疫情調查及聯繫使用。</li>
+            <li>6. 當事人權益：您的個人資料得依個人資料保護法規定，您可向艾斯移動股份有限公司行使權利，包括查詢或請求閱覽、請求製給複製本、請求補充或更正、請求蒐集、處理或利用、請求刪除及行使方式。相關權益行使方式，請Mail寄送至：<a href="mailto:mobiics@mobii.ai ">mobiics@mobii.ai</a></li>
+            <li>7. 注意須知：如您不同意提供個人資料對其權益之影響，將可能導致無法進入場館或參與活動。</li>
+          </ul>
         </div>
         <button id="understanding">我瞭解了</button>
       </div>
@@ -173,7 +142,14 @@
     <div class="dialog-box complete">
       <div class="dialog-mask"></div>
       <div class="dialog-content">
-        <div class="content-body">您已完成本次實聯登記,感謝您的配合</div>
+        <div class="content-body">
+          <div class="complate-dialog-dbSignboardName"></div>
+          <div>
+            您已完成本次實聯登記<br>
+            感謝您的配合
+          </div>
+          <img src="./image/a5.png">
+        </div>
         <button id="closeLiff-btn">關閉</button>
         <!-- <button class="width-half" id="editUaerData-btn">修改登記資料</button> -->
       </div>
@@ -187,14 +163,19 @@ $(function() {
   $('#userProfileBox').append(`<div>window.location.href: ${JSON.stringify(window.location.href)}<br><br></div>`);
 
   var isLogded = false; // 記住是否已登入用
-  var userModel = {};   // 記住使用者在資料庫中資料用
-  var storeModel = {};  // 記住店家在資料庫中資料用
+  // 記住C端使用者要送出的表單資料
+  var userModel = {
+    clientUserId: '', // 客戶 lineId
+    userId: '',       // 已填過的用戶 id
+    storeId: '',      // 商家 storeId
+    phoneNumber: '',  // 電話
+    userName: '',     // 名字
+    memo: '',         // 備註
+  };
 
   var endpointType = null; // 記住當前是哪一個 endpointType 用
-  var storeId = null; // 記住當前的店家id
-  var liffId = null;  // 記住當前的 liffid
-
-  
+  var storeId = null;      // 記住當前的店家id
+  var liffId = null;       // 記住當前的 liffid
 
   // 解析瀏覽器url參數
   function parseURLparm() {
@@ -209,6 +190,127 @@ $(function() {
     }
     return vars;
   }
+  
+  // api 取得使用者是否已經登入過了
+  function checkUserAndGetStoreInfo () {
+    var path = apiPath+'/api/v1/client/checkUserAndGetStoreInfo';
+    var parm = {
+      clientUserId: userModel.clientUserId,
+      storeId: storeId
+    };
+    $('#userProfileBox').append(`<div>呼叫是否已經登入過 path: ${path}<br><br></div>`);
+    $('#userProfileBox').append(`<div>呼叫是否已經登入過 body: ${JSON.stringify(parm)}<br><br></div>`);
+
+    $.ajax({
+      cache: false,
+      type: "POST",
+      dataType: 'json',
+      contentType: 'application/json;charset=utf-8',
+      async: false,
+      data: JSON.stringify(parm),
+      url: path,
+      success: function(result) {
+        $('#userProfileBox').append(`<div>呼叫是否已經登入過 success: ${JSON.stringify(result)}<br><br></div>`);
+        if (result.errorCode === '996600001') {
+          var storeData = result.data.store;
+          var userData = result.data.user;
+          // 如果擇一沒有資料就當作沒有登入
+          if (!userData || !storeData) {
+            document.title = 'Mobii! 綠色城市生活優惠平台｜實聯制';
+            isLogded = false;
+            $('.user').removeClass('logged');
+            $('.user').addClass('notLogin');
+          }
+          // 兩者資料都有才當作有登入
+          if (userData && storeData) {
+            document.title = '實聯制｜現場登記';
+            isLogded = true;
+            $('.user').addClass('logged');
+            $('.user').removeClass('notLogin');
+            $('#nowDate').html(moment().format('YYYY/MM/DD HH:mm'));
+            
+            $('#userProfileBox').append(`<div>登入後拿到的商家資訊: ${JSON.stringify(storeData)}<br><br></div>`);
+            $('#userProfileBox').append(`<div>登入後拿到的消費者資訊: ${JSON.stringify(userData)}<br><br></div>`);
+            
+            // 將db資料反寫到前端的表單model
+            userModel.userId = userData.userId;      // 已填過的用戶 id
+            userModel.storeId = storeData.storeId;   // 商家 storeId
+            userModel.phoneNumber = userData.mobile; // 電話
+            userModel.userName = userData.userName;  // 名字
+
+            $('#userProfileBox').append(`<div>將db資料反寫到前端的表單model: ${JSON.stringify(userData)}<br><br></div>`);
+            
+            $('#dbUserName').html(userModel.userName);
+            $('#dbmobile').html(userModel.phoneNumber);
+          }
+          if (storeData) {
+            // 店家名稱
+            $('#dbSignboardName, .complate-dialog-dbSignboardName').html(storeData.signboardName);
+          }
+        } else {
+          isLogded = false;
+          $('.user').removeClass('logged');
+          $('.user').addClass('notLogin');
+        }
+      },
+      error: function (error) {
+        $('#userProfileBox').append(`<div>呼叫是否已經登入過 error: ${JSON.stringify(error)}<br><br></div>`);
+      }
+    });
+  }
+
+  // api 取得28天足跡資料
+  function c28 () {
+    var path = apiPath+'/api/v1/client/queryBindMerchantList/'+userModel.clientUserId;
+    $('#userProfileBox').append(`<div>呼叫取得28天足跡 path: ${path}<br><br></div>`);
+    fetch(path, {
+      method: 'GET',
+      cache: 'no-cache',
+      mode: 'cors',
+      redirect: 'follow',
+      referrer: 'no-referrer',
+    }).then(response => {
+      return response.json();
+    }).then((result) => {
+      $('#userProfileBox').append(`<div>呼叫取得28天足跡 success: ${JSON.stringify(result)}<br><br></div>`);
+      if (result.errorCode === '996600001' && result.data.length > 0) {
+        var trHTML = '';
+        result.data.forEach((item, i) => {
+          // 將地點組成一個字串
+          var placeString = '';
+          if (item.address) {
+            placeString += item.address+'/';
+          }
+          if (item.signboardName) {
+            placeString += item.signboardName+'/';
+          }
+          if (item.busRoute) {
+            placeString += item.busRoute+'/';
+          }
+          if (item.busNumber) {
+            placeString += item.busNumber+'/';
+          }
+          if (placeString) {
+            placeString = placeString.slice(0, placeString.length-1);
+          }
+          // 時間
+          var dateString = '-'; 
+          if (item.footprintDateTime) {
+            dateString = moment(item.footprintDateTime).format('YYYY/MM/DD HH:mm');
+          }
+          trHTML += '<tr>';
+          trHTML += '  <td>'+ (i+1) +'</td>';
+          trHTML += '  <td>' + dateString + '</td>';
+          trHTML += '  <td>' + placeString +'</td>';
+          /* trHTML += '  <td>' + item.memo + '</td>'; */
+          trHTML += '</tr>';
+        });
+        $('table tbody').append(trHTML);
+      }
+    }).catch((error) => {
+      $('#userProfileBox').append(`<div>呼叫取得28天足跡 error: ${error}<br><br></div>`);
+    });
+  }
 
   // 取得 liff 使用者基本資料
   function getUserProfile(accessToken) {
@@ -222,20 +324,23 @@ $(function() {
     }).then(response => {
       return response.json();
     }).then((data) => {
-      // TODO... 呼叫取得使用者是否已登入api
-      isLogded = false;
-      $('.recording').removeClass('logged');
-      $('.recording').addClass('notLogin');
-
-
       // TODO... 開發測試用
       $('#userProfileBox').append(`<div>https://api.line.me/v2/profile:'${JSON.stringify(data)}'<br><br></div>`);
       $('#userProfileBox').append(
         'userId:' + data.userId + '<br>' +
         'displayName:' + data.displayName + '<br>' +
-        'pictureUrl:' + data.pictureUrl + '<br>'
+        'pictureUrl:' + data.pictureUrl + '<br><br><br>'
       );
-
+      if (data.userId) {
+        userModel.clientUserId = data.userId;
+      }
+      if (endpointType === 'REGISTER') {
+        // 呼叫取得使用者是否已登入api
+        checkUserAndGetStoreInfo();
+      }
+      if (endpointType === 'FOOTPRINT') {
+        c28();
+      }
     });
   }
   
@@ -245,6 +350,8 @@ $(function() {
     storeId = urlParm.storeId;
     liffId = urlParm.liffId;
     endpointType = urlParm.endpointType;
+    userModel.storeId = storeId;
+
     $('#userProfileBox').append(`<div><br>endpointType: ${endpointType}</div>`);
     $('#userProfileBox').append(`<div><br>storeId: ${storeId}</div>`);
     $('#userProfileBox').append(`<div>liffId: ${liffId}<br><br></div>`);
@@ -253,7 +360,7 @@ $(function() {
 
     if (liff) {
       // TODO... 由於 app 中 liff 打開之後後面的url參數會被轉碼... 這部分還要研究所以先寫死 1633210473-BZ1zNNWk
-      liff.init({ liffId: '1633210473-BZ1zNNWk' }).then(() => {
+      liff.init({ liffId: cLiffId }).then(() => {
         var accessToken = liff.getAccessToken();
         $('#userProfileBox').append(`<div>accessToken: ${accessToken}<br><br></div>`);
         getUserProfile(accessToken);
@@ -266,7 +373,8 @@ $(function() {
 
   // event 切換是否同意授權
   $('.check-agree').change(() => {
-    if ($('.check-agree:checked').length > 0) {
+    // 注意 length >= 2 是因為我將登入與未登入做在同一頁的關係
+    if ($('.check-agree:checked').length >= 2) {
       if (isLogded) {
         $('#logged').find('input[type=text]').change();
       } else {
@@ -309,21 +417,6 @@ $(function() {
     }
   });
 
-
-  // event click 未登入的送出按鈕
-  $('#notLogin-send-btn').click(() => {
-    console.log('未登入的送出按鈕');
-    //TODO... 呼叫api
-    $('.dialog-box.complete').addClass('show');
-  });
-
-  // event click 已登入的送出按鈕
-  $('#logged-send-btn').click(() => {
-    console.log('已登入的送出按鈕');
-    //TODO... 呼叫api
-    $('.dialog-box.complete').addClass('show');
-  });
-
   // event click 觀看個資授權
   $('.lookAuthorization').click(() => {
     $('.authorization').addClass('show');
@@ -339,36 +432,48 @@ $(function() {
     liff.closeWindow();
   });
 
+  // event 已登入與未登入 輸入欄位切換時擷取 value
+  $('#notLogin, #logged').find('input').change((event) => {
+    if ($(event.target).attr('type') === 'checkbox') return false;
 
-  // TODO... 測試28日足跡查詢用
-  var trHTML = '';
-  for (var i = 0; i <= 10; i++) {
-    trHTML += '<tr>';
-    trHTML += '  <td>'+ (i+1) +'</td>';
-    trHTML += '  <td>2021/05/17 11:56</td>';
-    trHTML += '  <td>XXX大樓</td>';
-    trHTML += '  <td>36.3</td>';
-    trHTML += '</tr>';
-  }
-  $('table tbody').append(trHTML);
+    var $target = $(event.target);
+    var value = $target.val();
+    var name = $target.attr('name');
+    userModel[name] = value;
 
-
-  // TODO... 開發測試用 event
-  $('#testNo').click(() => {
-    $('.recording').removeClass('logged');
-    $('.recording').addClass('notLogin');
-    $('#notLogin-banner-word').addClass('show');
-    $('#logged-banner-word').removeClass('show');
-    isLogded = false;
-  });
-  $('#testYes').click(() => {
-    $('.recording').removeClass('notLogin');
-    $('.recording').addClass('logged');
-    $('#notLogin-banner-word').removeClass('show');
-    $('#logged-banner-word').addClass('show');
-    isLogded = true;
+    // 如果是必填欄位加上必填提示
+    if (($target.attr('require') === '') && !value) {
+      $target.parent().addClass('error');
+    } else {
+      $target.parent().removeClass('error');
+    }
   });
 
+  // event click 未登入/已登入 的送出按鈕
+  $('#notLogin-send-btn, #logged-send-btn').click(() => {
+    let path = apiPath+'/api/v1/client/createClientUser';
+    $('#userProfileBox').append(`<div>呼叫createClientUser path: ${path}<br><br></div>`);
+    $('#userProfileBox').append(`<div>呼叫createClientUser body: ${JSON.stringify(userModel)}<br><br></div>`);
+    
+    $.ajax({
+      cache: false,
+      type: "POST",
+      dataType: 'json',
+      contentType: 'application/json;charset=utf-8',
+      async: false,
+      data: JSON.stringify(userModel),
+      url: path,
+      success: function(result) {
+        $('#userProfileBox').append(`<div>呼叫createClientUser success: ${JSON.stringify(result)}<br><br></div>`);
+        if (result.errorCode === '996600001') {
+          $('.dialog-box.complete').addClass('show');
+        }
+      },
+      error: function (error) {
+        $('#userProfileBox').append(`<div>呼叫createClientUser error: ${JSON.stringify(error)}<br><br></div>`);
+      }
+    });
+  });
 
   onload();
 });

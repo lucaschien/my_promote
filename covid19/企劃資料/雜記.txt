@@ -1,0 +1,111 @@
+這是將所有user資料前往29天過期的api
+https://sit.eyesmedia.com.tw/covid19-footprint/api/v1/covid/updateUserCreateTime/29
+
+
+
+qrcode url: https://liff.line.me/{liffId}?redirect={商家資訊}
+
+
+
+qrcode url: https://liff.line.me/{liffId}?storeId={商家編號}
+前端UI->
+ajax call get api
+url: http://api.justka.ai/covid19-footprint/queryUserStoreInfo?storeId={商家編號}
+未填過使用者資料的：
+ajax call post api
+url: http://api.justka.ai/covid19-footprint/binding
+body {商家資訊:{}, 客戶資訊:{}}
+
+
+qrcode url: https://liff.line.me/{liffId}?storeId={商家編號}&liffId={liffId}
+
+
+/*
+  B端 1656001745 c7bf3452-9ded-40b2-85aa-cf893af0718d
+  liff id --> 1656001745-aAmeEVo1
+  https://s3-ap-northeast-1.amazonaws.com/cdn.eyesmedia.com.tw/sit/covid19/store.html
+
+  https://sit.eyesmedia.com.tw/line/chatflow/lineCovid19/liffId/c7bf3452-9ded-40b2-85aa-cf893af0718d/1656001745/B
+
+  https://liff.line.me/1656001745-aAmeEVo1?storeId=c7bf3452-9ded-40b2-85aa-cf893af0718d&liffId=1656001745-aAmeEVo1&endpointType=STANDARD
+
+
+
+  C端 1655865887 9bb0f675-771e-407f-a179-6ac0b685882d
+  liff id --> 1655865887-gqaQ9dee
+  https://s3-ap-northeast-1.amazonaws.com/cdn.eyesmedia.com.tw/sit/covid19/user.html
+
+  https://sit.eyesmedia.com.tw/line/chatflow/lineCovid19/liffId/9bb0f675-771e-407f-a179-6ac0b685882d/1655865887/C
+
+  https://liff.line.me/1655865887-gqaQ9dee?storeId=9bb0f675-771e-407f-a179-6ac0b685882d&liffId=1655865887-gqaQ9dee&endpointType=REGISTER
+*/
+
+
+https://liff.line.me/1633210473-BZ1zNNWk?storeId=aaaa&liffId=1633210473-BZ1zNNWk
+
+https://lucaschien.github.io/my_promote/covid19/index.html?liff.state=%3FstoreId%3Daaaa%26liffId%3D1633210473-BZ1zNNWk
+
+
+消費者端 endpointType 定義:
+  REGISTER: 已申請通行證,未申請通行證
+  FOOTPRINT: 28日足跡
+
+店家端 endpointType 定義:
+  STANDARD: 一般類
+  TRAFFIC:  交通類
+  B_FOOTPRINT: 28日足跡
+  QRCODE: 下載QA code
+  STANDARD_COMPLETE: 一般類完成頁(我前端網頁自己用的)
+  TRAFFIC_COMPLETE: 交通類完成頁(我前端網頁自己用的)
+
+
+sit api 前面路徑 https://sit.eyesmedia.com.tw/covid19-footprint/
+
+B端 一般類店家登入 api
+/api/v1/store/storeInfomation
+
+
+
+
+
+/***  店家表單  ***/
+ * 
+clientUserId
+ * 招牌名稱
+signboardName
+ * 公車路線
+busRoute
+ * 公車車號
+busNumber
+ * 登記公司名稱
+company
+ * 統一編號
+uNumber
+ * 地址
+address
+ * 聯絡人姓名
+contactPerson
+ * 聯絡人電話
+contactMobile
+
+
+/***  消費者表單  ***/
+ * 客戶 lineId
+clientUserId
+ * 備註
+memo
+ * 電話
+phoneNumber
+ * 商家storeId
+storeId
+ * 已填過的用戶 id
+userId
+ * 名字
+userName
+
+
+
+
+B端 店家下載Qrcode
+https://liff.line.me/1656001745-aAmeEVo1?storeId=9d30e52c-6b97-45fe-82f2-21c1f43bae2f&liffId=1656001745-aAmeEVo1&endpointType=QRCODE
+

@@ -1,3 +1,11 @@
+// sit
+var apiPath = 'https://sit.eyesmedia.com.tw/covid19-footprint';
+var bLiffId = '1656001745-aAmeEVo1'; 
+var cLiffId = '1655865887-gqaQ9dee';
+
+// biz 
+
+
 // 解析瀏覽器url參數
 function parseURLparm() {
   var href = window.location.href;
@@ -12,35 +20,48 @@ function parseURLparm() {
   return vars;
 }
 
-
 // 區分要打開哪一個 endpointType 的div區塊
 function showEndpointTypeBlock (endpointType) {
   // 消費者端
-  if (endpointType === 'REISTER') { // 已申請通行證,未申請通行證
-    $('.endpointType_REISTER').addClass('show');
-    $('.main').addClass('recording');
+  if (endpointType === 'REGISTER') { // 已申請通行證,未申請通行證
+    $('.endpointType_REGISTER').addClass('show');
+    $('.main').addClass('user');
   }
   if (endpointType === 'FOOTPRINT') { // 28日足跡
     $('.endpointType_FOOTPRINT').addClass('show');
     $('.main').addClass('footprint');
+    document.title = '防疫新生活｜實聯制';
   }
 
   // 店家端
-  if (endpointType === 'STANDARD') { // 一般類
+  if (endpointType === 'STANDARD') { // 一般類申請
     $('.endpointType_STANDARD').addClass('show');
     $('.main').addClass('normal');
+    document.title = '店家申請單：一般類';
   }
-  if (endpointType === 'TRAFFIC') { // 交通類
+  if (endpointType === 'TRAFFIC') { // 交通類申請
     $('.endpointType_TRAFFIC').addClass('show');
     $('.main').addClass('traffic');
+    document.title = '店家申請單：交通類';
   }
   if (endpointType === 'B_FOOTPRINT') { // 28日足跡
     $('.endpointType_B_FOOTPRINT').addClass('show');
     $('.main').addClass('b-footprint');
+    document.title = '防疫新生活｜實聯制';
   }
   if (endpointType === 'QRCODE') { // 下載QA code
     $('.endpointType_QRCODE').addClass('show');
     $('.main').addClass('qrcode');
+    document.title = '店家專屬QRcode';
   }
+  if (endpointType === 'STANDARD_COMPLETE') { // 一般類完成
+    $('.endpointType_STANDARD_COMPLETE').addClass('show');
+    document.title = '店家申請單：一般類';
+  }
+  if (endpointType === 'TRAFFIC_COMPLETE') { // 交通類完成
+    $('.endpointType_TRAFFIC_COMPLETE').addClass('show');
+    document.title = '店家申請單：交通類';
+  }
+
 
 }
