@@ -28,9 +28,10 @@ export default {
     return {
     }
   },
-  computed: {
-  },
   methods: {
+  },
+  created() {
+    document.title = '登入後首頁';
   }
 }
 </script>

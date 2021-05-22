@@ -18,6 +18,9 @@ export default {
   name: 'Redirect',
   data() {
     return {}
+  },
+  created() {
+    document.title = '轉換中';
   }
 }
 </script>

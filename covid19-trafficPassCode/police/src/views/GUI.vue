@@ -141,6 +141,9 @@ export default {
       let newClassName = (nowClassName.match('hide'))? 'testUnit-box' : 'testUnit-box hide';
       $box.className = newClassName;
     }
+  },
+  created() {
+    document.title = 'GUI';
   }
 }
 </script>

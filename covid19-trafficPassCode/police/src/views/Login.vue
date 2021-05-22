@@ -30,7 +30,8 @@ export default {
   },
   methods: {
   },
-  computed: {
+  created() {
+    document.title = '登入頁';
   }
 }
 </script>

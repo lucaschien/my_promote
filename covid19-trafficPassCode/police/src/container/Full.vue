@@ -63,7 +63,6 @@ export default {
       // 已取得
       this.clientUserId = window.clientUserId;
       clearInterval(window.checkClientUserIdTimer);
-      document.title = '測試中';
       this.checkUserAndGetStoreInfo();
     }, 300);
   },

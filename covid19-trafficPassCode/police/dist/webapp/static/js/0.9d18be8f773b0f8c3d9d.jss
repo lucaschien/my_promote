@@ -7,7 +7,7 @@ webpackJsonp([0],{
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_GUI_vue__ = __webpack_require__(510);
 /* empty harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_5b00540a_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_GUI_vue__ = __webpack_require__(516);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_f2bcb100_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_GUI_vue__ = __webpack_require__(516);
 function injectStyle (ssrContext) {
   __webpack_require__(514)
 }
@@ -27,7 +27,7 @@ var __vue_scopeId__ = null
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_GUI_vue__["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_5b00540a_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_GUI_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_f2bcb100_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_GUI_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
@@ -308,6 +308,9 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
       var newClassName = nowClassName.match('hide') ? 'testUnit-box' : 'testUnit-box hide';
       $box.className = newClassName;
     }
+  },
+  created: function created() {
+    document.title = 'GUI';
   }
 });
 
@@ -323,7 +326,7 @@ var content = __webpack_require__(515);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(497)("03df9fb0", content, true, {});
+var update = __webpack_require__(497)("6a4b5b91", content, true, {});
 
 /***/ }),
 
