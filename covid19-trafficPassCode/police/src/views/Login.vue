@@ -4,6 +4,7 @@
 
     <div class="views-body">
       login 頁面
+      <div>{{ testData }}</div>
     </div>
     <Footer />
   </div>
@@ -26,6 +27,7 @@ export default {
   },
   data() {
     return {
+      testData: null
     }
   },
   methods: {
@@ -39,6 +41,7 @@ export default {
       displayLog('checkUserAndGetStoreInfo body: ' + JSON.stringify(parm));
       ajax.post(peth, parm).then((result) => {
         displayLog('checkUserAndGetStoreInfo success: ' + JSON.stringify(result));
+        this.testData = result.data.user;
       }).catch((error) => {
         displayLog('checkUserAndGetStoreInfo error: ' + JSON.stringify(error));
       });

@@ -5,10 +5,11 @@
     <div class="views-body">
       <!-- 觀看目前fome表單元素樣式 -->
       <div class="testUnit-box hide">
+        {{ testChangeCount }}
         <h5 @click="triggerFn($event)">觀看目前fome表單元素樣式</h5>
         <div class="testUnit-body">
 
-          <input type="text" placeholder="input 請輸入">
+          <input type="text" placeholder="input 請輸入" @keypress="testChange()">
           <input type="text" placeholder="input 請輸入" disabled>
 
           <textarea placeholder="textarea 請輸入"></textarea>
@@ -131,7 +132,10 @@ export default {
     return {
       popDialog: popDialog,
       moment: moment,
-      stringUtils: stringUtils
+      stringUtils: stringUtils,
+
+      // 實驗 input 在手機上面是否會觸發事件用
+      testChangeCount: 0
     }
   },
   methods: {
@@ -140,6 +144,10 @@ export default {
       let nowClassName = $box.className;
       let newClassName = (nowClassName.match('hide'))? 'testUnit-box' : 'testUnit-box hide';
       $box.className = newClassName;
+    },
+    // 實驗 input 在手機上面是否會觸發事件用
+    testChange () {
+      this.testChangeCount++;
     }
   },
   created() {
