@@ -34,6 +34,7 @@ export default {
     }
   },
   mounted() {
+    alert(window.clientUserId);
     this.clientUserId = window.clientUserId;
   }
 }
