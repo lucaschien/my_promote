@@ -30,6 +30,58 @@ export default {
         }
       })()
     }
+  },
+  created() {
+    // 解析網址參數
+    function parseURLparm() {
+      var href = window.location.href;
+      var vars = {}, hash;
+      var hashes = href.slice(href.indexOf('?') + 1).split('&');
+      for (var i = 0; i < hashes.length; i++) {
+        hash = hashes[i].split('=');
+        if (Array.isArray(hash[0], vars) > -1) {
+          vars[hash[0]] = hash[1];
+        }
+      }
+      return vars;
+    }
+
+    // liff 初始化
+    var urlParm = parseURLparm();
+    window.liffId = urlParm.liffId;
+    window.endpointType = urlParm.endpointType;
+
+    displayLog('urlParm: '+JSON.stringify(urlParm));
+
+    if (liff) {
+      // TODO... 先寫死我個人的 liffId
+      liff.init({ liffId: '1633210473-BZ1zNNWk' }).then(() => {
+        var accessToken = liff.getAccessToken();
+        displayLog('accessToken: '+JSON.stringify(accessToken));
+
+        //透過 token 取得使用者資訊
+        fetch('https://api.line.me/v2/profile', {
+          method: 'GET',
+          headers: {
+            'content-type': 'application/json',
+            'Authorization': 'Bearer '+accessToken
+          },
+        }).then(response => {
+          return response.json();
+        }).then((data) => {
+          window.clientUserId = data;
+          displayLog('liff userId: '+data.userId);
+          displayLog('liff displayName: '+data.displayName);
+          displayLog('liff pictureUrl: '+data.pictureUrl);
+        }).catch((error) => {
+          displayLog('取得使用者資訊 error: '+JSON.stringify(error));
+        });
+
+      }).catch((error) => {
+        displayLog('liff.init error: '+JSON.stringify(error));
+      });
+    }
+
   }
 }
 </script>
