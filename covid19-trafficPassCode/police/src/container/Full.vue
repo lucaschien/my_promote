@@ -6,7 +6,7 @@
       <router-link to="/gui">GUI</router-link> |
       clientUserId: {{ clientUserId }}
     </div>
-    <router-view class="views-contnet"></router-view>
+    <router-view class="views-contnet" v-if="clientUserId"></router-view>
   </div>
 </template>
 
@@ -41,7 +41,6 @@ export default {
   },
   methods: {
     async checkUserAndGetStoreInfo() {
-      this.clientUserId = window.clientUserId;
       let peth = 'https://sit.eyesmedia.com.tw/covid19-footprint/api/v1/client/checkUserAndGetStoreInfo';
       let parm = {
         clientUserId: this.clientUserId
@@ -53,11 +52,21 @@ export default {
     }
   },
   mounted() {
-    displayLog('if liff: ' + liff);
-    displayLog('if window.liff: ' + window.liff);
+    // 注意: 由於本地端與實際 liff 上面的程式訊息不同, 因此這邊使用 loop 的方式去監聽是否有取得 clientUserId
+    window.checkClientUserIdTimer = setInterval(() => {
 
-    this.checkUserAndGetStoreInfo();
-    document.title = '測試中';
-  }
+      displayLog('是否取得clientUserId: ' + window.clientUserId);
+
+      if (!window.clientUserId) return false; // 未取得
+
+      displayLog('已取得clientUserId: ' + window.clientUserId);
+
+      // 已取得
+      this.clientUserId = window.clientUserId;
+      clearInterval(window.checkClientUserIdTimer);
+      document.title = '測試中';
+      this.checkUserAndGetStoreInfo();
+    }, 300);
+  },
 }
 </script>
