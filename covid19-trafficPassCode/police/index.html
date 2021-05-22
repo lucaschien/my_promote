@@ -43,9 +43,27 @@
         displayLog('urlParm: '+JSON.stringify(urlParm));
 
         if (liff) {
+          // TODO... 先寫死我個人的 liff id
           liff.init({ liffId: '1633210473-BZ1zNNWk' }).then(() => {
-            let accessToken = liff.getAccessToken();
+            var accessToken = liff.getAccessToken();
             displayLog('accessToken: '+JSON.stringify(accessToken));
+
+            //透過 token 取得使用者資訊
+            fetch('https://api.line.me/v2/profile', {
+              method: 'GET',
+              headers: {
+                'content-type': 'application/json',
+                'Authorization': 'Bearer '+accessToken
+              },
+            }).then(response => {
+              return response.json();
+            }).then((data) => {
+              lineUserData = data;
+              displayLog('liff userId: '+data.userId);
+              displayLog('liff displayName: '+data.displayName);
+              displayLog('liff pictureUrl: '+data.pictureUrl);
+            });
+
           }).catch((error) => {
             console.log('liff.init error >>> ', error);
             displayLog('liff.init error: '+JSON.stringify(accessToken));

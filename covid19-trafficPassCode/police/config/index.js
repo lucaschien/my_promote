@@ -9,7 +9,7 @@ const createEnv = (envName, assetsPublicPath='webapp') => {
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
     //assetsPublicPath: `/${assetsPublicPath}/`,
-    assetsPublicPath: `./${assetsPublicPath}/`,
+    assetsPublicPath: `./${assetsPublicPath}/`, // for 放到 github測試用
     productionSourceMap: false,
     productionGzip: true,
     productionGzipExtensions: ['js', 'css'],
