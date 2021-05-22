@@ -23,7 +23,8 @@ Vue.use(Router);
 
 const router = new Router({
   base: process.env.ROUTER_PATH,
-  mode: 'history',
+  //mode: 'history',
+  mode: 'hash',
   linkActiveClass: 'open active',
   scrollBehavior: () => ({ y: 0 }),
   routes: [
