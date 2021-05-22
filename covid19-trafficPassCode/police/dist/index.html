@@ -43,11 +43,12 @@
               displayLog('liff userId: '+data.userId);
               displayLog('liff displayName: '+data.displayName);
               displayLog('liff pictureUrl: '+data.pictureUrl);
+            }).catch((error) => {
+              displayLog('取得使用者資訊 error: '+JSON.stringify(error));
             });
 
           }).catch((error) => {
-            console.log('liff.init error >>> ', error);
-            displayLog('liff.init error: '+JSON.stringify(accessToken));
+            displayLog('liff.init error: '+JSON.stringify(error));
           });
         }
       })();</script><style>/* 開發測試用 */
