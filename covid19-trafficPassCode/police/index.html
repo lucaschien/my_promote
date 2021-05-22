@@ -9,14 +9,19 @@
     <META HTTP-EQUIV="expires" CONTENT="0">
     <link rel="shortcut icon" href="<%= process.env.STATIC_PATH + '/' + process.env.NODE_ENV + '/favicon.ico'%>" />
     <title><%= '\u200E'%></title>
+    <style>
+      /* 開發測試用 */
+      #userProfileBox {
+        background-color: rgb(255, 255, 203);
+        padding: 20px;
+        word-break: break-all;
+        margin: 20px 0;
+        /* display: none; */
+      }
+    </style>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-  </head>
-  <body>2
-    <div id="app"></div>
-    <div id="userProfileBox"></div>
-    <!-- built files will be auto injected -->
     <script src="https://static.line-scdn.net/liff/edge/versions/2.8.0/sdk.js"></script>
-    <script>
+    <script sync>
       function displayLog(text) {
         $('#userProfileBox').append('<div><br> '+text+'<br></div>');
       }
@@ -72,15 +77,10 @@
         }
       })();
     </script>
-    <style>
-      /* 開發測試用 */
-      #userProfileBox {
-        background-color: rgb(255, 255, 203);
-        padding: 20px;
-        word-break: break-all;
-        margin: 20px 0;
-        /* display: none; */
-      }
-    </style>
+  </head>
+  <body>3
+    <div id="app"></div>
+    <div id="userProfileBox"></div>
+    <!-- built files will be auto injected -->
   </body>
 </html>

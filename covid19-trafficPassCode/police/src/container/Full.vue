@@ -11,6 +11,12 @@
 </template>
 
 <script>
+import { mapMutations, mapGetters, mapActions } from "vuex";
+import Cookies from 'js-cookie';
+import stringUtils from '@/common/utils/StringUtils';
+import { ajax, storage as StoreAction } from '@/common/';
+import moment from "moment";
+import popDialog from '@/common/popDialog';
 import jwt_decode from "jwt-decode";
 import MobileDetect from 'mobile-detect';
 
@@ -33,9 +39,21 @@ export default {
       })()
     }
   },
+  methods: {
+    async checkUserAndGetStoreInfo() {
+      let peth = 'https://sit.eyesmedia.com.tw/covid19-footprint/api/v1/client/checkUserAndGetStoreInfo';
+      let parm = {
+        clientUserId: this.clientUserId
+      };
+      let result = await ajax.post(peth, parm);
+      displayLog('checkUserAndGetStoreInfo: ' + JSON.stringify(result));
+    }
+  },
   mounted() {
     alert(window.clientUserId);
     this.clientUserId = window.clientUserId;
+
+    checkUserAndGetStoreInfo();
   }
 }
 </script>
