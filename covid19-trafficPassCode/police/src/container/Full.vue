@@ -24,7 +24,6 @@ export default {
   name: "full",
   data() {
     return {
-      clientUserId: null,
       // user 當前的載具資訊
       userDevice: (() => {
         var md = new MobileDetect(window.navigator.userAgent);
@@ -40,19 +39,12 @@ export default {
     }
   },
   methods: {
-    checkUserAndGetStoreInfo() {
-      let peth = 'https://sit.eyesmedia.com.tw/covid19-footprint/api/v1/client/checkUserAndGetStoreInfo';
-      let parm = {
-        clientUserId: this.clientUserId
-      };
-      displayLog('checkUserAndGetStoreInfo path: ' + peth);
-      displayLog('checkUserAndGetStoreInfo body: ' + JSON.stringify(parm));
-      ajax.post(peth, parm).then((result) => {
-        displayLog('checkUserAndGetStoreInfo success: ' + JSON.stringify(result));
-      }).catch((error) => {
-        displayLog('checkUserAndGetStoreInfo error: ' + JSON.stringify(error));
-      });
-    }
+    ...mapMutations(['setClientUserId'])
+  },
+  computed: {
+    ...mapGetters({
+      clientUserId: 'getClientUserId'
+    })
   },
   mounted() {
     // 注意: 由於本地端與實際 liff 上面的程式訊息不同, 因此這邊使用 loop 的方式去監聽是否有取得 clientUserId
@@ -61,9 +53,8 @@ export default {
       if (!window.clientUserId) return false; // 未取得
       displayLog('已取得clientUserId: ' + window.clientUserId);
       // 已取得
-      this.clientUserId = window.clientUserId;
+      this.setClientUserId(window.clientUserId);
       clearInterval(window.checkClientUserIdTimer);
-      this.checkUserAndGetStoreInfo();
     }, 300);
   },
 }

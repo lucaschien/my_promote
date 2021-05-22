@@ -29,9 +29,29 @@ export default {
     }
   },
   methods: {
+    // TODO... 這一隻是實驗呼叫 ajax 用之後可刪
+    test() {
+      let peth = 'https://sit.eyesmedia.com.tw/covid19-footprint/api/v1/client/checkUserAndGetStoreInfo';
+      let parm = {
+        clientUserId: this.clientUserId
+      };
+      displayLog('checkUserAndGetStoreInfo path: ' + peth);
+      displayLog('checkUserAndGetStoreInfo body: ' + JSON.stringify(parm));
+      ajax.post(peth, parm).then((result) => {
+        displayLog('checkUserAndGetStoreInfo success: ' + JSON.stringify(result));
+      }).catch((error) => {
+        displayLog('checkUserAndGetStoreInfo error: ' + JSON.stringify(error));
+      });
+    }
+  },
+  computed: {
+    ...mapGetters({
+      clientUserId: 'getClientUserId'
+    })
   },
   created() {
     document.title = '登入頁';
+    this.test();
   }
 }
 </script>
