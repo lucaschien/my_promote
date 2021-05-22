@@ -3,7 +3,8 @@
     <div style="padding: 10px 20px;">
       <router-link to="/">登入頁</router-link> |
       <router-link to="/home">登入後首頁</router-link> |
-      <router-link to="/gui">GUI</router-link>
+      <router-link to="/gui">GUI</router-link> |
+      clientUserId: {{ clientUserId }}
     </div>
     <router-view class="views-contnet"></router-view>
   </div>
@@ -17,6 +18,7 @@ export default {
   name: "full",
   data() {
     return {
+      clientUserId: null,
       // user 當前的載具資訊
       userDevice: (() => {
         var md = new MobileDetect(window.navigator.userAgent);
@@ -30,6 +32,9 @@ export default {
         }
       })()
     }
+  },
+  mounted() {
+    this.clientUserId = window.clientUserId;
   }
 }
 </script>
