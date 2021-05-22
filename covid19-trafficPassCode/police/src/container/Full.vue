@@ -41,19 +41,19 @@ export default {
   },
   methods: {
     async checkUserAndGetStoreInfo() {
+      this.clientUserId = window.clientUserId;
       let peth = 'https://sit.eyesmedia.com.tw/covid19-footprint/api/v1/client/checkUserAndGetStoreInfo';
       let parm = {
         clientUserId: this.clientUserId
       };
+      displayLog('checkUserAndGetStoreInfo body: ' + peth);
+      displayLog('checkUserAndGetStoreInfo body: ' + JSON.stringify(parm));
       let result = await ajax.post(peth, parm);
-      displayLog('checkUserAndGetStoreInfo: ' + JSON.stringify(result));
+      displayLog('checkUserAndGetStoreInfo 回傳: ' + JSON.stringify(result));
     }
   },
   mounted() {
-    alert(window.clientUserId);
-    this.clientUserId = window.clientUserId;
-
-    checkUserAndGetStoreInfo();
+    this.checkUserAndGetStoreInfo();
   }
 }
 </script>
