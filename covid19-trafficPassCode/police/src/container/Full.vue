@@ -6,6 +6,7 @@
       <router-link to="/gui">GUI</router-link>
     </div>
     <router-view class="views-contnet"></router-view>
+    <div id="userProfileBox"></div>
   </div>
 </template>
 
@@ -32,6 +33,7 @@ export default {
     }
   },
   created() {
+    alert('????');
     // 解析網址參數
     function parseURLparm() {
       var href = window.location.href;
