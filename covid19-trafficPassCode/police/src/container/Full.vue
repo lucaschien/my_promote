@@ -46,7 +46,7 @@ export default {
       let parm = {
         clientUserId: this.clientUserId
       };
-      displayLog('checkUserAndGetStoreInfo body: ' + peth);
+      displayLog('checkUserAndGetStoreInfo path: ' + peth);
       displayLog('checkUserAndGetStoreInfo body: ' + JSON.stringify(parm));
       let result = await ajax.post(peth, parm);
       displayLog('checkUserAndGetStoreInfo 回傳: ' + JSON.stringify(result));
@@ -54,6 +54,7 @@ export default {
   },
   mounted() {
     this.checkUserAndGetStoreInfo();
+    document.title = '測試中';
   }
 }
 </script>
