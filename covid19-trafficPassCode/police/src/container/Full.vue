@@ -53,6 +53,9 @@ export default {
     }
   },
   mounted() {
+    displayLog('if liff: ' + liff);
+    displayLog('if window.liff: ' + window.liff);
+
     this.checkUserAndGetStoreInfo();
     document.title = '測試中';
   }
