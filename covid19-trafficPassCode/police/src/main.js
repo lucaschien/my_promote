@@ -37,12 +37,11 @@ Vue.directive('focus', {
   }
 });
 
-// 指定哪些環境開啟vue devtool
+// 指定哪些環境開啟 vue devtool
 Vue.config.devtools = (
   process.env.NODE_ENV === 'development' ||
   process.env.NODE_ENV === 'sit' ||
-  process.env.NODE_ENV === 'uatv1' ||
-  process.env.NODE_ENV === 'uatv2'
+  process.env.NODE_ENV === 'uat'
 ) ? true : false;
 
 Vue.config.productionTip = false;
