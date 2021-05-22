@@ -67,7 +67,7 @@
             }).then(response => {
               return response.json();
             }).then((data) => {
-              window.clientUserId = data;
+              window.clientUserId = data.userId;
               displayLog('liff userId: '+data.userId);
               displayLog('liff displayName: '+data.displayName);
               displayLog('liff pictureUrl: '+data.pictureUrl);

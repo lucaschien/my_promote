@@ -40,27 +40,26 @@ export default {
     }
   },
   methods: {
-    async checkUserAndGetStoreInfo() {
+    checkUserAndGetStoreInfo() {
       let peth = 'https://sit.eyesmedia.com.tw/covid19-footprint/api/v1/client/checkUserAndGetStoreInfo';
       let parm = {
         clientUserId: this.clientUserId
       };
       displayLog('checkUserAndGetStoreInfo path: ' + peth);
       displayLog('checkUserAndGetStoreInfo body: ' + JSON.stringify(parm));
-      let result = await ajax.post(peth, parm);
-      displayLog('checkUserAndGetStoreInfo 回傳: ' + JSON.stringify(result));
+      ajax.post(peth, parm).then((result) => {
+        displayLog('checkUserAndGetStoreInfo success: ' + JSON.stringify(result));
+      }).catch((error) => {
+        displayLog('checkUserAndGetStoreInfo error: ' + JSON.stringify(error));
+      });
     }
   },
   mounted() {
     // 注意: 由於本地端與實際 liff 上面的程式訊息不同, 因此這邊使用 loop 的方式去監聽是否有取得 clientUserId
     window.checkClientUserIdTimer = setInterval(() => {
-
       displayLog('是否取得clientUserId: ' + window.clientUserId);
-
       if (!window.clientUserId) return false; // 未取得
-
       displayLog('已取得clientUserId: ' + window.clientUserId);
-
       // 已取得
       this.clientUserId = window.clientUserId;
       clearInterval(window.checkClientUserIdTimer);
