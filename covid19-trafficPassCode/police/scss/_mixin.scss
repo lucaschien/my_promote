@@ -1,0 +1,18 @@
+/* 區塊有 scroll bar 樣式 (框架預設是沒有 scroll bar) */
+@mixin use-scroll-bar () {
+  &::-webkit-scrollbar {
+    display: block;
+  }
+}
+
+// chatFlow item 通用性控制項的 label 設定
+@mixin chat-flow-itemsLabel () {
+  color: $default-Black;
+  font-size: 13px;
+  margin-top: 6px;
+  margin-bottom: 3px;
+  display: block;
+  .require {
+    color: $red-1;
+  }
+}

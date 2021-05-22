@@ -2,6 +2,9 @@
 https://sit.eyesmedia.com.tw/covid19-footprint/api/v1/covid/updateUserCreateTime/29
 
 
+swagger 位置:
+https://sit.eyesmedia.com.tw/covid19-footprint/swagger-ui.html#/
+
 
 qrcode url: https://liff.line.me/{liffId}?redirect={商家資訊}
 
@@ -49,10 +52,11 @@ https://lucaschien.github.io/my_promote/covid19/index.html?liff.state=%3FstoreId
 消費者端 endpointType 定義:
   REGISTER: 已申請通行證,未申請通行證
   FOOTPRINT: 28日足跡
+  MODIFYUSER: 用戶修改會員資料
 
 店家端 endpointType 定義:
   STANDARD: 一般類
-  TRAFFIC:  交通類
+  TRAFFIC: 交通類
   B_FOOTPRINT: 28日足跡
   QRCODE: 下載QA code
   STANDARD_COMPLETE: 一般類完成頁(我前端網頁自己用的)

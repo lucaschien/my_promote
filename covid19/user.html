@@ -16,6 +16,7 @@
 
 </head>
 <body>
+  user 1
   <div class="app">
     <div class="main">
       <!-- 已申請通行證,未申請通行證 -->
@@ -82,7 +83,23 @@
             <button type="button" id="logged-send-btn">送出</button>
 
           </div>
-        </div>        
+        </div>  
+        
+        <!-- 修改會員資料 -->
+        <div class="endpointType-block endpointType_MODIFYUSER" id="modify-form">
+          <label class="label-box">
+            <h5>姓名<span class="require">*</span></h5>
+            <input type="text" name="userName" id="modifyUserName" placeholder="請輸入" require>
+            <span class="require-text">必填</span>
+          </label>
+          <label class="label-box">
+            <h5>手機號碼<span class="require">*</span></h5>
+            <input type="tel" name="phoneNumber" id="modifyPhoneNumber" placeholder="例:0912345678" require>
+            <span class="require-text">必填</span>
+          </label>
+
+          <button type="button" id="modify-send-btn" disabled>送出</button>
+        </div>
 
          <!-- 28日足跡查詢 -->
         <div class="endpointType-block endpointType_FOOTPRINT">
@@ -144,17 +161,31 @@
       <div class="dialog-content">
         <div class="content-body">
           <div class="complate-dialog-dbSignboardName"></div>
+          <div class="complate-dialog-dateTime"></div>
           <div>
             您已完成本次實聯登記<br>
             感謝您的配合
           </div>
           <img src="./image/a5.png">
         </div>
-        <button id="closeLiff-btn">關閉</button>
-        <!-- <button class="width-half" id="editUaerData-btn">修改登記資料</button> -->
+        <button class="width-half" id="editUaerData-btn">修改登記資料</button>
+        <button class="width-half" class="closeLiff-btn">關閉</button>
       </div>
     </div>
 
+    <!-- 修改會員資料完成 dialog -->
+    <div class="dialog-box modifyuser-complete">
+      <div class="dialog-mask"></div>
+      <div class="dialog-content">
+        <div class="content-body">
+          <div class="complate-dialog-dateTime"></div>
+          <div>
+            會員資料修改完成
+          </div>
+          <img src="./image/a5.png">
+        </div>
+        <button class="closeLiff-btn">關閉</button>
+    </div>
   </div>
 
 <script>
@@ -176,7 +207,7 @@ $(function() {
   var endpointType = null; // 記住當前是哪一個 endpointType 用
   var storeId = null;      // 記住當前的店家id
   var liffId = null;       // 記住當前的 liffid
-
+  
   // 解析瀏覽器url參數
   function parseURLparm() {
     var href = window.location.href;
@@ -242,6 +273,9 @@ $(function() {
             
             $('#dbUserName').html(userModel.userName);
             $('#dbmobile').html(userModel.phoneNumber);
+
+            // 已登入直接呈現 dialog
+            $('#logged-send-btn').click();
           }
           if (storeData) {
             // 店家名稱
@@ -255,6 +289,62 @@ $(function() {
       },
       error: function (error) {
         $('#userProfileBox').append(`<div>呼叫是否已經登入過 error: ${JSON.stringify(error)}<br><br></div>`);
+      }
+    });
+  }
+
+  // api 取得用戶基本資料
+  function getCUserInfo() {
+    // 注意用同查是否已登入的那隻api來撈取用戶資料
+    var path = apiPath+'/api/v1/client/checkUserAndGetStoreInfo';
+    var parm = {
+      clientUserId: userModel.clientUserId,
+      storeId: ''
+    };
+    $('#userProfileBox').append(`<div>呼叫取得用戶基本資料 path: ${path}<br><br></div>`);
+    $('#userProfileBox').append(`<div>呼叫取得用戶基本資料 body: ${JSON.stringify(parm)}<br><br></div>`);
+    $.ajax({
+      cache: false,
+      type: "POST",
+      dataType: 'json',
+      contentType: 'application/json;charset=utf-8',
+      async: false,
+      data: JSON.stringify(parm),
+      url: path,
+      success: function(result) {
+        $('#userProfileBox').append(`<div>呼叫取得用戶基本資料 success: ${JSON.stringify(result)}<br><br></div>`);
+        if (result.errorCode === '996600001') {
+          var storeData = result.data.store;
+          var userData = result.data.user;
+        
+          if (userData) {
+            $('#nowDate').html(moment().format('YYYY/MM/DD HH:mm'));
+            
+            $('#userProfileBox').append(`<div>用戶基本資料拿到的商家資訊: ${JSON.stringify(storeData)}<br><br></div>`);
+            $('#userProfileBox').append(`<div>用戶基本資料拿到的消費者資訊: ${JSON.stringify(userData)}<br><br></div>`);
+            
+            // 將db資料反寫到前端的表單model
+            userModel.userId = userData.userId;      // 已填過的用戶 id
+            userModel.phoneNumber = userData.mobile; // 電話
+            userModel.userName = userData.userName;  // 名字
+
+            $('#userProfileBox').append(`<div>將db資料反寫到前端的表單model: ${JSON.stringify(userData)}<br><br></div>`);
+            
+            $('#modifyUserName').val(userModel.userName);
+            $('#modifyPhoneNumber').val(userModel.phoneNumber);
+            $('#modify-send-btn').removeAttr('disabled'); // 按鈕改為可以點擊
+          }
+          if (storeData) {
+            userModel.storeId = storeData.storeId;   // 商家 storeId
+            // 店家名稱
+            $('#dbSignboardName, .complate-dialog-dbSignboardName').html(storeData.signboardName);
+          }
+        } else {
+
+        }
+      },
+      error: function (error) {
+        $('#userProfileBox').append(`<div>呼叫取得用戶基本資料 error: ${JSON.stringify(error)}<br><br></div>`);
       }
     });
   }
@@ -341,6 +431,9 @@ $(function() {
       if (endpointType === 'FOOTPRINT') {
         c28();
       }
+      if (endpointType === 'MODIFYUSER') {
+        getCUserInfo();
+      }
     });
   }
   
@@ -375,6 +468,8 @@ $(function() {
   $('.check-agree').change(() => {
     // 注意 length >= 2 是因為我將登入與未登入做在同一頁的關係
     if ($('.check-agree:checked').length >= 2) {
+      $('#notLogin-send-btn, #logged-send-btn').attr('disabled', false);
+      // 觸發檢查必填
       if (isLogded) {
         $('#logged').find('input[type=text]').change();
       } else {
@@ -385,7 +480,7 @@ $(function() {
     }
   });
 
-  // event 未登入的表單欄位檢查是有值用
+  // event 未登入的表單欄位檢查是否有值用
   $('#notLogin').find('input[require]').change((event) => {
     var isFull = true;
     $.each($('#notLogin').find('input[require]'), function(i, item) {
@@ -401,7 +496,7 @@ $(function() {
     }
   });
 
-  // event 已登入的表單欄位檢查是有值用
+  // event 已登入的表單欄位檢查是否有值用
   $('#logged').find('input[require]').change((event) => {
     var isFull = true;
     $.each($('#logged').find('input[require]'), function(i, item) {
@@ -417,6 +512,21 @@ $(function() {
     }
   });
 
+  // event 修改會員資料表單欄位檢查是否有值用
+  $('#modify-form').find('input[require]').change((event) => {
+    var isFull = true;
+    $.each($('#modify-form').find('input[require]'), function(i, item) {
+      if (!$(item).val()) {
+        isFull = false;
+      }
+    });
+    if (isFull) {
+      $('#modify-send-btn').removeAttr('disabled');
+    } else {
+      $('#modify-send-btn').attr('disabled', true);
+    }
+  });
+
   // event click 觀看個資授權
   $('.lookAuthorization').click(() => {
     $('.authorization').addClass('show');
@@ -428,18 +538,30 @@ $(function() {
   });
 
   // event click 關閉完成登記 dialog (已登入未登入共用)
-  $('#closeLiff-btn').click(() => {
+  $('.closeLiff-btn').click(() => {
     liff.closeWindow();
   });
 
-  // event 已登入與未登入 輸入欄位切換時擷取 value
-  $('#notLogin, #logged').find('input').change((event) => {
+  // event 已登入/未登入/修改會員資料 輸入欄位切換時擷取 value
+  $('#notLogin, #logged, #modify-form').find('input').change((event) => {
     if ($(event.target).attr('type') === 'checkbox') return false;
 
     var $target = $(event.target);
     var value = $target.val();
     var name = $target.attr('name');
-    userModel[name] = value;
+    
+    // 如果是手機欄位需要驗證格式
+    if (name === 'phoneNumber') {
+      if (is_mobile(value)) {
+        userModel[name] = value;
+      } else {
+        $target.val('');
+        $target.change();
+        alert('手機格式錯誤');
+      }
+    } else {
+      userModel[name] = value;
+    }
 
     // 如果是必填欄位加上必填提示
     if (($target.attr('require') === '') && !value) {
@@ -466,6 +588,7 @@ $(function() {
       success: function(result) {
         $('#userProfileBox').append(`<div>呼叫createClientUser success: ${JSON.stringify(result)}<br><br></div>`);
         if (result.errorCode === '996600001') {
+          $('.complate-dialog-dateTime').html(moment().format('YYYY/MM/DD HH:mm'));
           $('.dialog-box.complete').addClass('show');
         }
       },
@@ -473,6 +596,42 @@ $(function() {
         $('#userProfileBox').append(`<div>呼叫createClientUser error: ${JSON.stringify(error)}<br><br></div>`);
       }
     });
+  });
+  
+  // event click 修改會員資料 的送出按鈕
+  $('#modify-send-btn').click(() => {
+    let path = apiPath+'/api/v1/client/updateUserInfo';
+    $('#userProfileBox').append(`<div>送出updateUserInfo path: ${path}<br><br></div>`);
+    $('#userProfileBox').append(`<div>呼叫updateUserInfo body: ${JSON.stringify(userModel)}<br><br></div>`);
+
+    $.ajax({
+      cache: false,
+      type: "POST",
+      dataType: 'json',
+      contentType: 'application/json;charset=utf-8',
+      async: false,
+      data: JSON.stringify(userModel),
+      url: path,
+      success: function(result) {
+        $('#userProfileBox').append(`<div>呼叫updateUserInfo success: ${JSON.stringify(result)}<br><br></div>`);
+        if (result.errorCode === '996600001') {
+          $('.complate-dialog-dateTime').html(moment().format('YYYY/MM/DD HH:mm'));
+          $('.dialog-box.modifyuser-complete').addClass('show');
+        }
+      },
+      error: function (error) {
+        $('#userProfileBox').append(`<div>呼叫updateUserInfo error: ${JSON.stringify(error)}<br><br></div>`);
+      }
+    });
+
+  });
+
+  // event click 前往修改會員資料頁面
+  $('#editUaerData-btn').click(() => {
+    endpointType = 'MODIFYUSER';
+    showEndpointTypeBlock (endpointType);
+    $('.endpointType_REGISTER').removeClass('show');
+    $('.complete').removeClass('show');
   });
 
   onload();

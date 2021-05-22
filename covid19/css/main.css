@@ -55,7 +55,7 @@ img {
   background-color: green;
 }
 
-/* C端 申請通行證/現場登記 單元專用 */
+/* C端 申請通行證/現場登記/修改會員資料 單元專用 */
 .user .main-banner {
   display: none;
 }
@@ -406,7 +406,32 @@ label.label-box.error .require-text {
   text-align: center;
   line-height: 36px;
 }
-.dialog-box.complete .complate-dialog-dbSignboardName {
+.dialog-box.complete .complate-dialog-dbSignboardName,
+.dialog-box.complete .complate-dialog-dateTime {
+  font-weight: 500;
+  text-align: center;
+  font-size: 24px;
+  color: #01A89E;
+}
+.dialog-box.complete #editUaerData-btn {
+  background-color: #fff;
+  border-color: #fd5f00;
+  color: #fd5f00;
+}
+/* for C端修改會員資料用 dialog */
+.dialog-box.modifyuser-complete .dialog-content .content-body {
+  height: 80%;
+  overflow: scroll;
+  font-size: 23px;
+  display: flex;
+  align-items: center;
+  /* justify-content: space-around; */
+  justify-content: space-around;
+  flex-direction: column;
+  text-align: center;
+  line-height: 36px;
+}
+.dialog-box.modifyuser-complete .complate-dialog-dateTime {
   font-weight: 500;
   text-align: center;
   font-size: 24px;
@@ -420,5 +445,5 @@ label.label-box.error .require-text {
   padding: 20px;
   word-break: break-all;
   margin: 20px 0;
-  display: none; 
+  /* display: none; */
 }

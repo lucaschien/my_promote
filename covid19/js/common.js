@@ -20,12 +20,33 @@ function parseURLparm() {
   return vars;
 }
 
+// 驗證手機號
+function is_mobile(mobile) {
+  if (mobile === '') {
+    return false;
+  } else {
+    // 台灣手機規則
+    if (!(/^09[0-9]{8}$/.test(mobile))) {
+      return false;
+    }
+    return true;
+  }
+}
+
 // 區分要打開哪一個 endpointType 的div區塊
 function showEndpointTypeBlock (endpointType) {
+  //alert(endpointType);
+
   // 消費者端
   if (endpointType === 'REGISTER') { // 已申請通行證,未申請通行證
     $('.endpointType_REGISTER').addClass('show');
     $('.main').addClass('user');
+  }
+  if (endpointType === 'MODIFYUSER') { // 修改會員資料
+    $('.endpointType_MODIFYUSER').addClass('show');
+    $('.main').addClass('user');
+    $('.user').addClass('modifyuser');
+    document.title = '實聯制｜修改會員資料';
   }
   if (endpointType === 'FOOTPRINT') { // 28日足跡
     $('.endpointType_FOOTPRINT').addClass('show');
