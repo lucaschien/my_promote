@@ -1,0 +1,7 @@
+我個人拿來測試用的github資料夾位置:
+https://github.com/lucaschien/my_promote/tree/master/covid19-trafficPassCode/police/dist
+
+測試github上的網址: (於chrome devTool 輸入 window.clientUserId = 'U5ab59f96d2d886c8274c87c64ee67a24'; 就可以模擬在 liff page 了)
+https://lucaschien.github.io/my_promote/covid19-trafficPassCode/police/dist/#/home
+
+

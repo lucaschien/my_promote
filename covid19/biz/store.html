@@ -16,7 +16,6 @@
 
 </head>
 <body>
-  store
   <div class="app">
     <div class="main store">
       
@@ -356,7 +355,7 @@ $(function() {
   }
 
   // event 一般類的表單必填欄位檢查是有值用
-  $('#normalForm').find('input[require]').change((event) => {
+  $('#normalForm').find('input[require]').bind('input porpertychange', (event) => {
     var isFull = true;
     $.each($('#normalForm').find('input[require]'), function(i, item) {
       if (!$(item).val()) {
@@ -371,7 +370,7 @@ $(function() {
   });
 
   // event 交通類的表單必填欄位檢查是有值用
-  $('#trafficForm').find('input[require]').change((event) => {
+  $('#trafficForm').find('input[require]').bind('input porpertychange', (event) => {
     var isFull = true;
     $.each($('#trafficForm').find('input[require]'), function(i, item) {
       if (!$(item).val()) {
@@ -386,7 +385,7 @@ $(function() {
   });
 
   // event 一般類與交通類 輸入欄位切換時擷取 value
-  $('#normalForm, #trafficForm').find('input').change((event) => {
+  $('#normalForm, #trafficForm').find('input').bind('input porpertychange', (event) => {
     var $target = $(event.target);
     var value = $target.val();
     var name = $target.attr('name');
@@ -402,7 +401,6 @@ $(function() {
 
   // event click 一般類/交通類 的送出按鈕
   $('#normal-send-btn, #traffic-send-btn').click(() => {
-    console.log('一般類的送出按鈕', storeModel);
     let path = apiPath+'/api/v1/store/storeInformation';
     $('#userProfileBox').append(`<div>呼叫storeInformation path: ${path}<br><br></div>`);
     $('#userProfileBox').append(`<div>呼叫storeInformation body: ${JSON.stringify(storeModel)}<br><br></div>`);

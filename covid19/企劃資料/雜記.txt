@@ -6,24 +6,15 @@ swagger 位置:
 https://sit.eyesmedia.com.tw/covid19-footprint/swagger-ui.html#/
 
 
-qrcode url: https://liff.line.me/{liffId}?redirect={商家資訊}
+// 我個人 liff id 對應到 艾斯s3上面的 endpoint URL
+https://s3-ap-northeast-1.amazonaws.com/cdn.eyesmedia.com.tw/sit/covid19/user.html
 
 
-
-qrcode url: https://liff.line.me/{liffId}?storeId={商家編號}
-前端UI->
-ajax call get api
-url: http://api.justka.ai/covid19-footprint/queryUserStoreInfo?storeId={商家編號}
-未填過使用者資料的：
-ajax call post api
-url: http://api.justka.ai/covid19-footprint/binding
-body {商家資訊:{}, 客戶資訊:{}}
+//桌機看 Ｂ端的 qrcode 
+https://cdn.eyesmedia.com.tw/sit/covid19/store.html?storeId=31c1abcf-b4bd-4b84-a2d6-79bd70f460fa&liffId=1656001745-aAmeEVo1&endpointType=QRCODE
 
 
-qrcode url: https://liff.line.me/{liffId}?storeId={商家編號}&liffId={liffId}
-
-
-/*
+/* sit
   B端 1656001745 c7bf3452-9ded-40b2-85aa-cf893af0718d
   liff id --> 1656001745-aAmeEVo1
   https://s3-ap-northeast-1.amazonaws.com/cdn.eyesmedia.com.tw/sit/covid19/store.html
@@ -63,10 +54,6 @@ https://lucaschien.github.io/my_promote/covid19/index.html?liff.state=%3FstoreId
   TRAFFIC_COMPLETE: 交通類完成頁(我前端網頁自己用的)
 
 
-sit api 前面路徑 https://sit.eyesmedia.com.tw/covid19-footprint/
-
-B端 一般類店家登入 api
-/api/v1/store/storeInfomation
 
 
 
@@ -110,6 +97,4 @@ userName
 
 
 
-B端 店家下載Qrcode
-https://liff.line.me/1656001745-aAmeEVo1?storeId=9d30e52c-6b97-45fe-82f2-21c1f43bae2f&liffId=1656001745-aAmeEVo1&endpointType=QRCODE
 

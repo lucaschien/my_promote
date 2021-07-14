@@ -1,0 +1,202 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Mobii! 綠色城市生活優惠平台</title>
+  <link rel="stylesheet" href="./css/reset.css">
+  <link rel="stylesheet" href="./css/main.css">
+  <script type="text/javascript" src="./js/jquery.js"></script>
+  <script type="text/javascript" src="./js/common.js"></script>
+  <script src="https://static.line-scdn.net/liff/edge/versions/2.8.0/sdk.js"></script>
+
+</head>
+<body>
+  <div class="app">
+    <div class="main store-complete">
+      <div class="main-banner">
+        <div class="endpointType-block endpointType_STANDARD_COMPLETE">
+          <img src="./image/a2.png">
+        </div>
+        <div class="endpointType-block endpointType_TRAFFIC_COMPLETE">
+          <img src="./image/a3.png">
+        </div>
+      </div>
+      <div class="main-content">
+
+        <h4 class="text-center">
+          已完成申請，一個Line帳號只能申請一次。
+          若需變更申請資料或解除綁定，請聯絡客服。
+        </h4>
+
+        <!-- 一般類介面 -->
+        <div class="endpointType-block endpointType_STANDARD_COMPLETE">
+          <label class="label-box">
+            <h5>招牌名稱<span class="require">*</span></h5>
+            <span class="display-value signboardName">--</span>
+          </label>
+          <label class="label-box">
+            <h5>登記公司/店家名稱</h5>
+            <span class="display-value company">--</span>
+          </label>
+          <label class="label-box">
+            <h5>統一編號</h5>
+            <span class="display-value unumber">--</span>
+          </label>
+          <label class="label-box">
+            <h5>營業地址<span class="require">*</span></h5>
+            <span class="display-value address">--</span>
+          </label>
+          <label class="label-box">
+            <h5>聯絡人姓名<span class="require">*</span></h5>
+            <span class="display-value contactPerson">--</span>
+          </label>
+          <label class="label-box">
+            <h5>聯絡電話<span class="require">*</span></h5>
+            <span class="display-value contactMobile">--</span>
+          </label>
+        </div>
+        <!-- 交通類 -->
+        <div class="endpointType-block endpointType_TRAFFIC_COMPLETE">
+          <label class="label-box">
+            <h5>公車/客運路線<span class="require">*</span></h5>
+            <span class="display-value busRoute">--</span>
+          </label>
+          <label class="label-box">
+            <h5>公車/客運車號<span class="require">*</span></h5>
+            <span class="display-value busNumber">--</span>
+          </label>
+          <label class="label-box">
+            <h5>登記公司名稱</h5>
+            <span class="display-value company">--</span>
+          </label>
+          <label class="label-box">
+            <h5>統一編號</h5>
+            <span class="display-value unumber">--</span>
+          </label>
+          <label class="label-box">
+            <h5>營業地址<span class="require">*</span></h5>
+            <span class="display-value address">--</span>
+          </label>
+          <label class="label-box">
+            <h5>聯絡人姓名<span class="require">*</span></h5>
+            <span class="display-value contactPerson">--</span>
+          </label>
+          <label class="label-box">
+            <h5>聯絡電話<span class="require">*</span></h5>
+            <span class="display-value contactMobile">--</span>
+          </label>
+        </div>
+        
+        <div class="btn-box">
+          <!-- <button type="button" class="width-half callCenter-btn">聯絡客服</button> -->
+          <!-- <a href="mailto:mobiics@mobii.ai" class="width-half callCenter-btn">聯絡客服</a> -->
+          <button type="button" class="width-half" id="callCenter">聯絡客服</button>
+          <button type="button" class="width-half" id="gotoQrcode">下載專屬QRocde</button>
+        </div>
+
+        <div id="userProfileBox"></div>
+  
+      </div>
+    </div>
+
+  </div>
+
+<script>
+$(function() {
+  $('#userProfileBox').append(`<div>window.location.href: ${JSON.stringify(window.location.href)}<br><br></div>`);
+
+  var endpointType = null; // 記住當前是哪一個 endpointType 用
+  var storeId = null; // 記住當前的店家id
+  var liffId = null;  // 記住當前的 liffid
+  var storeData = null; // 記住重 store.html 帶過來的資料
+  var clientUserId = null; // 記住 line liff 提供的 user id
+
+  // 呈現剛剛註冊的商家資料
+  function displayStoreData() {
+    if (storeData) {
+      // 一般類
+      $('.signboardName').html(storeData.signboardName);
+      $('.company').html(storeData.company);
+      $('.unumber').html(storeData.unumber);
+      $('.address').html(storeData.address);
+      $('.contactPerson').html(storeData.contactPerson);
+      $('.contactMobile').html(storeData.contactMobile);
+      // 交通類
+      $('.busRoute').html(storeData.busRoute);
+      $('.busNumber').html(storeData.busNumber);
+    }
+  }
+
+  // 取得 liff 使用者基本資料
+  function getUserProfile(accessToken) {
+    //透過 token 取得使用者資訊
+    fetch('https://api.line.me/v2/profile', {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
+      },
+    }).then(response => {
+      return response.json();
+    }).then((data) => {
+
+      // TODO... 開發測試用
+      $('#userProfileBox').append(`<div>https://api.line.me/v2/profile:'${JSON.stringify(data)}'<br><br></div>`);
+      $('#userProfileBox').append(
+        'userId:' + data.userId + '<br>' +
+        'displayName:' + data.displayName + '<br>' +
+        'pictureUrl:' + data.pictureUrl + '<br>'
+      );
+
+    });
+  }
+  
+  // liff 初始化
+  function onload() {
+    var urlParm = parseURLparm();
+    storeId = urlParm.storeId;
+    liffId = urlParm.liffId;
+    endpointType = urlParm.endpointType;
+    if (urlParm.storeData) {
+      storeData = JSON.parse(decodeURI(urlParm.storeData)); // <---注意這是我前端自己從 store.html 帶過來的
+    }
+    $('#userProfileBox').append(`<div><br>endpointType: ${endpointType}</div>`);
+    $('#userProfileBox').append(`<div><br>storeId: ${storeId}</div>`);
+    $('#userProfileBox').append(`<div><br>liffId: ${liffId}<br><br></div>`);
+    $('#userProfileBox').append(`<div>storeData: ${JSON.stringify(storeData)}<br><br></div>`);
+
+    showEndpointTypeBlock(endpointType);
+    displayStoreData();
+
+    if (liff) {
+      // TODO... 由於 app 中 liff 打開之後後面的url參數會被轉碼... 這部分還要研究所以先寫死 1633210473-BZ1zNNWk
+      liff.init({ liffId: bLiffId }).then(() => {
+        var accessToken = liff.getAccessToken();
+        $('#userProfileBox').append(`<div>accessToken: ${accessToken}<br><br></div>`);
+        getUserProfile(accessToken);
+      }).catch((error) => {
+        alert('liff init error: ' + JSON.stringify(error));
+      });
+    }
+  }
+
+  // event click 前往下載 qrCode 頁面
+  $('#gotoQrcode').click(() => {
+    location.href = `./store.html?storeId=${storeId}&liffId=${liffId}&endpointType=QRCODE`;
+  });
+
+  // event click 聯絡客服人員
+  $('#callCenter').click(() => {
+    window.location = "mailto:mobiics@mobii.ai";
+  });
+
+
+  onload();
+});
+</script>
+</body>
+</html>

@@ -1,6 +1,6 @@
-# eyesmedia-chat-services-ui
+# eyesmedia-covid19-police-ui
 
-> chat-services-ui
+> eyesmedia-covid19-police-ui
 
 ## Build Setup
 

@@ -1,0 +1,452 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #13334C;
+  background-color: #f5f5f5;
+  font-size: 16px;
+}
+a {
+  color: #008FFF;
+  text-decoration: none;
+}
+
+.app {
+  max-width: 670px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background-color: #fff;
+}
+.header {
+  text-align: center;
+  position: relative;
+}
+.main {
+}
+.main-banner {
+  background-color: #C4C4C4;
+  text-align: center;
+  color:#fff;
+}
+.main-content {
+  padding: 26px;
+}
+
+img {
+  max-width: 100%;
+  vertical-align: top;
+}
+
+/* endpointType 區塊 */
+.endpointType-block {
+  display: none;
+}
+.endpointType-block.show {
+  display: block;
+}
+
+
+/* gui 單元專用 */
+.gui .main-banner{
+  background-color: green;
+}
+
+/* C端 申請通行證/現場登記/修改會員資料 單元專用 */
+.user .main-banner { /* 申請通行證/現場登記/修改會員資料 banner先隱藏起來 */
+  display: none;
+}
+.user.notLogin .main-banner { /* 未登入 */
+  display: block;
+}
+.user.logged .main-banner { /* 已登入 */
+
+}
+.user.modifyuser .main-banner { /* 修改會員資料 */
+  display: block;
+}
+.user.logged .main-banner img { /* 已登入 */
+  display: none;
+}
+.user #notLogin, .user #logged { /* 已登入 未登入 表單先隱藏起來 */
+  display: none;
+}
+.user.notLogin #notLogin { /* 未登入 表單打開 */
+  display: block;
+}
+.user.logged #logged { /* 已登入 表單打開 */
+  display: block;
+}
+.user h3 {
+  margin: 20px 0;
+  font-weight: 500;
+  text-align: center;
+  font-size: 24px;
+  color: #01A89E;
+}
+.user h4 {
+  margin: 20px 0 40px 0;
+  font-weight: 500;
+  text-align: center;
+}
+.user button {
+  margin-top: 20px;
+}
+
+
+/* c端/B端 28日足跡查詢 單元專用*/
+.footprint h3, 
+.b-footprint h3 {
+  margin: 20px 0;
+  font-weight: 500;
+  text-align: center;
+  font-size: 16px;
+}
+.footprint .introduction-box,
+.b-ootprint .introduction-box
+{
+  font-size: 14px;
+  line-height: 18px;
+  margin-bottom: 20px;
+}
+.footprint .note-box,
+.b-footprint .note-box 
+{
+  font-size: 14px;
+  line-height: 18px;
+}
+.footprint .note-box li, 
+.b-footprint .note-box li {
+  padding-bottom: 8px;
+  padding-left: 13px;
+  text-indent: -13px;
+  text-align: justify;
+}
+
+/* 店家申請頁 一般類/交通類 單元專用 */
+.store .main-banner span {
+  display: none;
+}
+.store .main-banner span.show {
+  display: inline;
+}
+.store.normal .main-banner { /* 一般類 */
+  background-color: #6ABFDD;
+}
+.store.traffic .main-banner { /* 交通類 */
+  background-color: #81D39A;
+}
+.store h4 {
+  margin-bottom: 25px;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+/* 店家專屬QRcode */
+.store.qrcode .main-banner {
+  background-color: #466A5E;
+}
+.store.qrcode .main-content img {
+  margin: 0 auto 30px auto;
+  display: block;
+  width: 100%;
+  max-width: 300px;
+}
+.store.qrcode .main-content .download-link {
+  width: 100%;
+  display: block;
+  text-align: center;
+  background-color: #fd5f00;
+  color: #fff;
+  border-radius: 50px;
+  padding: 20px;
+  font-size: 16px;
+}
+.store.qrcode .main-content .download-note{
+  text-align: center;
+  color: #FD5F00;
+  font-size: 16px;
+}
+.store.qrcode h4 {
+  font-size: 18px;
+  text-align: center;
+}
+.store.qrcode h5 {
+  font-size: 16px;
+  text-align: center;
+}
+
+/* 店家申請頁 一般類/交通類完成 單元專用 */
+.store-complete h4 {
+  margin-bottom: 25px;
+}
+.store-complete .callCenter-btn {
+  text-align: center;
+  background-color: #fff;
+  color: #fd5f00;
+  border: 1px solid #fd5f00;
+  border-radius: 50px;
+  padding: 14px;
+  font-size: 16px;
+  display: inline-block;
+}
+.store-complete .btn-box {
+  display: flex;
+}
+.store-complete #callCenter {
+  padding-left: 5px;
+  padding-right: 5px;
+  background-color: #fff;
+  color: #fd5f00;
+  border: 1px solid #fd5f00;
+}
+.store-complete #gotoQrcode {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+
+
+
+
+/* scan 單元專用 */
+.scan .main-banner {
+  background-color: pink;
+}
+.scan .scan-btn-box {
+  position: relative;
+}
+.scan .scan-btn-box input[type=file] {
+  position: absolute;
+  z-index: 1;
+  left: calc(50% - 50px);
+  top: 0;
+  opacity: 0;
+  display: block;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+}
+.scan .scan-btn-box button {
+  margin: 0 auto;
+  display: block;
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+}
+
+
+
+/* form ui start */
+input[type=button], button {
+  border: 1px solid #fd5f00;
+  background-color: #fd5f00;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+}
+input[type=button]:disabled, button:disabled {
+  border-color: #C4C4C4;
+  background-color: #C4C4C4;
+}
+
+input[type=text], input[type=tel], textarea, select {
+  border: 1px solid #C4C4C4;
+  border-radius: 3px;
+  padding: 10px;
+  width: 100%;
+}
+input[type=text]:disabled, input[type=tel]:disabled, textarea:disabled, select:disabled {
+  border-color: #e1e1e1;
+  background-color: #e1e1e1;
+}
+
+textarea {
+  resize: vertical;
+}
+
+input[type="radio"], input[type="checkbox"] {
+  margin-bottom: 20px;
+}
+input[type="radio"]:disabled, input[type="checkbox"]:disabled {
+  /* border-color: #e1e1e1;
+  background-color: #e1e1e1; */
+}
+/* form ui end */
+
+
+
+table {
+  margin: 20px 0;
+  width: 100%;
+}
+table th, table td {
+  padding: 10px;
+  font-size: 14px;
+}
+table th {
+  background-color: #13334C;
+  color: #fff;
+  font-size: 16px;
+}
+table td {
+  background-color: #E5E9F2;
+}
+table tr:nth-of-type(2n) td {
+  background-color: #F8F8F8;
+}
+
+
+
+/* 通用性方法 */
+.width-full {
+  width: 100%;
+}
+
+.width-half {
+  width: 47%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+
+label.label-box {
+  display: block;
+  margin-bottom: 20px;
+}
+label.label-box .require-text {
+  display: none;
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+label.label-box h5 {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+label.label-box h5 span.require {
+  color: #FF3B30;
+}
+label.label-box .display-value {
+  display: block;
+  padding: 10px 10px 20px 10px;
+}
+label.label-box.error input{
+  border-color: red;
+}
+label.label-box.error .require-text {
+  display: block;
+}
+
+
+/* dialog */
+.dialog-box {
+  display: none;
+}
+.dialog-box.show {
+  display: block;
+}
+.dialog-box .dialog-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 1;
+}
+.dialog-box .dialog-content {
+  position: fixed;
+  top: calc(50% - 45%);
+  left: calc(50% - 45%);
+  width: 90%;
+  /* max-width: 500px; */
+  height: 90%;
+  overflow: scroll;
+  background-color: #fff;
+  z-index: 1;
+  padding: 20px;
+}
+/* for 個資授權 dialog */
+.dialog-box.authorization .dialog-content h5{
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
+.dialog-box.authorization .dialog-content .content-body {
+  height: 70%;
+  overflow: scroll;
+}
+.dialog-box.authorization .dialog-content li {
+  padding-bottom: 10px;
+  padding-left: 13px;
+  text-indent: -13px;
+  line-height: 18px;
+  text-align: justify;
+}
+.dialog-box.authorization .dialog-content button {
+  margin-top: 20px;
+}
+/* for C端user完成登錄用 dialog */
+.dialog-box.complete .dialog-content .content-body {
+  height: 80%;
+  overflow: scroll;
+  font-size: 23px;
+  display: flex;
+  align-items: center;
+  /* justify-content: space-around; */
+  justify-content: space-around;
+  flex-direction: column;
+  text-align: center;
+  line-height: 36px;
+}
+.dialog-box.complete .complate-dialog-dbSignboardName,
+.dialog-box.complete .complate-dialog-dateTime {
+  font-weight: 500;
+  text-align: center;
+  font-size: 24px;
+  color: #01A89E;
+}
+.dialog-box.complete #editUaerData-btn {
+  background-color: #fff;
+  border-color: #fd5f00;
+  color: #fd5f00;
+}
+/* for C端修改會員資料用 dialog */
+.dialog-box.modifyuser-complete .dialog-content .content-body {
+  height: 80%;
+  overflow: scroll;
+  font-size: 23px;
+  display: flex;
+  align-items: center;
+  /* justify-content: space-around; */
+  justify-content: space-around;
+  flex-direction: column;
+  text-align: center;
+  line-height: 36px;
+}
+.dialog-box.modifyuser-complete .complate-dialog-dateTime {
+  font-weight: 500;
+  text-align: center;
+  font-size: 24px;
+  color: #01A89E;
+}
+
+
+/* 開發測試用 */
+#userProfileBox {
+  background-color: rgb(255, 255, 203);
+  padding: 20px;
+  word-break: break-all;
+  margin: 20px 0;
+  display: none;
+}

@@ -56,7 +56,7 @@ img {
 }
 
 /* C端 申請通行證/現場登記/修改會員資料 單元專用 */
-.user .main-banner {
+.user .main-banner { /* 申請通行證/現場登記/修改會員資料 banner先隱藏起來 */
   display: none;
 }
 .user.notLogin .main-banner { /* 未登入 */
@@ -64,6 +64,9 @@ img {
 }
 .user.logged .main-banner { /* 已登入 */
 
+}
+.user.modifyuser .main-banner { /* 修改會員資料 */
+  display: block;
 }
 .user.logged .main-banner img { /* 已登入 */
   display: none;
@@ -445,5 +448,5 @@ label.label-box.error .require-text {
   padding: 20px;
   word-break: break-all;
   margin: 20px 0;
-  /* display: none; */
+  display: none;
 }

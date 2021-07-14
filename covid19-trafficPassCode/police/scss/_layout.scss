@@ -1,28 +1,34 @@
-// 整體框架結構
+/* 整體框架結構 */
+
+// app root
 .app {
   max-width: 670px;
   min-height: 100vh;
   margin: 0 auto;
   background-color: #fff;
 }
-.main {
-}
 
-// 每一個單元的共用起始容器
+// 預留彈性容器
+.main {}
+
+// 每一個單元共用的起始容器
 .views-contnet {
   padding: 0;
 }
-// 每一個單元的共用body容器
+
+// 每一個單元共用的body容器
 .views-body {
   padding: 20px;
 }
 
+// 每一個單元內的header
 .app-header {
   background-color: $grey-1;
   color: #fff;
   padding: 10px 10px;
 }
 
+// 每一個單元內的footer
 .footer {
   font-size: 11px;
   background-color: $grey-1;
@@ -30,4 +36,3 @@
   padding: 3px 10px;
   text-align: center;
 }
-

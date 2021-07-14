@@ -16,11 +16,10 @@
 
 </head>
 <body>
-  user 1
   <div class="app">
     <div class="main">
-      <!-- 已申請通行證,未申請通行證 -->
-      <div class="endpointType-block endpointType_REGISTER">
+      <!-- 已申請通行證,未申請通行證, 修改會員資料 -->
+      <div class="endpointType-block endpointType_REGISTER endpointType_MODIFYUSER">
         <div class="main-banner">
           <img src="./image/a1.png">
         </div>
@@ -39,7 +38,7 @@
             <label class="label-box">
               <h5>手機號碼<span class="require">*</span></h5>
               <input type="tel" name="phoneNumber" placeholder="例:0912345678" require>
-              <span class="require-text">必填</span>
+              <span class="require-text">手機格式錯誤</span>
             </label>
             <!-- <label class="label-box">
               <h5>備註<span class="require">*</span></h5>
@@ -95,10 +94,10 @@
           <label class="label-box">
             <h5>手機號碼<span class="require">*</span></h5>
             <input type="tel" name="phoneNumber" id="modifyPhoneNumber" placeholder="例:0912345678" require>
-            <span class="require-text">必填</span>
+            <span class="require-text">手機格式錯誤</span>
           </label>
 
-          <button type="button" id="modify-send-btn" disabled>送出</button>
+          <button type="button" id="modify-send-btn" disabled>確認修改</button>
         </div>
 
          <!-- 28日足跡查詢 -->
@@ -169,7 +168,7 @@
           <img src="./image/a5.png">
         </div>
         <button class="width-half" id="editUaerData-btn">修改登記資料</button>
-        <button class="width-half" class="closeLiff-btn">關閉</button>
+        <button class="width-half closeLiff-btn">關閉</button>
       </div>
     </div>
 
@@ -273,6 +272,11 @@ $(function() {
             
             $('#dbUserName').html(userModel.userName);
             $('#dbmobile').html(userModel.phoneNumber);
+
+            // 注意:額外提供給 "修改帳號密碼介面用"
+            $('#modifyUserName').val(userModel.userName);
+            $('#modifyPhoneNumber').val(userModel.phoneNumber);
+            $('#modify-send-btn').removeAttr('disabled'); // 按鈕改為可以點擊
 
             // 已登入直接呈現 dialog
             $('#logged-send-btn').click();
@@ -481,23 +485,61 @@ $(function() {
   });
 
   // event 未登入的表單欄位檢查是否有值用
-  $('#notLogin').find('input[require]').change((event) => {
+  $('#notLogin').find('input[require]').bind('input porpertychange', (event) => {
+    var $target = $(event.target);
+    var targetValue = $target.val();
+
+    // 檢查所有必填欄位 > 按鈕是否 disabled
     var isFull = true;
     $.each($('#notLogin').find('input[require]'), function(i, item) {
-      if (!$(item).val()) {
+      var $item = $(item);
+      var name = $item.attr('name');
+      var value = $item.val();
+      
+      // 如果是手機欄位需要驗證格式
+      if (name === 'phoneNumber') {
+        if (!is_mobile(value)) {
+          $('#notLogin-send-btn').attr('disabled', true);
+          $('#logged-send-btn').attr('disabled', true);
+          $('#modify-send-btn').attr('disabled', true);
+          isFull = false;
+        }
+      } else if (!value) {
         isFull = false;
       }
     });
+
+    // 檢查自己必填欄位
+    if ($target.attr('name') === 'phoneNumber') { 
+      // 手機欄位
+      if (is_mobile(targetValue)) {
+        $target.parent().removeClass('error');
+      } else {
+        $target.parent().addClass('error');
+        isFull = false;
+      }
+    } else { 
+      // 一般欄位
+      if (targetValue) {
+        $target.parent().removeClass('error');
+      } else {
+        $target.parent().addClass('error');
+        isFull = false;
+      }
+    }
+
     // 已填寫並且也同意授權
-    if (isFull && $('.check-agree:checked').length > 0) {
+    // 注意 length >= 2 是因為我將登入與未登入做在同一頁的關係
+    if (isFull && $('.check-agree:checked').length >= 2) {
       $('#notLogin-send-btn').removeAttr('disabled');
     } else {
       $('#notLogin-send-btn').attr('disabled', true);
     }
+
   });
 
   // event 已登入的表單欄位檢查是否有值用
-  $('#logged').find('input[require]').change((event) => {
+  $('#logged').find('input[require]').bind('input porpertychange', (event) => {
     var isFull = true;
     $.each($('#logged').find('input[require]'), function(i, item) {
       if (!$(item).val()) {
@@ -505,7 +547,8 @@ $(function() {
       }
     });
     // 已填寫並且也同意授權
-    if (isFull && $('.check-agree:checked').length > 0) {
+    // 注意 length >= 2 是因為我將登入與未登入做在同一頁的關係
+    if (isFull && $('.check-agree:checked').length >= 2) {
       $('#logged-send-btn').removeAttr('disabled');
     } else {
       $('#logged-send-btn').attr('disabled', true);
@@ -513,18 +556,53 @@ $(function() {
   });
 
   // event 修改會員資料表單欄位檢查是否有值用
-  $('#modify-form').find('input[require]').change((event) => {
+  $('#modify-form').find('input[require]').bind('input porpertychange', (event) => {
+    var $target = $(event.target);
+    var targetValue = $target.val();
+    
+    // 檢查所有必填欄位 > 按鈕是否 disabled
     var isFull = true;
     $.each($('#modify-form').find('input[require]'), function(i, item) {
-      if (!$(item).val()) {
+      var $item = $(item);
+      var name = $item.attr('name');
+      var value = $item.val();
+      
+      // 如果是手機欄位需要驗證格式
+      if (name === 'phoneNumber') {
+        if (!is_mobile(value)) {
+          $('#notLogin-send-btn').attr('disabled', true);
+          $('#logged-send-btn').attr('disabled', true);
+          $('#modify-send-btn').attr('disabled', true);
+          isFull = false;
+        }
+      } else if (!value) {
         isFull = false;
       }
     });
+
     if (isFull) {
       $('#modify-send-btn').removeAttr('disabled');
     } else {
       $('#modify-send-btn').attr('disabled', true);
     }
+
+    // 檢查自己必填欄位
+    if ($target.attr('name') === 'phoneNumber') { 
+      // 手機欄位
+      if (is_mobile(targetValue)) {
+        $target.parent().removeClass('error');
+      } else {
+        $target.parent().addClass('error');
+      }
+    } else { 
+      // 一般欄位
+      if (targetValue) {
+        $target.parent().removeClass('error');
+      } else {
+        $target.parent().addClass('error');
+      }
+    }
+    
   });
 
   // event click 觀看個資授權
@@ -537,38 +615,26 @@ $(function() {
     $('.authorization').removeClass('show');
   });
 
-  // event click 關閉完成登記 dialog (已登入未登入共用)
+  // event click 關閉完成登記 dialog (已登入未登入, 修改會員資料 共用)
   $('.closeLiff-btn').click(() => {
     liff.closeWindow();
   });
 
   // event 已登入/未登入/修改會員資料 輸入欄位切換時擷取 value
-  $('#notLogin, #logged, #modify-form').find('input').change((event) => {
+  $('#notLogin, #logged, #modify-form').find('input').bind('input porpertychange', (event) => {
     if ($(event.target).attr('type') === 'checkbox') return false;
 
     var $target = $(event.target);
     var value = $target.val();
     var name = $target.attr('name');
-    
-    // 如果是手機欄位需要驗證格式
-    if (name === 'phoneNumber') {
-      if (is_mobile(value)) {
-        userModel[name] = value;
-      } else {
-        $target.val('');
-        $target.change();
-        alert('手機格式錯誤');
-      }
-    } else {
-      userModel[name] = value;
-    }
+    userModel[name] = value;
 
     // 如果是必填欄位加上必填提示
-    if (($target.attr('require') === '') && !value) {
+    /* if (($target.attr('require') === '') && !value) {
       $target.parent().addClass('error');
     } else {
       $target.parent().removeClass('error');
-    }
+    } */
   });
 
   // event click 未登入/已登入 的送出按鈕
@@ -628,10 +694,12 @@ $(function() {
 
   // event click 前往修改會員資料頁面
   $('#editUaerData-btn').click(() => {
-    endpointType = 'MODIFYUSER';
-    showEndpointTypeBlock (endpointType);
+    $('.user').removeClass('logged');
+    $('.user').removeClass('notLogin');
     $('.endpointType_REGISTER').removeClass('show');
     $('.complete').removeClass('show');
+    endpointType = 'MODIFYUSER';
+    showEndpointTypeBlock (endpointType);
   });
 
   onload();

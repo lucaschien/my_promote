@@ -1,9 +1,7 @@
-// sit
-var apiPath = 'https://sit.eyesmedia.com.tw/covid19-footprint';
+// 環境變數
+var apiPath = 'https://biz.justka.ai/covid19-footprint';
 var bLiffId = '1656001745-aAmeEVo1'; 
 var cLiffId = '1655865887-gqaQ9dee';
-
-// biz 
 
 
 // 解析瀏覽器url參數
@@ -46,7 +44,7 @@ function showEndpointTypeBlock (endpointType) {
     $('.endpointType_MODIFYUSER').addClass('show');
     $('.main').addClass('user');
     $('.user').addClass('modifyuser');
-    document.title = '實聯制｜修改會員資料';
+    document.title = '防疫新生活｜修改會員資料';
   }
   if (endpointType === 'FOOTPRINT') { // 28日足跡
     $('.endpointType_FOOTPRINT').addClass('show');

@@ -1,8 +1,8 @@
 {
-  "name": "eyesmedia-chat-services-ui",
+  "name": "eyesmedia-covid19-police-ui",
   "version": "1.0.0",
-  "description": "chat-services-ui",
-  "author": "brian <brian.huang@eyesmedia.com.tw>",
+  "description": "eyesmedia-covid19-police-ui",
+  "author": "Lucas <lucas.chien@eyesmedia.com.tw>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js --api_env dev",

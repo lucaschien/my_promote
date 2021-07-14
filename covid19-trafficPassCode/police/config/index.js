@@ -2,14 +2,14 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 var path = require('path')
 
-const createEnv = (envName, assetsPublicPath='webapp') => {
+const createEnv = (envName, assetsPublicPath='covid19') => {
   envDefine[envName] = {
     env: require(`./${envName}.env`),
     index: path.resolve(__dirname, '../dist/index.html'),
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    //assetsPublicPath: `/${assetsPublicPath}/`,
-    assetsPublicPath: `./${assetsPublicPath}/`, // for 放到 github測試用
+    assetsPublicPath: `/${assetsPublicPath}/`,
+    //assetsPublicPath: `./${assetsPublicPath}/`, // for 放到我個人 github 測試用
     productionSourceMap: false,
     productionGzip: true,
     productionGzipExtensions: ['js', 'css'],
