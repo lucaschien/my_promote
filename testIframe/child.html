@@ -4,7 +4,8 @@
   <link rel="stylesheet" href="./main.css">
   <script type="text/javascript">
     var $recordBox = document.getElementById('recordBox');
-    $recordBox.innerHTML = `判斷自己是否被iframe: ${JSON.stringify(self.frameElement)}`;
+    var isFrame = (self.frameElement)? JSON.stringify(self.frameElement) : 'null';
+    $recordBox.innerHTML = `判斷自己是否被iframe: ${isFrame}`;
 
     // 子層提供外部呼叫用
     window.childInterface = function (_val) {
