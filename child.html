@@ -12,14 +12,22 @@
 
     function childTalkToParent() {
       var content = document.getElementById('childInput').value;
+
+      /* 使用早期的function的方式
       if (parent.window.parentInterface) {
         parent.window.parentInterface(content);
-      }
+      } */
+
+      // 改用 postMessage 的方式
+      parent.postMessage({
+        call: 'parentInterface',
+        parm: content
+      }, '*');
     }
 
     // 監聽 postMwssage 傳遞過來的事件
     window.addEventListener('message', function(e) {
-      console.log('e.data', e.data);
+      console.log('child message e.data', e.data);
       if (e.data.call === 'childInterface' && e.data.parm) {
         childInterface(e.data.parm);
       }
