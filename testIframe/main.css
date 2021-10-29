@@ -1,0 +1,35 @@
+.parent {
+  border: 2px solid red;
+  min-height: 500px;
+}
+
+.child {
+  border: 2px solid green;
+  margin: 10px;
+}
+
+h1 {
+  font-size: 12px;
+  padding: 10px 20px;
+  margin: 0;
+}
+
+.input-box {
+  background-color: rgb(199, 199, 199);
+  padding: 20px;
+}
+
+.record-bpx {
+  font-size: small;
+  background-color: rgb(240, 242, 219);
+  padding: 10px;
+  margin: 0;
+  max-height: 150px;
+  overflow: auto;
+}
+.record-bpx li {
+  margin: 0 0 3px 0;
+  padding: 0 0 0 10px;
+  list-style: none;
+  border-left: 2px solid rgb(113, 72, 36);
+}
