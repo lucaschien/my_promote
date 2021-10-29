@@ -13,13 +13,13 @@
     function childTalkToParent() {
       var content = document.getElementById('childInput').value;
 
-      /* 使用早期的function的方式
+      /* 使用早期的function的方式, 會有跨CORS的問題
       if (parent.window.parentInterface) {
         parent.window.parentInterface(content);
       } */
 
       // 改用 postMessage 的方式
-      parent.postMessage({
+      parent.window.postMessage({
         call: 'parentInterface',
         parm: content
       }, '*');
