@@ -19,8 +19,11 @@
   <script type="text/javascript">
     setTimeout(() => {
       var $recordBox = document.getElementById('recordBox');
-      var isFrame = (self.frameElement)? JSON.stringify(self.frameElement) : 'null';
-      $recordBox.innerHTML = `判斷自己是否被iframe: ${isFrame}`;
+      var tagName = 'null';
+      if (self.frameElement && self.frameElement.tagName) {
+        tagName = self.frameElement.tagName;
+      }
+      $recordBox.innerHTML = `判斷自己是否被iframe: ${tagName}`;
     }, 3000);
     
     // 子層提供外部呼叫用
