@@ -17,10 +17,12 @@
 
 
   <script type="text/javascript">
-    var $recordBox = document.getElementById('recordBox');
-    var isFrame = (self.frameElement)? JSON.stringify(self.frameElement) : 'null';
-    $recordBox.innerHTML = `判斷自己是否被iframe: ${isFrame}`;
-
+    setTimeout(() => {
+      var $recordBox = document.getElementById('recordBox');
+      var isFrame = (self.frameElement)? JSON.stringify(self.frameElement) : 'null';
+      $recordBox.innerHTML = `判斷自己是否被iframe: ${isFrame}`;
+    }, 3000);
+    
     // 子層提供外部呼叫用
     window.childInterface = function (_val) {
       var $recordBox = document.getElementById('recordBox');
