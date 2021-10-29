@@ -2,6 +2,20 @@
 
 <head>
   <link rel="stylesheet" href="./main.css">
+</head>
+
+<body class="child">
+  <h1>我是兒子</h1>
+  <div class="input-box">
+    <input type="text" id="childInput">
+    <input type="button" value="對父親說" onclick="childTalkToParent()" />
+  </div>
+
+  <div>父親說了:
+    <ul class="record-bpx" id="recordBox"></ul>
+  </div>
+
+
   <script type="text/javascript">
     var $recordBox = document.getElementById('recordBox');
     var isFrame = (self.frameElement)? JSON.stringify(self.frameElement) : 'null';
@@ -38,19 +52,6 @@
     }, false);
 
   </script>
-</head>
-
-<body class="child">
-  <h1>我是兒子</h1>
-  <div class="input-box">
-    <input type="text" id="childInput">
-    <input type="button" value="對父親說" onclick="childTalkToParent()" />
-  </div>
-
-  <div>父親說了:
-    <ul class="record-bpx" id="recordBox"></ul>
-  </div>
-
 </body>
 
 </html>
