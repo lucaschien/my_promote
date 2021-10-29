@@ -1,0 +1,36 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="./main.css">
+  <script type="text/javascript">
+    // 子層提供外部呼叫用
+    window.childInterface = function (_val) {
+      var $recordBox = document.getElementById('recordBox');
+      var innerHTML = $recordBox.innerHTML + `<li>${_val}</li>`;
+      $recordBox.innerHTML = innerHTML;
+    }
+
+    function childTalkToParent() {
+      var content = document.getElementById('childInput').value;
+      if (parent.window.parentInterface) {
+        parent.window.parentInterface(content);
+      }
+    }
+
+  </script>
+</head>
+
+<body class="child">
+  <h1>我是兒子</h1>
+  <div class="input-box">
+    <input type="text" id="childInput">
+    <input type="button" value="對父親說" onclick="childTalkToParent()" />
+  </div>
+
+  <div>父親說了:
+    <ul class="record-bpx" id="recordBox"></ul>
+  </div>
+
+</body>
+
+</html>
