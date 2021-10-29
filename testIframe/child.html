@@ -3,6 +3,8 @@
 <head>
   <link rel="stylesheet" href="./main.css">
   <script type="text/javascript">
+    console.log('判斷自己是否被iframe: ', self.frameElement);
+
     // 子層提供外部呼叫用
     window.childInterface = function (_val) {
       var $recordBox = document.getElementById('recordBox');
