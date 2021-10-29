@@ -3,7 +3,8 @@
 <head>
   <link rel="stylesheet" href="./main.css">
   <script type="text/javascript">
-    alert('判斷自己是否被iframe: ' + JSON.stringify(self.frameElement));
+    var $recordBox = document.getElementById('recordBox');
+    $recordBox.innerHTML = `判斷自己是否被iframe: ${JSON.stringify(self.frameElement)}`;
 
     // 子層提供外部呼叫用
     window.childInterface = function (_val) {
