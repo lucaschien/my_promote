@@ -139,14 +139,14 @@ button.grey-btn {
         font-size: 13px;
         color: $grey-3;
       }
-      legend {
+      .legend {
         display: block;
         margin-bottom: 24px;
         &:last-child {
           margin-bottom: 0;
         }
       }
-      legend.flex {
+      .legend.flex {
         display: flex;
         justify-content: space-between;
       }
@@ -194,7 +194,7 @@ button.grey-btn {
             font-size: 13px;
           }
         }
-        legend {
+        .legend {
           margin: 0;
         }
         .tag-type {
