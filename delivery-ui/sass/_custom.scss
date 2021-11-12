@@ -4,16 +4,13 @@
 .gotoOrder {
   box-sizing: border-box;
   display: block;
-  width: calc(100% - 20px);
+  width: 100%;
   background-color: $grey-5;
   color: $grey-6;
   padding: 10px 20px;
   border-radius: 10px;
   text-decoration: none;
   cursor: pointer;
-  position: absolute; 
-  bottom: 10px; 
-  left: 10px;
 }
 
 // 畫面改成上下兩個區塊且靠邊邊的編排樣式

@@ -30,7 +30,9 @@ body {
     box-sizing: border-box;
     padding: 10px;
     max-width: $max-width;
+    /* min-height: 100vh; */
     min-height: 100vh;
+    min-height: calc(var(--vh, 1vh) * 100);
     margin: 0 auto;
     &.fix {
       padding: 0;
@@ -60,6 +62,7 @@ input[type="text"] {
 // 按鈕整體規劃
 button {
   background-color: $red-1;
+  font-size: 15px;
   color: #fff;
   padding: 10px 20px;
   border: 0;
@@ -377,17 +380,10 @@ button.grey-btn {
   position: relative;
   width: 44%;
   margin: 0 1%;
-  .calendar-icon {
-    position: absolute;
-    left: 15px;
-    top: 10px;
-    color: $grey-4;
-    font-size: 20px;
-  }
   input {
     box-sizing: border-box;
     width: 100%;
-    padding: 10px 10px 10px 50px;
+    padding: 10px 10px 10px 10px;
     border: 0;
     border-bottom: 1px solid $grey-4;
     color: $default;
