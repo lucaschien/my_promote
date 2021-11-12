@@ -1,0 +1,87 @@
+.color-default {
+  color: $default !important;
+}
+.color-red-1 {
+  color: $red-1 !important;
+}
+.color-grey-2 {
+  color: $grey-2 !important;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.font-ll {
+  font-size: 25px;
+}
+.font-l {
+  font-size: 20px;
+}
+.font-s {
+  font-size: 15px;
+}
+.font-ss {
+  font-size: 14px;
+}
+.font-ss {
+  font-size: 13px;
+}
+
+.p-normal {
+  padding: 10px 0;
+}
+.p-l {
+  padding: 20px 0;
+}
+.p-s {
+  padding: 5px 0;
+}
+
+.m-normal {
+  margin: 10px 0;
+}
+.m-l {
+  margin: 20px 0;
+}
+.m-s {
+  margin: 5px 0;
+}
+
+.clear {
+  &:after {
+    clear: both;
+    content: '';
+    display: table;
+  }
+}
+
+.full-width {
+  width: 100%;
+  box-sizing: border-box;
+}
+.full-2 {
+  width: 48%;
+  box-sizing: border-box;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+}
+.flex-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.no-shadow {
+  box-shadow: none !important;
+}
+
+.box-center {
+  padding: 38vh 5px 5px 5px;
+}

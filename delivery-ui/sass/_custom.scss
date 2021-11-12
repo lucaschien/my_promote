@@ -1,0 +1,84 @@
+/*---- 各單元客製寫在這 ----*/
+
+// 外送物流叫件失敗頁用
+.gotoOrder {
+  box-sizing: border-box;
+  display: block;
+  width: calc(100% - 20px);
+  background-color: $grey-5;
+  color: $grey-6;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  cursor: pointer;
+  position: absolute; 
+  bottom: 10px; 
+  left: 10px;
+}
+
+// 畫面改成上下兩個區塊且靠邊邊的編排樣式
+.special-view {
+  .main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0;
+  }
+}
+
+// 訂單查詢頁用
+.top-box {
+  background-color: #fff;
+  padding: 20px 20px 0 20px;
+  border-bottom: 1px solid rgba($grey-2, 0.2);
+}
+.order-list-box {
+  box-sizing: border-box;
+  padding: 20px;
+  height: calc(100vh - 181px);
+  overflow: auto;
+}
+
+// 訂單詳情-已接訂單頁
+.transportation-status-box {
+  margin: 0;
+  padding: 25px 0;
+  display: flex;
+  justify-content: space-around;
+  li {
+    flex: 0 0 18%;
+    min-width: 70px;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: $grey-3;
+    font-size: 13px;
+    &:before {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 12px;
+      border-radius: 20px;
+      background-color: $grey-1;
+      margin-bottom: 10px;
+    }
+    h4 {
+      padding: 5px 0;
+    }
+    &.ed, &.ing {
+      &:before {
+        background-color: $red-3;
+      }
+      h4 {
+        color: $red-3;
+      }
+    }
+  }
+}
+.google-map-area {
+  background-color: #000;
+  width: 100%;
+  height: 40vh;
+  min-height: 200px;
+}

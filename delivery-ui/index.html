@@ -1,0 +1,313 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+    <base href="/">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<link rel="shortcut icon" href="/images/favicon.ico">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1.0, user-scalable=0">
+		<link href="./css/font-awesome.min.css" rel="stylesheet">
+		<link href="./css/datepicker.css" rel="stylesheet">
+		<link href="./css/main.css" rel="stylesheet">
+		<title></title>
+	</head>
+
+	<body>
+		<div class="wrapper">
+			<div class="header">
+				<a class="back-link"" href="javascript:;"><i class="fa fa-arrow-left aria-hidden="true"></i></a>
+				<span>Header</span>
+			</div>
+			<div class="main">
+
+				<div class="p-l">
+					前往各畫面:
+					<a href="./01訂單詳情.html">01訂單詳情</a>
+					<a href="./02確認xx送餐.html">02確認xx送餐？</a>
+					<a href="./03外送物流叫件中.html">03外送物流叫件中</a>
+					<a href="./04親送確認.html">04親送確認</a>
+					<a href="./05外送物流叫件失敗.html">05外送物流叫件失敗</a>
+					<a href="./06外送物流叫件成功.html">06外送物流叫件成功</a>
+					<a href="./07訂單查詢頁.html">07訂單查詢頁</a>
+					<a href="./08訂單詳情_已接單頁.html">08訂單詳情_已接單頁</a>
+				</div>
+
+				<br><br><br>
+
+				<!-- 單一個資訊區塊規劃 -->
+				<div class="area-block">
+					<h2><span>區塊標題</span></h2>
+					<div class="area-box">
+						<h3>訂單編號 18397</h3>
+						<div class="area-content">
+							<legend>
+								<h4>會員資訊</h4>
+								<p>王小明 0928288491</p>
+							</legend>
+
+							<hr>
+
+							<legend>
+								<h4>收件資訊</h4>
+								<p>王小明 0928288491</p>
+							</legend>
+
+							<legend class="flex">
+								<p>出餐時間</p>
+								<p>2021年09月23日 14:00</p>
+							</legend>
+
+							<legend class="flex">
+								<div>
+									<p>2 X 大腸麵線（小)</p>
+									<p class="small-remark">大辣/加醋/不加香菜</p>
+								</div>
+								<div>$90</div>
+							</legend>
+						</div>
+					</div>
+				</div>
+				
+				<!-- 單一個訂單區塊規劃 -->
+				<div class="area-block one-order-block">
+					<div class="font-ss color-grey-2 p-normal ">2021年11月11日 14:00</div>
+					<div class="area-box">
+						<div class="area-content">
+							<div class="left">
+								<p class="tag-type other">物流</p>
+								<p class="tag-type self">親送</p>
+							</div>
+							<legend class="center">
+								<h4>訂單編號 18397</h4>
+								<p class="small-remark">2 X 大腸麵線（小）/ 1 X 大腸麵線</p>
+								<button class="outline-btn small-btn more-radius m-s">
+									<span><i class="fa fa-angle-right" aria-hidden="true"></i> 查看訂單詳情</span>
+								</button>
+								<p class="bold">$20</p>
+							</legend>
+							<div class="right">
+								<button class="more-radius">
+									<span>出餐</span>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- 標籤整體規劃 -->
+				<div class="p-l">
+					<h2 class="p-normal">>> 標籤整體規劃</h2>
+					<div class="tag">已付款</div>
+					<div class="tag">已接單</div>
+				</div>
+
+				<!-- 按鈕整體規劃 -->
+				<div class="p-l">
+					<h2 class="p-normal">>> 按鈕整體規劃</h2>
+					<button><span>一般按鈕</span></button>
+					
+					<h2 class="p-normal">小型按鈕, 左右圓弧按鈕</h2>
+					<button class="more-radius small-btn"><span>出餐</span></button>
+
+					<h2 class="p-normal">左右並排置中, 按鈕字句加大, 外線條按鈕</h2>
+					<div class="flex-space-between">
+						<button class="full-2 space-btn"><span>親送</span></button>
+						<button class="full-2 space-btn outline-btn"><span>取消</span></button>
+					</div>
+
+					<h2 class="p-normal">滿寬</h2>
+					<button class="full-width"><span>訂單詳情</span></button>
+
+					<h2 class="p-normal">外線條按鈕, 小型按鈕, 左右圓弧按鈕</h2>
+					<button class="outline-btn small-btn more-radius">
+						<span><i class="fa fa-angle-right" aria-hidden="true"></i> 查看訂單詳情</span>
+					</button>
+				</div>
+				
+				<!-- 下載中 組件 -->
+				<div class="loading-component">
+					<i class="fa fa-spinner fa-spin loading-icon" aria-hidden="true"></i>
+					<p>外送物流叫件中<br>請稍後</p>
+				</div>
+
+				<!-- dialog 整體規劃 -->
+				<div class="p-l">
+					<h2 class="p-normal">>> dialog整體規劃</h2>
+					<button class="full-width m-normal" id="testOpenDialogBtn"><span>打開一般dialog</span></button>
+					<button class="full-width m-normal" id="testOpenHalfDialogBtn"><span>打開短版dialog</span></button>
+					<button class="full-width m-normal" id="testOpenHeightDialogBtn"><span>打開高版dialog</span></button>
+				</div>
+
+				<!-- searchbar 組件 -->
+				<div style="padding: 10px; background-color: #fff;">
+					<h2 class="p-normal">>> searchbar 組件</h2>
+					<div class="search-bar-component">
+						<i class="fa fa-search search-icon" aria-hidden="true"></i>
+						<input type="text" placeholder="請輸入">
+					</div>
+				</div>
+
+				<!-- 小日曆套件 -->
+				<div style="padding: 10px; background-color: #fff;">
+					<h2 class="p-normal">>> 小日曆套件</h2>
+					<div class="input-datepicker-box">
+						<i class="fa fa-calendar calendar-icon" aria-hidden="true"></i>
+						<input type="date">
+					</div>
+					-
+					<div class="input-datepicker-box">
+						<i class="fa fa-calendar calendar-icon" aria-hidden="true"></i>
+						<input type="date">
+					</div>
+				</div>
+
+				<!-- 頁籤組件 -->
+				<div style="padding: 10px; background-color: #fff;">
+					<h2 class="p-normal">>> 頁籤組件</h2>
+					<div class="tabs-box">
+						<div class="tab active">全部</div>
+						<div class="tab dot">外送</div>
+						<div class="tab">外帶</div>
+						<div class="tab">內用</div>
+					</div>
+				</div>
+
+				<!-- 一般 dialog 組件 -->
+				<div class="dialog-component" id="testDialog">
+					<div class="content">
+						<p class="font-l p-l">是否出餐完成？</p>
+						<button class="outline-btn more-radius full-2 close-dialog-btn"><span>否</span></button>
+						<button class="more-radius full-2"><span>是</span></button>
+					</div>
+					<div class="mask"></div>
+				</div>
+
+				<!-- dialog 短版向下靠齊 組件 -->
+				<div class="dialog-component dialog-bottom-half no-mask" id="testHalfDialog">
+					<div class="content">
+						<div class="area-block">
+							<div class="area-box no-shadow">
+								<h3 class="color-default">短版</h3>
+								<div class="scroll-box">
+									<div class="area-content fix">
+										<legend>
+											<h4>會員資訊</h4>
+											<p>王小明 0928288491</p>
+										</legend>
+										<legend>
+											<h4>會員資訊</h4>
+											<p>王小明 0928288491</p>
+										</legend>
+										<legend>
+											<h4>會員資訊</h4>
+											<p>王小明 0928288491</p>
+										</legend>
+										<legend>
+											<h4>會員資訊</h4>
+											<p>王小明 0928288491</p>
+										</legend>
+										<legend>
+											<h4>會員資訊</h4>
+											<p>王小明 0928288491</p>
+										</legend>
+										<legend>
+											<h4>會員資訊</h4>
+											<p>王小明 0928288491</p>
+										</legend>
+										<legend>
+											<h4>會員資訊</h4>
+											<p>王小明 0928288491</p>
+										</legend>
+										<legend>
+											<h4>會員資訊</h4>
+											<p>王小明 0928288491</p>
+										</legend>
+									</div>
+								</div>
+								<div class="area-content">	
+									<button class="full-width close-dialog-btn"><span>確定</span></button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="mask"></div>
+				</div>
+
+				<!-- dialog 高版向下靠齊 組件 -->
+				<div class="dialog-component dialog-bottom-height" id="testHeightDialog">
+					<div class="content">
+						<div class="close-height-dialog-btn close-dialog-btn"></div>
+						<div class="area-block">
+							<div class="area-box no-shadow">
+								<h3 class="color-default">高版</h3>
+								<div class="scroll-box">
+									<div class="area-content fix">
+										<legend>
+											<h4>會員資訊</h4>
+											<p>王小明 0928288491</p>
+										</legend>
+										<legend>
+											<h4>會員資訊</h4>
+											<p>王小明 0928288491</p>
+										</legend>
+										<legend>
+											<h4>會員資訊</h4>
+											<p>王小明 0928288491</p>
+										</legend>
+										<legend>
+											<h4>會員資訊</h4>
+											<p>王小明 0928288491</p>
+										</legend>
+										<legend>
+											<h4>會員資訊</h4>
+											<p>王小明 0928288491</p>
+										</legend>
+										<legend>
+											<h4>會員資訊</h4>
+											<p>王小明 0928288491</p>
+										</legend>
+										<legend>
+											<h4>會員資訊</h4>
+											<p>王小明 0928288491</p>
+										</legend>
+										<legend>
+											<h4>會員資訊</h4>
+											<p>王小明 0928288491</p>
+										</legend>
+									</div>
+								</div>
+								<div class="area-content">	
+									<button class="full-width close-dialog-btn"><span>確定</span></button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="mask"></div>
+				</div>
+					
+			</div>
+		</div>
+		<script src="./javascripts/jquery-2.2.4.min.js"></script>
+		<script src="./javascripts/datepicker.js"></script>
+		<script src="./javascripts/datepicker.zh-CN.js"></script>
+		<script src="./javascripts/main.js"></script>
+		<script>
+			$(function() {
+				// 測試用: 打開一般 dialog
+				$('#testOpenDialogBtn').click(function() {
+					$('#testDialog').addClass('show');
+				});
+
+				// 測試用: 打開短版向下靠齊 dialog
+				$('#testOpenHalfDialogBtn').click(function() {
+					$('#testHalfDialog').addClass('show');
+				});
+
+				// 測試用: 打開高版向下靠齊 dialog
+				$('#testOpenHeightDialogBtn').click(function() {
+					$('#testHeightDialog').addClass('show');
+				});
+			});
+		</script>
+	</body>
+</html>

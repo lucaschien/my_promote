@@ -1,0 +1,510 @@
+body {
+  color: $default;
+  background-color: $grey-1;
+  font-family: sans-serif;
+}
+.wrapper {
+  .header {
+    box-sizing: border-box;
+    background-color: #fff;
+    position: relative;
+    text-align: center;
+    padding: 10px 0;
+    max-width: $max-width;
+    margin: 0 auto;
+    span {
+      font-weight: bold;
+      font-size: 20px;
+    }
+    .back-link {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 0;
+      padding: 10px;
+      color: $default;
+    }
+  }
+  .main {
+    position: relative;
+    box-sizing: border-box;
+    padding: 10px;
+    max-width: $max-width;
+    min-height: 100vh;
+    margin: 0 auto;
+    &.fix {
+      padding: 0;
+    }
+  }
+}
+
+a {
+  color: $red-1;
+  cursor: pointer;
+}
+
+hr {
+  border: 0;
+  border-bottom: 1px solid rgba($default, 0.2);
+  margin: 35px 0;
+}
+
+input[type="text"] {
+  outline: none;
+  &:focus {
+    outline: none;
+    border-color: $red-1;
+  }
+}
+
+// 按鈕整體規劃
+button {
+  background-color: $red-1;
+  color: #fff;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: $red-2;
+  }
+}
+button.space-btn {
+  span {
+    letter-spacing: 20px;
+    margin-right: -20px;
+    display: block;
+  }
+}
+button.outline-btn {
+  background-color: transparent;
+  border: 1px solid $red-1;
+  color: $red-1;
+  &:hover {
+    color: $red-2;
+    border-color: $red-2;
+  }
+}
+button.more-radius {
+  border-radius: 50px;
+}
+button.small-btn {
+  font-size: 12px;
+  padding: 3px 14px;
+  span {
+    letter-spacing: inherit;
+    margin-right: 0;
+  }
+}
+button.grey-btn {
+  background-color: $grey-4;
+  color: #fff;
+}
+
+// 單一個區塊模組
+.area-block {
+  h2 {
+    padding: 5px 0 20px 0;
+    font-size: 20px;
+    span {
+      display: inline-block;
+      border-bottom: 3px solid $red-1;
+      padding: 0 0 6px 0;
+    }
+  }
+  .area-box {
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba($grey-2, 0.3);
+    border-radius: 13px;
+    h3 {
+      color: $red-1;
+      font-size: 20px;
+      font-weight: bold;
+      padding: 25px 15px 20px 15px;
+      border-bottom: 1px solid rgba($grey-2, 0.3);
+    }
+    .area-content {
+      padding: 25px 15px;
+      p {
+        padding: 5px 0;
+      }
+      h4 {
+        color: $grey-3;
+        font-size: 15px;
+      }
+      .small-remark {
+        font-size: 13px;
+        color: $grey-3;
+      }
+      legend {
+        display: block;
+        margin-bottom: 24px;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+      legend.flex {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
+
+  // 單一個訂單區塊用
+  &.one-order-block {
+    margin: 20px 0;
+    .area-box {
+      .area-content {
+        padding: 10px 0;
+        &:after {
+          clear: both;
+          content: '';
+          display: table;
+        }
+        .left {
+          float: left;
+          width: 0 0 50px;
+        }
+        .center {
+          float: left;
+          width: calc(100% - 140px);
+          padding: 0 10px;
+          h4 {
+            color: $default;
+            font-weight: bold;
+            margin: 6px 0 3px 0;
+          }
+          p.small-remark {
+            width: 100%;
+            text-overflow : ellipsis;
+            white-space : nowrap;
+            overflow: hidden;
+          }
+        }
+        .right {
+          float: left;
+          width: 70px;
+          padding-top: 40px;
+          button {
+            padding: 5px 0; 
+            width: 95%;
+            font-size: 13px;
+          }
+        }
+        legend {
+          margin: 0;
+        }
+        .tag-type {
+          border-radius: 0 30px 30px 0;
+          padding: 5px 10px;
+          margin: 5px 0 0 0;
+          font-size: 12px;
+          color: #fff;
+          &.other {
+            background-color: $green-1;
+          }
+          &.self {
+            background-color: $green-2;
+          }
+        }
+      }
+    }
+    // 該筆訂單已出餐狀態
+    &.delivered {
+      .area-box {
+        opacity: 0.4;
+        .area-content {
+          .right {
+            button {
+              background-color: $grey-4;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// 小標籤
+.tag {
+  display: inline-block;
+  font-size: 15px;
+  padding: 5px 14px;
+  background-color: $red-1;
+  color: #fff;
+  border-radius: 50px;
+  user-select: none;
+}
+
+// search bar組件
+.search-bar-component {
+  position: relative;
+  input[type="text"] {
+    box-sizing: border-box;
+    background-color: $grey-1;
+    border: 0;
+    padding: 14px 20px 14px 50px;
+    width: 100%;
+    border-radius: 50px;
+  }
+  .search-icon {
+    position: absolute;
+    left: 16px;
+    top: 10px;
+    font-size: 20px;
+    color: $grey-4;
+  }
+}
+
+// 下載中組件
+.loading-component {
+  text-align: center;
+  width: 200px;
+  margin: 0 auto;
+  .loading-icon {
+    color: $red-1;
+    font-size: 74px;
+  }
+  p {
+    margin-top: 20px;
+    font-size: 20px;
+    line-height: 30px;
+    display: block;
+  }
+}
+
+// dialog組件
+.dialog-component {
+  position: relative;
+  visibility: hidden;
+  &.show {
+    visibility: inherit;
+    .content {
+      top: 30%;
+    }
+    &.dialog-bottom-half {
+      .content {
+        bottom: 0;
+      }
+    }
+    &.dialog-bottom-height {
+      .content {
+        bottom: 0;
+      }
+    }
+  }
+  &.no-mask {
+    .mask {
+      display: none;
+    }
+  }
+  // 短版向下靠齊, 高版向下靠齊
+  &.dialog-bottom-half, &.dialog-bottom-height {
+    .content {
+      text-align: inherit;
+      top: auto;
+      bottom: -100%;
+      left: 0;
+      right: 0;
+      width: 100%;
+      padding: 0;
+      border-radius: 20px 20px 0 0;
+      .scroll-box {
+        overflow: auto;
+      }
+    }
+  }
+  // 短版向下靠齊
+  &.dialog-bottom-half {
+    .content {
+      .scroll-box {
+        max-height: 40vh;
+      }
+    }
+  }
+  // 高版向下靠齊
+  &.dialog-bottom-height {
+    .content {
+      .close-height-dialog-btn {
+        width: 100px;
+        height: 4px;
+        border: 15px solid #fff; // 注意這只是增加眼睛看不見的觸發面積用
+        background-color: $grey-2;
+        border-radius: 40px;
+        display: block;
+        margin: 0 auto;
+        cursor: pointer;
+      }
+      .scroll-box {
+        max-height: 67vh;
+      }
+    }
+  }
+  // 沒有浮動效果
+  &.static {
+    .content {
+      position: static;
+    }
+  }
+  .content {
+    transition: all 0.4s ease;
+    box-sizing: border-box;
+    background-color: #fff;
+    position: fixed;
+    top: -100%;
+    left: calc(50% - 150px);
+    width: 300px;
+    text-align: center;
+    padding: 30px 20px;
+    border-radius: 20px;
+    z-index: 1;
+  }
+  .mask {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(#000, 0.5);
+    z-index: 0;
+  }
+}
+
+// 小日曆組件
+.input-datepicker-box {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  width: 44%;
+  margin: 0 1%;
+  .calendar-icon {
+    position: absolute;
+    left: 15px;
+    top: 10px;
+    color: $grey-4;
+    font-size: 20px;
+  }
+  input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px 10px 10px 50px;
+    border: 0;
+    border-bottom: 1px solid $grey-4;
+    color: $default;
+    font-size: 15px;
+  }
+}
+// 變更小日曆套件樣式
+.datepicker-container {
+  width: 280px;
+  &.datepicker-top-left, 
+  &.datepicker-top-right {
+    border-top-color: $red-1;
+    &:before {
+      border-bottom-color: $red-1;
+    }
+  }
+
+  &.datepicker-bottom-left, 
+  &.datepicker-bottom-right {
+    border-bottom-color: $red-1;
+    &:before {
+      border-top-color: $red-1;
+    }
+  }
+}
+.datepicker-panel{
+  width: 280px;
+  > ul {
+    width: 280px;
+    > li {
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      &[data-view="years current"], 
+      &[data-view="year current"], 
+      &[data-view="month current"] {
+        width: 200px;
+      }
+      &.highlighted {
+        background-color: transparent;
+        color: #000;
+      }
+      &.picked {
+        color: $red-1;
+      }
+      &:hover {
+        background-color: transparent;
+        color: $red-1;
+      }
+    }
+    &[data-view="days"] {
+      > li {
+        border-radius: 40px;
+        &:hover {
+          background-color: rgba($red-1, 0.2);
+          color: $red-1;
+        }
+        &.picked {
+          background-color: $red-1;
+          color: #fff;
+          &:hover {
+            background-color: rgba($red-1, 0.2);
+            color: $red-1;
+          }
+        }
+        &.highlighted {
+          background-color: transparent;
+          color: #000;
+          &:hover {
+            background-color: rgba($red-1, 0.2);
+            color: $red-1;
+          }
+        }
+      }
+    }
+  }
+}
+.datepicker-footer { // 這是套件原本沒有的部分
+  display: flex;
+  justify-content: right;
+  padding: 0 10px 10px 10px;
+  p {
+    padding: 3px 15px;
+    color: $red-1;
+    cursor: pointer;
+    &:hover {
+      background-color: rgba($red-1, 0.2);
+      border-radius: 20px;
+    }
+  }
+}
+
+// 頁籤組件
+.tabs-box {
+  display: flex;
+  justify-content: space-around;
+  .tab {
+    position: relative;
+    padding: 10px 20px;
+    width: 25%;
+    text-align: center;
+    box-sizing: border-box;
+    cursor: pointer;
+    &.active {
+      border-bottom: 4px solid $red-1;
+      color: $red-1;
+    }
+    &.dot {
+      &:after {
+        content: '';
+        background-color: $red-1;
+        position: absolute;
+        right: 10px;
+        top: 14px;
+        padding: 4px;
+        border-radius: 10px;
+      }
+    }
+  }
+}

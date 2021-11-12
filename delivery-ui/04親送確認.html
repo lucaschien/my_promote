@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+    <base href="/">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<link rel="shortcut icon" href="/images/favicon.ico">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1.0, user-scalable=0">
+		<link href="./css/font-awesome.min.css" rel="stylesheet">
+		<link href="./css/datepicker.css" rel="stylesheet">
+		<link href="./css/main.css" rel="stylesheet">
+		<title></title>
+	</head>
+
+	<body>
+		<div class="wrapper special-view">
+			<div class="main">
+
+        <div class="box-center align-center" style="padding-top: 0px;">
+          <img src="./images/01.png" style="width: 78%">
+          <p class="font-ll p-normal">已確認店家親送</p>
+          <p>請店家於<span class="color-red-1 font-l bold">14:30</span>送達</p>
+        </div>
+
+        <div class="dialog-component dialog-bottom-half show static">
+					<div class="content">
+						<div class="area-block">
+							<div class="area-box no-shadow">
+								<h3 class="color-default">訂單資料</h3>
+								<div class="scroll-box" id="scrollBar">
+									<div class="area-content fix">
+										<legend>
+											<h4>訂單編號</h4>
+											<p>18397</p>
+										</legend>
+										<legend>
+											<h4>預定送達送間</h4>
+											<p>2021年11月11日 14:30</p>
+										</legend>
+										<legend>
+											<h4>外送地址</h4>
+											<p>台北市大安區敦化南路二段76號5樓</p>
+										</legend>
+									</div>
+								</div>
+								<div class="area-content">	
+									<button class="full-width"><span>訂單詳情</span></button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+	
+			</div>
+		</div>
+		<script src="./javascripts/jquery-2.2.4.min.js"></script>
+		<script src="./javascripts/datepicker.js"></script>
+		<script src="./javascripts/datepicker.zh-CN.js"></script>
+		<script src="./javascripts/main.js"></script>
+    <script>
+      $(function() {
+        function calcSize() {
+          var bodyH = window.innerHeight;
+          var maxHeight = ((bodyH - 400) > 200 )? bodyH - 400 : 200; //預計提供給 .scroll-box用
+          $('#scrollBar').attr('style', 'max-height:' + maxHeight + 'px;');
+        }
+        calcSize();
+        $(window).resize(calcSize);
+      });
+    </script>
+	</body>
+</html>
