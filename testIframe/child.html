@@ -51,7 +51,7 @@
     // 監聽 postMwssage 傳遞過來的事件
     window.addEventListener('message', function(e) {
       console.log('child message e.data', e.data);
-      if (e.data.call === 'childInterface' && e.data.parm) {
+      if (e.data.call === 'parentInterface' && e.data.parm) {
         childInterface(e.data.parm);
       }
     }, false);
