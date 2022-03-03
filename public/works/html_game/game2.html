@@ -1,0 +1,532 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>無標題文件</title>
+
+<style>
+body, html{ padding:0px; margin:0px; font-family: "Microsoft YaHei"; width:100%; height:100%; cursor:pointer; -ms-touch-action: none;}
+
+#gameScene{
+	background-image: url(game1.jpg);
+	background-repeat: repeat;
+	margin:0px;
+}
+.main{
+	text-align:center;
+	position:relative;
+	width:100%; height:100%;
+}
+#setBomb_btn{ 
+	position:absolute; 
+	z-index:1;
+	width:70px;
+	height:50px;
+	top:300px;
+	background-image:url(game12.png);
+	cursor:pointer;
+}
+#gameInfo{
+	background-color:rgba(0, 0, 0, 0.8);
+	border-radius:5px;
+	padding:5px;
+	color:#fff;
+	position:absolute;
+	z-index:1;
+	top:310px;
+	letter-spacing: 2px;
+}
+#resetgame_btn{
+	background-color:rgba(0, 0, 0, 0.8);
+	border-radius:5px;
+	padding:5px;
+	color:#fff;
+	position:absolute;
+	z-index:1;
+	top:350px;
+	letter-spacing: 2px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="main">
+	<div id="setBomb_btn"></div>
+    <div id="gameInfo">遊戲資訊：</div>
+    <div id="resetgame_btn">重新遊戲</div>
+	<canvas id="gameScene" width="400" height="300" >你的瀏覽器不支援HTML5</canvas>
+</div>
+
+<script>
+/*練習炸彈超人那種遊戲*/
+
+//定義遊戲介面
+var btn = document.getElementById("setBomb_btn");
+var gameInfo = document.getElementById("gameInfo");
+var resetgame_btn = document.getElementById("resetgame_btn");
+var gameScene = document.getElementById("gameScene");//canvas
+drawGame = gameScene.getContext("2d");
+
+//定義:遊戲中各種圖像物件
+var drawTree = new Image();//樹
+    drawTree.src = "game3.png";
+var drawDog = new Image();//小狗
+    drawDog.src = "game4.png";
+var drawBad = new Image();//小狗
+    drawBad.src = "game10.png";
+var drawBomb = new Image();//炸彈
+    drawBomb.src = "game11.png";
+var drawRoad = new Image();//道路
+    drawRoad.src = "game1.jpg";
+var drawNull = new Image();//透明物件
+	drawNull.src = "game8.png";
+var drawFire = new Image();//透明物件
+	drawFire.src = "game13.png";
+
+//判斷遊戲中所有使用的圖片是否都已經載入了
+var AllimgLoad = 0;//判斷圖片是否都載入完成用	
+drawTree.onload = function() { AllimgLoad += 20; }
+drawDog.onload = function() { AllimgLoad += 20; }
+drawBad.onload = function() { AllimgLoad += 20; }
+drawBomb.onload = function() { AllimgLoad += 10; }
+drawRoad.onload = function() { AllimgLoad += 10; }
+drawNull.onload = function() { AllimgLoad += 10; }
+drawFire.onload = function() { AllimgLoad += 10; }
+
+
+
+//初始化設定
+var drawObj = [],          //記錄一整個畫布的物件用
+    nowDog = {},           //記錄目前小狗是在哪一個索引數用
+	badObj = {},           //記錄壞人物件用
+	gameXCount = 8,        //場景左右格數
+    gameYCount = 6,        //場景上下格數
+	iconWidth = 50,        //一個小格數的寬度
+	iconHeight = 50,       //一個小格數的高度
+	bombAll = [],          //記錄所有炸彈物件用
+	bombTime = 3500,       //炸彈從放置到爆炸的時間
+	drowSceneTime = null,  //每幾秒從畫場景用(setInterval)
+	badMoveTime = null,    //壞人每幾秒移動用(setInterval)
+	badHaveBoum = false;   //限定壞人一次在場景中只能有一顆炸彈用
+
+
+//定義一個炸彈類別	
+function BombObj( _x, _y, _time){
+	this.Obj = drawBomb;
+	this.x = _x;
+	this.y = _y;
+	this.length = (_y*gameXCount) + _x;//此物件相對於地圖的陣列索引數
+	
+	bombAll.push(this);//將這物件放到陣列中
+	//console.log(bombAll);
+	
+	//將地圖物件陣列中原本是道路的索引改為不可移動的透明物件
+	drawObj[this.length] = {Obj:drawNull, x:this.x, y: this.y};
+	
+	//私有方法:一段時間就爆炸的方法
+	var time_fn = function(){
+		//找尋陣列中xy是建立時的xy就將它移除
+		var length = bombAll.length,
+			i = 0;
+		
+		for( i; i<length; i++ ){
+			var getx = bombAll[i].x,
+				gety = bombAll[i].y;
+			if( this.x == getx && this.y == gety ){
+				
+				//炸彈爆炸之後
+				//console.log("已爆");
+				//drawObj[this.length] = {Obj:drawRoad, x:this.x, y: this.y};//將地圖物件陣列中原本是透明物件的索引改為道路
+				_fire_fn(this.length, this.x, this.y);//使用火焰方法
+				bombAll.splice(i,1);//將這顆炸彈物件從陣列中移除
+				//console.log(bombAll);
+				
+				//判斷炸彈的上下左右四邊
+				//上: 判斷是否在場景最上邊了
+				if( this.y > 0 ){
+					var _index = this.length-gameXCount,
+						_x = this.x,
+						_y = this.y-1;
+					_fire_fn(_index, _x, _y);//使用火焰方法
+				}
+				//右: 判斷是否在場景最右邊了
+				if( this.x < gameXCount-1 ){
+					var _index = this.length+1,
+						_x = this.x+1,
+						_y = this.y;
+					_fire_fn(_index, _x, _y);//使用火焰方法
+				}
+				//下: 判斷是否在場景最下邊了
+				if( this.y < gameYCount-1 ){
+					var _index = this.length+gameXCount,
+						_x = this.x,
+						_y = this.y+1;
+					_fire_fn(_index, _x, _y);//使用火焰方法
+				}
+				//左: 判斷是否在場景最左邊了
+				if( this.x > 0 ){
+					var _index = this.length-1,
+						_x = this.x-1,
+						_y = this.y;
+					_fire_fn(_index, _x, _y);//使用火焰方法
+				}
+				
+				return false;
+			}
+		}
+		
+	}
+
+	//一段時間就使用爆炸
+	setTimeout(time_fn.bind(this), _time);
+
+};
+
+//定義:火焰轉道路,是否燒到小狗或壞人方法
+function _fire_fn(_index, _x, _y){
+	var _FireDog = false,
+		_FireBad = false;
+	
+	//先轉火焰
+	drawObj[_index] = {Obj:drawFire, x:_x, y: _y};
+	
+	//判斷燒到小狗
+	if( nowDog.x == _x && nowDog.y == _y){
+		console.log("燒到小狗");
+		_FireDog = true;
+	}
+	
+	//判斷燒到壞人
+	if( badObj.x == _x && badObj.y == _y){
+		console.log("燒到壞人");
+		_FireBad = true;
+	}
+	
+	//火焰各種判斷
+	setTimeout(function(){
+		if(_FireDog){
+			//這邊還要做燒到小狗的處理
+			_drowScene_fn();//畫最後一次
+			clearInterval(drowSceneTime);
+			clearInterval(badMoveTime);
+			gameInfo.innerHTML="遊戲資訊：喔喔小狗被燒到了！";
+		}
+		if(_FireBad){
+			//這邊還要做燒到壞人的處理
+		}
+		if( !_FireDog || !_FireBad){
+			//甚麼都沒燒到將火焰轉成道路
+			drawObj[_index] = {Obj:drawRoad, x:_x, y: _y};
+		}
+		
+	} ,100);
+	
+	
+}
+
+//定義:畫出場景中的所有物件的方法
+function _drowScene_fn(){
+	//PS.這邊要注意畫圖的順序喔
+	
+	//將遊戲場景清空
+	drawGame.clearRect(0, 0, 10000, 10000);
+	
+	//畫障礙物
+	var k = drawObj.length,
+		i=0;
+	for(i=0; i<k; i++){
+		var getObj = drawObj[i].Obj,
+			getX = (drawObj[i].x)*iconWidth,
+			getY = (drawObj[i].y)*iconHeight;
+		drawGame.drawImage(getObj, getX, getY);
+		//檢查用
+		/*if( getObj == drawRoad){
+			console.log("道路 x:"+getX+" / y:"+getY);
+		}*/
+	}
+	
+	//畫所有炸彈
+	var k = bombAll.length,
+		i=0;
+	for(i=0; i<k; i++){
+		var getObj = bombAll[i].Obj,
+			getX = (bombAll[i].x)*iconWidth,
+			getY = (bombAll[i].y)*iconHeight;
+		drawGame.drawImage(getObj, getX, getY);
+		//檢查用
+		/*if( getObj == drawBomb){
+			console.log("炸彈 x:"+getX+" / y:"+getY);
+		}*/
+	}
+	
+	//畫小狗
+	var getObj = nowDog.Obj,
+		getX = (nowDog.x)*iconWidth,
+		getY = (nowDog.y)*iconHeight;
+	drawGame.drawImage(getObj, getX, getY);
+	//console.log("小狗 x:"+getX+" / y:"+getY); //檢查用
+	
+	//畫壞人
+	var getObj = badObj.Obj,
+		getX = (badObj.x)*iconWidth,
+		getY = (badObj.y)*iconHeight;
+	drawGame.drawImage(getObj, getX, getY);
+	//console.log("壞人 x:"+getX+" / y:"+getY); //檢查用
+	
+	
+}
+
+//定義:設定障礙物以外的物件方法(注意遊戲一開始用，遊戲中就不使用此方法了)
+function _setOtherItem_fn(_item, _img, _td, _tr){
+	
+	//指定的物件
+	_item.Obj= _img;
+	_item.x = _td;
+	_item.y = _tr;
+	_item.length = (_tr*gameXCount) + _td;//此物件相對於地圖的陣列索引數
+	
+	drawObj[_td+(_tr*gameXCount)] = {Obj: drawRoad, x: _td, y: _tr};//改變地圖物件
+	
+	//指定的物件上下左右改為可走道路
+	//上
+	var top_td = _td,
+		top_tr = _tr-1;
+	drawObj[top_td+(top_tr*gameXCount)] = {Obj: drawRoad, x: top_td, y: top_tr};
+	//左
+	var left_td = _td-1,
+		left_tr = _tr;
+	if(_td!=0){
+		drawObj[left_td+(left_tr*gameXCount)] = {Obj: drawRoad, x: left_td, y: left_tr};
+	}
+	//右
+	var right_td = _td+1,
+		right_tr = _tr;
+	if(_td!=gameXCount-1){
+		drawObj[right_td+(right_tr*gameXCount)] = {Obj: drawRoad, x: right_td, y: right_tr};
+	}
+	//下
+	var bottom_td = _td,
+		bottom_tr = _tr+1;
+	if(_tr!=gameYCount-1){
+		drawObj[bottom_td+(bottom_tr*gameXCount)] = {Obj: drawRoad, x: bottom_td, y: bottom_tr};
+	}
+}
+
+//定義:判斷物件是否可以移動的方法
+function _checkObj_fn( _target, _x, _y, _index ){
+	//如果移動的方向是可以移動的
+	if( drawObj[_index].Obj == drawRoad ){
+		_target.x = _x;
+		_target.y = _y;
+		_target.length = _index;
+		//判斷小狗跟壞人是否碰到了
+		if( nowDog.length == badObj.length ){
+			_drowScene_fn();
+			gameInfo.innerHTML="遊戲資訊：喔喔碰到壞人小狗被抓了！";
+			clearInterval(drowSceneTime);
+			clearInterval(badMoveTime);
+			//...這邊之後還要補一些後續動作
+		}
+	}
+}
+
+//定義:壞人一段時間就移動的方法
+function _badMove_fn(){
+	//亂數移動前是否放至炸彈
+	var isBomb = Math.floor((Math.random()*40))+0;
+	(isBomb<10)? isBomb = true : isBomb = false;
+	//console.log((isBomb && !badHaveBoum));
+	if(isBomb && !badHaveBoum){
+		badHaveBoum = true;
+		new BombObj( badObj.x, badObj.y, bombTime);
+		setTimeout(function(){badHaveBoum=false;},bombTime);//壞人的炸彈爆炸之後改變badHaveBoum=
+		//console.log("已放置");
+	}
+	
+	
+	//亂數前往方向
+	var direction = Math.floor((Math.random()*4))+1;
+	//console.log(direction);
+	
+	//判斷方向 1上 2右 3下 4左
+	if(direction==1){
+		//上
+		//判斷是否在場景最上邊了
+		if( badObj.y > 0 ){
+			var _index = badObj.length-gameXCount,
+				_x = badObj.x,
+				_y = badObj.y-1;
+			_checkObj_fn(badObj, _x, _y, _index);
+		}
+	}else if(direction==2){
+		//右
+		//判斷是否在場景最右邊了
+		if( badObj.x < gameXCount-1 ){
+		var _index = badObj.length+1,
+				_x = badObj.x+1,
+				_y = badObj.y;
+			_checkObj_fn(badObj, _x, _y, _index);	
+		}
+	}else if(direction==3){
+		//下
+		//判斷是否在場景最下邊了
+		if( badObj.y < gameYCount-1 ){
+			var _index = badObj.length+gameXCount,
+				_x = badObj.x,
+				_y = badObj.y+1;
+			_checkObj_fn(badObj, _x, _y, _index);
+		}
+	}else if(direction==4){
+		//左
+		//判斷是否在場景最左邊了
+		if( badObj.x > 0 ){
+			//if(badObj.x<=0)return false;//避免在左上角時的錯誤
+			var _index = badObj.length-1,
+				_x = badObj.x-1,
+				_y = badObj.y;
+			_checkObj_fn(badObj, _x, _y, _index);
+		}
+	}
+}
+
+
+function init(){
+	
+	//初始化設定
+	drawObj = [],          //記錄一整個畫布的物件用
+	nowDog = {},           //記錄目前小狗是在哪一個索引數用
+	badObj = {},           //記錄壞人物件用度
+	bombAll = [];          //記錄所有炸彈物件用
+	clearInterval(drowSceneTime);
+	clearInterval(badMoveTime);
+	gameInfo.innerHTML="遊戲資訊：";
+	
+	
+	//當所有圖片都載入好就設定物件
+	var ckeckImg = setInterval(function(){
+		
+		if( AllimgLoad == 100 ){
+			clearInterval(ckeckImg);
+			
+			//先佈滿障礙物
+			var maxCount = (gameXCount * gameYCount )-1 ;
+			var i=0,
+				td=0,
+				tr=0;
+			for(i; i<=maxCount; i++){
+				drawObj.push({Obj:drawTree, x:td, y: tr});
+				td++;
+				//換行
+				if(td==gameXCount){
+					td=0;
+					tr++;
+				}
+			}
+			
+	
+			//指定小狗位置
+			var td = Math.floor((Math.random() * gameXCount));
+			var tr = Math.floor((Math.random() * gameYCount));
+			_setOtherItem_fn(nowDog, drawDog, td, tr);
+			
+			
+			//指定壞人位置
+			var checkBad = setInterval(function(){
+				var badtd = Math.floor((Math.random() * gameXCount));
+				var badtr = Math.floor((Math.random() * gameYCount));
+				
+				//避開在小狗的週圍(2格以外)
+				if( badtd != td && badtr != tr && 
+					badtd-1 != td && badtd+1 != td && 
+					badtr-1 != tr && badtr+1 != tr &&
+					badtd-2 != td && badtd+2 != td && 
+					badtr-2 != tr && badtr+2 != tr
+				 ){
+					_setOtherItem_fn(badObj, drawBad, badtd, badtr);
+					clearInterval(checkBad);
+					drowSceneTime = setInterval(_drowScene_fn,100);//指定canvas畫圖速度
+					badMoveTime = setInterval(_badMove_fn,1000);//壞人每數秒就移動一次
+				}
+			},100);
+	
+		}
+	},100)
+	
+}
+init();
+
+//事件:按上下左右的鍵盤
+function key_fn(event){
+	var keyCode = event.keyCode;
+	//console.log(keyCode);
+	
+	//判斷鍵盤事件
+	if(keyCode==38){
+		//上
+		//判斷是否在場景最下邊了
+		if( nowDog.y > 0 ){
+			var _index = nowDog.length-gameXCount,
+				_x = nowDog.x,
+				_y = nowDog.y-1;
+			_checkObj_fn(nowDog, _x, _y, _index);
+		}
+	}else if(keyCode==39){
+		//右
+		//判斷是否在場景最右邊了
+		if( nowDog.x < gameXCount-1 ){
+			var _index = nowDog.length+1,
+				_x = nowDog.x+1,
+				_y = nowDog.y;
+			_checkObj_fn(nowDog, _x, _y, _index);	
+		}
+	}else if(keyCode==40){
+		//下
+		//判斷是否在場景最下邊了
+		if( nowDog.y < gameYCount-1 ){
+			var _index = nowDog.length+gameXCount,
+				_x = nowDog.x,
+				_y = nowDog.y+1;
+			_checkObj_fn(nowDog, _x, _y, _index);
+		}
+	}else if(keyCode==37){
+		//左
+		//判斷是否在場景最左邊了
+		if( nowDog.x > 0 ){
+			var _index = nowDog.length-1,
+				_x = nowDog.x-1,
+				_y = nowDog.y;
+			_checkObj_fn(nowDog, _x, _y, _index);
+		}
+	}
+	
+	//空白鍵
+	if(keyCode==32){
+		new BombObj( nowDog.x, nowDog.y, bombTime);
+	}
+}
+document.onkeyup = key_fn;
+//事件:點擊重新遊戲按鈕
+document.getElementById("resetgame_btn").onmouseup = init;
+
+
+//讓炸彈按鈕隨瀏覽器保持在canvas的右下角
+var btn_left = gameScene.offsetLeft;
+var btn_width = gameScene.width;
+var setLeft = (btn_left + btn_width)-70;
+btn.style.left = setLeft+"px";
+gameInfo.style.left = btn_left+"px";
+resetgame_btn.style.left = btn_left+"px";
+
+window.onresize = function(event) {
+    var btn_left = gameScene.offsetLeft;
+	var btn_width = gameScene.width;
+	var setLeft = (btn_left + btn_width)-70;
+	btn.style.left = setLeft+"px";
+	gameInfo.style.left = btn_left+"px";
+	resetgame_btn.style.left = btn_left+"px";
+};
+
+</script>
+</body>
+</html>
