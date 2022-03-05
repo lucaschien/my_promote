@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title></title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0 " />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<script src="jquery-1.8.1.min.js"></script>
+<script src="jquery-ui.js"></script>
+<script src="jquery.ui.touch-punch.min.js"></script>
+
+<script>
+$(function(){
+	//初始化設定
+	var minX = 0,                                 //場景的最小x
+		maxX = parseInt($(".main").width(),10),   //場景的最大x
+		minY = 0,                                 //場景的最小y
+		maxY = parseInt($(".main").height(),10);  //場景的最大y
+		life = 0,            //生命
+		time = 0,            //時間
+		maxTime = 0,         //一條生命可以轉換的時間數
+		checkTime = null,    //計時器用
+		moveSize = 50,       //每次移動的像素
+		getAllrock = [],     //放置障礙物的物件資訊用
+		getSuccess = [],     //放置過關的物件資訊用
+		getProps = [],       //放置道具的物件資訊用
+		getTrap = [],        //放置陷阱的物件資訊用
+		gameStatus = false;  //遊戲開始或是結速
+		
+		
+	//初始化user物件
+	$(".main").append("<div class='user_icon' style='left:-50px; top:0px;'></div>");
+	var userIcon = $(".user_icon"); //使用者移動對象
+	
+	//定義:計數器的判斷方法
+	var checkTime_fn = function(){
+		time--;
+		$(".time_view span").html(time);
+		$(".life_view span").html(life);
+		if( time <= 0 ){
+			if( life != 0){
+				//將生命轉換成時間
+				life--;
+				time = maxTime;
+				$(".life_view span").html(life);
+				$(".time_view span").html(time);
+			}else{
+				//失敗了
+				gameStatus = false;
+				$(".fail_view").fadeIn(300);
+				clearInterval(checkTime);
+			}
+		}
+		//console.log(time);
+	}
+	
+	//第1關的初始化
+	function init_1(){
+		life=1,
+		time=8,
+		maxTime=time,
+		getAllrock=[],  //障礙物的物件資訊重設
+		getSuccess=[], //過關的物件資訊重設
+		getProps=[],  //道具的物件資訊重設
+		getTrap=[];  //陷阱的物件資訊重設
+		
+		$(".life_view span").html(life);
+		$(".time_view span").html(time);
+		checkTime = setInterval(checkTime_fn,1000);
+		
+		//設定user物件
+		userIcon.css({"left":"250px", "top":"250px"});
+	
+		//設定過關物件
+		$(".main").append("<div class='success_icon' style='left:0px; top:50px;'></div>");
+		//將過關物件的一些數據放到陣列中
+		$.each($(".success_icon"),function(i, item){
+			var t = $(item);
+			var t_x = parseInt(t.css("left"),10), //X座標
+				t_y = parseInt(t.css("top"),10), //Y座標
+				t_height = parseInt(t.css("top"),10)+parseInt(t.css("height"),10), //高
+				t_width = parseInt(t.css("left"),10)+parseInt(t.css("width"),10); //寬
+			
+			getSuccess.push({target:t, info:{t_x: t_x, t_y: t_y, t_height: t_height, t_width: t_width}});
+			//console.log(getAllrock);
+		})
+	
+		
+		//設定道具物件
+		$(".main").append("<div class='props_icon props_TIME' style='left:150px; top:150px;' effect='加時間' ></div>");
+		$(".main").append("<div class='props_icon props_LEFT' style='left:50px; top:200px;' effect='加生命' ></div>");
+		//將道具物件的一些數據放到陣列中
+		$.each($(".props_icon"),function(i, item){
+			var t = $(item);
+			var t_x = parseInt(t.css("left"),10), //X座標
+				t_y = parseInt(t.css("top"),10), //Y座標
+				t_height = parseInt(t.css("top"),10)+parseInt(t.css("height"),10), //高
+				t_width = parseInt(t.css("left"),10)+parseInt(t.css("width"),10); //寬
+				t_effect = t.attr("effect")//道具效果文字
+			getProps.push({target:t, info:{t_x: t_x, t_y: t_y, t_height: t_height, t_width: t_width, effect: t_effect }});
+			//console.log(getProps);
+		})
+		
+		
+		//設定陷阱物件
+		$(".main").append("<div class='trap_icon trap_toxic' style='left:100px; top:200px;' effect='毒藥' ></div>");
+		//將陷阱物件的一些數據放到陣列中
+		$.each($(".trap_icon"),function(i, item){
+			var t = $(item);
+			var t_x = parseInt(t.css("left"),10), //X座標
+				t_y = parseInt(t.css("top"),10), //Y座標
+				t_height = parseInt(t.css("top"),10)+parseInt(t.css("height"),10), //高
+				t_width = parseInt(t.css("left"),10)+parseInt(t.css("width"),10); //寬
+				t_effect = t.attr("effect")//道具效果文字
+			getTrap.push({target:t, info:{t_x: t_x, t_y: t_y, t_height: t_height, t_width: t_width, effect: t_effect }});
+			//console.log(getProps);
+		})
+	
+		
+		//設定一堆障礙物物件
+		$(".main").append("<div class='rock_icon' style='left:0px; top:0px;'></div>");
+		$(".main").append("<div class='rock_icon' style='left:50px; top:0px;'></div>");
+		$(".main").append("<div class='rock_icon' style='left:50px; top:50px;'></div>");
+		$(".main").append("<div class='rock_icon' style='left:50px; top:100px;'></div>");
+		$(".main").append("<div class='rock_icon' style='left:0px; top:200px;'></div>");
+		$(".main").append("<div class='rock_icon' style='left:0px; top:250px;'></div>");
+		$(".main").append("<div class='rock_icon' style='left:50px; top:250px;'></div>");
+		$(".main").append("<div class='rock_icon' style='left:100px; top:250px;'></div>");
+		$(".main").append("<div class='rock_icon' style='left:150px; top:250px;'></div>");
+		$(".main").append("<div class='rock_icon' style='left:200px; top:250px;'></div>");
+		$(".main").append("<div class='rock_icon' style='left:200px; top:200px;'></div>");
+		$(".main").append("<div class='rock_icon' style='left:200px; top:150px;'></div>");
+		$(".main").append("<div class='rock_icon' style='left:200px; top:100px;'></div>");
+		$(".main").append("<div class='rock_icon' style='left:200px; top:50px;'></div>");
+		$(".main").append("<div class='rock_icon' style='left:150px; top:100px;'></div>");
+		//將障礙物物件的一些數據放到陣列中
+		$.each($(".rock_icon"),function(i, item){
+			var t = $(item);
+			var t_x = parseInt(t.css("left"),10), //X座標
+				t_y = parseInt(t.css("top"),10), //Y座標
+				t_height= parseInt(t.css("top"),10)+parseInt(t.css("height"),10), //高
+				t_width = parseInt(t.css("left"),10)+parseInt(t.css("width"),10); //寬
+			
+			getAllrock.push({target:t, info:{t_x: t_x, t_y: t_y, t_height: t_height, t_width: t_width}});
+			//console.log(getAllrock);
+		})
+	
+	}
+	
+	//第2關的初始化
+	function init_2(){
+		life=0,
+		time=12,
+		maxTime=time,
+		getAllrock=[],  //障礙物的物件資訊重設
+		getSuccess=[], //過關的物件資訊重設
+		getProps=[],  //道具的物件資訊重設
+		getTrap=[];  //陷阱的物件資訊重設
+
+		$(".life_view span").html(life);
+		$(".time_view span").html(time);
+		checkTime = setInterval(checkTime_fn,1000);
+		
+		//設定user物件
+		userIcon.css({"left":"150px", "top":"200px"});
+	
+		//設定過關物件
+		$(".main").append("<div class='success_icon' style='left:250px; top:00px;'></div>");
+		//將過關物件的一些數據放到陣列中
+		$.each($(".success_icon"),function(i, item){
+			var t = $(item);
+			var t_x = parseInt(t.css("left"),10), //X座標
+				t_y = parseInt(t.css("top"),10), //Y座標
+				t_height = parseInt(t.css("top"),10)+parseInt(t.css("height"),10), //高
+				t_width = parseInt(t.css("left"),10)+parseInt(t.css("width"),10); //寬
+			
+			getSuccess.push({target:t, info:{t_x: t_x, t_y: t_y, t_height: t_height, t_width: t_width}});
+			//console.log(getAllrock);
+		})
+	
+		
+		//設定道具物件
+		$(".main").append("<div class='props_icon props_TIME' style='left:0px; top:0px;' effect='加時間' ></div>");
+		$(".main").append("<div class='props_icon props_LEFT' style='left:100px; top:100px;' effect='加生命' ></div>");
+		//將道具物件的一些數據放到陣列中
+		$.each($(".props_icon"),function(i, item){
+			var t = $(item);
+			var t_x = parseInt(t.css("left"),10), //X座標
+				t_y = parseInt(t.css("top"),10), //Y座標
+				t_height = parseInt(t.css("top"),10)+parseInt(t.css("height"),10), //高
+				t_width = parseInt(t.css("left"),10)+parseInt(t.css("width"),10); //寬
+				t_effect = t.attr("effect")//道具效果文字
+			getProps.push({target:t, info:{t_x: t_x, t_y: t_y, t_height: t_height, t_width: t_width, effect: t_effect }});
+			//console.log(getProps);
+		})
+		
+		
+		//設定陷阱物件
+		$(".main").append("<div class='trap_icon trap_toxic' style='left:0px; top:200px;' effect='毒藥' ></div>");
+		//將陷阱物件的一些數據放到陣列中
+		$.each($(".trap_icon"),function(i, item){
+			var t = $(item);
+			var t_x = parseInt(t.css("left"),10), //X座標
+				t_y = parseInt(t.css("top"),10), //Y座標
+				t_height = parseInt(t.css("top"),10)+parseInt(t.css("height"),10), //高
+				t_width = parseInt(t.css("left"),10)+parseInt(t.css("width"),10); //寬
+				t_effect = t.attr("effect")//道具效果文字
+			getTrap.push({target:t, info:{t_x: t_x, t_y: t_y, t_height: t_height, t_width: t_width, effect: t_effect }});
+			//console.log(getProps);
+		})
+	
+		
+		//設定一堆障礙物物件
+		$(".main").append("<div class='rock_icon' style='left:50px; top:50px;'></div>");
+		$(".main").append("<div class='rock_icon' style='left:100px; top:50px;'></div>");
+		$(".main").append("<div class='rock_icon' style='left:150px; top:50px;'></div>");
+		$(".main").append("<div class='rock_icon' style='left:200px; top:50px;'></div>");
+		$(".main").append("<div class='rock_icon' style='left:250px; top:50px;'></div>");
+		$(".main").append("<div class='rock_icon' style='left:50px; top:100px;'></div>");
+		$(".main").append("<div class='rock_icon' style='left:50px; top:150px;'></div>");
+		$(".main").append("<div class='rock_icon' style='left:50px; top:250px;'></div>");
+		$(".main").append("<div class='rock_icon' style='left:100px; top:250px;'></div>");
+		$(".main").append("<div class='rock_icon' style='left:150px; top:250px;'></div>");
+		$(".main").append("<div class='rock_icon' style='left:150px; top:150px;'></div>");
+		$(".main").append("<div class='rock_icon' style='left:200px; top:150px;'></div>");
+		$(".main").append("<div class='rock_icon' style='left:200px; top:250px;'></div>");
+		//將障礙物物件的一些數據放到陣列中
+		$.each($(".rock_icon"),function(i, item){
+			var t = $(item);
+			var t_x = parseInt(t.css("left"),10), //X座標
+				t_y = parseInt(t.css("top"),10), //Y座標
+				t_height= parseInt(t.css("top"),10)+parseInt(t.css("height"),10), //高
+				t_width = parseInt(t.css("left"),10)+parseInt(t.css("width"),10); //寬
+			
+			getAllrock.push({target:t, info:{t_x: t_x, t_y: t_y, t_height: t_height, t_width: t_width}});
+			//console.log(getAllrock);
+		})
+	
+	}
+	
+
+	/*--------------------------------------------------------------初始化結束---------------------------------------------------------*/
+
+	//定義:user_icon移動方法與接觸
+	function goWhere_fn(_x, _y){
+		var getX = _x,
+			getY = _y;
+			
+		//判斷有無超過場景範圍
+		if( getX >= minX && getX < maxX && getY >= minY && getY < maxY ){
+			var canMove = true;//判斷是否可以移動用
+			
+			//設定要前往的資訊
+			var user_x = getX ; //要前往X座標
+				user_y = getY, //要前往Y座標
+				user_width = getX+parseInt(userIcon.css("width"),10), //要前往的寬
+				user_height = getY+parseInt(userIcon.css("height"),10), //要前往的高
+			
+			//跟所有障礙物比對是否有觸碰
+			$.each(getAllrock,function(i, item){
+				$.each(item, function(j, items){
+					//判斷兩個div是否有碰觸
+					if( user_x+(user_width-user_x) > items.t_x && 
+						user_y+(user_height-user_y) > items.t_y && 
+						user_x < items.t_width &&
+						user_y < items.t_height
+					){
+						//碰到了
+						canMove = false;
+					}
+				})
+			})
+			
+			//跟道具物件比對是否有觸碰
+			$.each(getProps,function(i, item){
+				$.each(item, function(j, items){
+					//判斷兩個div是否有碰觸
+					if( user_x+(user_width-user_x) > items.t_x && 
+						user_y+(user_height-user_y) > items.t_y && 
+						user_x < items.t_width &&
+						user_y < items.t_height
+					){
+						//碰到了
+						var getEffect = items.effect;
+						$(".game_info span").append("道具:"+getEffect+", ");
+						
+						if(getEffect=="加時間"){
+							time += maxTime;
+							$(".time_view span").html(time);
+						}else if(getEffect=="加生命"){
+							life++;
+							$(".life_view span").html(life);
+						}
+						
+						item.target.remove();//移除dom
+						getProps[i]={};//移除陣列資料將它變成空物件
+					}
+				})
+			})
+			
+			//跟陷阱物件比對是否有觸碰
+			$.each(getTrap,function(i, item){
+				$.each(item, function(j, items){
+					//判斷兩個div是否有碰觸
+					if( user_x+(user_width-user_x) > items.t_x && 
+						user_y+(user_height-user_y) > items.t_y && 
+						user_x < items.t_width &&
+						user_y < items.t_height
+					){
+						//碰到了
+						var getEffect = items.effect;
+						$(".game_info span").append("陷阱:"+getEffect+", ");
+						
+						item.target.remove();//移除dom
+						getTrap[i]={};//移除陣列資料將它變成空物件
+						
+						//判斷還有沒有生命
+						if( life > 0 ){
+							life--;
+							$(".life_view span").html(life);
+						}else{
+							//失敗了
+							gameStatus = false;
+							$(".fail_view").fadeIn(300);
+							clearInterval(checkTime);
+						}
+							
+					}
+				})
+			})
+			
+			//跟過關物件比對是否有觸碰
+			$.each(getSuccess,function(i, item){
+				$.each(item, function(j, items){
+					//判斷兩個div是否有碰觸
+					if( user_x+(user_width-user_x) > items.t_x && 
+						user_y+(user_height-user_y) > items.t_y && 
+						user_x < items.t_width &&
+						user_y < items.t_height
+					){
+						//碰到了
+						gameStatus = false;
+						$(".game_info span").append("過關, ");
+						$(".win_view").fadeIn(300);
+						clearInterval(checkTime);
+					}
+				})
+			})
+			
+			if(canMove){
+				userIcon.css({"left":getX, "top":getY});
+			}
+		}
+		
+	}
+	
+	//偵側鍵盤事件
+	$(window).keydown(function(event){
+		var keyCode = event.keyCode;
+		
+		//判斷鍵盤事件
+		if(keyCode==38){
+			//上
+			var goWhereX = parseInt(userIcon.css("left"),10),
+				goWhereY = parseInt(userIcon.css("top"),10)-moveSize;
+			goWhere_fn(goWhereX, goWhereY);
+			
+		}else if(keyCode==39){
+			//右
+			var goWhereX = parseInt(userIcon.css("left"),10)+moveSize,
+				goWhereY = parseInt(userIcon.css("top"),10);
+			goWhere_fn(goWhereX, goWhereY);
+				
+		}else if(keyCode==40){
+			//下
+			var goWhereX = parseInt(userIcon.css("left"),10),
+				goWhereY = parseInt(userIcon.css("top"),10)+moveSize;
+			goWhere_fn(goWhereX, goWhereY);
+				
+		}else if(keyCode==37){
+			//左
+			var goWhereX = parseInt(userIcon.css("left"),10)-moveSize,
+				goWhereY = parseInt(userIcon.css("top"),10);
+			goWhere_fn(goWhereX, goWhereY);
+				
+		}
+		
+	})
+	
+	//事件:選擇關卡
+	$(".selectPoints").click(function(){
+		var Points = $(this).attr("Points");
+		$(".game_first_view").fadeOut(300);
+		if( Points == 1 ){
+			init_1();
+		}else{
+			init_2();
+		}
+		gameStatus = true;
+	})
+	
+	//事件:回首頁
+	$(".back").click(function(){
+		$(".success_icon, .rock_icon, .props_icon, .trap_icon").remove();//將所有遊戲的物件清掉
+		$(".game_info span").html("");
+		
+		$(".game_first_view").fadeIn(300,function(){
+			$(".win_view, .fail_view").hide();
+		});
+		gameStatus = false;
+	})
+	
+	
+	/*針對觸控寫的*/
+	var getTouches = [],
+		Touch1 = {},
+		Touch2 = {};
+			
+	//觸控按下
+	document.body.addEventListener("touchstart", function(event) {
+		Touch1.x = event.touches[0].clientX;
+		Touch1.y = event.touches[0].clientY;
+	}, false);
+	//觸控移動
+	document.body.addEventListener("touchmove", function(event) {
+		Touch2.x = event.touches[0].clientX;
+		Touch2.y = event.touches[0].clientY;
+	}, false);
+	//觸控放開 
+	document.body.addEventListener("touchend", function(event) {
+		if(gameStatus){
+			TouchAng_fn(Touch1, Touch2);
+		}
+	}, false);
+	
+	//定義:觸控角度換算
+	function TouchAng_fn(obj1, obj2){
+		var dx = obj2.x - obj1.x;
+		var dy = obj2.y - obj1.y;
+		var ang = Math.floor(Math.atan2(dy, dx)/Math.PI*180);
+		
+		//向右	
+		if( ang >= -45 && ang <= 45 ){
+			var goWhereX = parseInt(userIcon.css("left"),10)+moveSize,
+				goWhereY = parseInt(userIcon.css("top"),10);
+			goWhere_fn(goWhereX, goWhereY);
+		}
+		//向下
+		if( ang >= 45 && ang <= 135 ){
+			var goWhereX = parseInt(userIcon.css("left"),10),
+				goWhereY = parseInt(userIcon.css("top"),10)+moveSize;
+			goWhere_fn(goWhereX, goWhereY);
+		}
+		//向左
+		if( (ang >= 135 && ang <= 180) || (ang >= -180 && ang <= -145) ){
+			var goWhereX = parseInt(userIcon.css("left"),10)-moveSize,
+				goWhereY = parseInt(userIcon.css("top"),10);
+			goWhere_fn(goWhereX, goWhereY);
+		}
+		//向上
+		if( ang >= -145 && ang <= -45 ){
+			var goWhereX = parseInt(userIcon.css("left"),10),
+				goWhereY = parseInt(userIcon.css("top"),10)-moveSize;
+			goWhere_fn(goWhereX, goWhereY);
+		}
+		
+	}
+	
+	//給window8用的(桌機也會有用)
+	//事件:滑鼠按下
+	$("body").mousedown(function (event) {
+		Touch1.x = event.pageX;
+		Touch1.y = event.pageY;
+	});
+	
+	//事件:滑鼠放開
+	$("body").mouseup(function (event) {
+		Touch2.x = event.pageX;
+		Touch2.y = event.pageY;
+		if(gameStatus){
+			TouchAng_fn(Touch1, Touch2);
+		}
+	});
+	
+	
+	
+})
+
+</script>
+<style>
+html {
+    display: block;
+    overscroll-behavior-y: contain;
+    user-select: none;
+    -webkit-user-select:none;
+    touch-callout: none;
+    -webkit-touch-callout: none;
+    height: 100%;
+    margin: 0 auto;
+    word-wrap: break-word;
+}
+body { 
+    padding:0px; 
+    font-family: "Microsoft YaHei"; 
+    overscroll-behavior-y: contain;
+    user-select: none;
+    -webkit-user-select:none;
+    touch-callout: none;
+    -webkit-touch-callout: none;
+    
+    height: 100%;
+    margin: 0 auto;
+    word-wrap: break-word;
+}
+
+.game_area{
+    position: fixed;
+    left: calc(50% - 150px);
+	background-color: #a78c71;
+    max-width: 300px;
+    width: 100%;
+	font-size: 12px;
+	margin: 0 auto;
+    cursor:pointer;
+    -ms-touch-action: none;
+    user-select: none;
+}
+/*關卡選擇介面*/
+.game_first_view{
+	position:absolute;
+	top:0px;
+	left:0px;
+	right:0px;
+	bottom:0px;
+	background-color:#79b079;
+	text-align:center;
+	padding-top:30px;
+	font-size:24px;
+	z-index:4;
+    user-select: none;
+}
+/*過關,失敗介面*/
+.win_view, .fail_view{
+	position:absolute;
+	top:0px;
+	left:0px;
+	right:0px;
+	bottom:0px;
+	text-align:center;
+	font-size:24px;
+	padding-top:30px;
+	z-index:3;
+	display:none;
+    user-select: none;
+}
+.win_view{ background-color: rgba(255, 153, 51, 0.8); }
+.fail_view{ background-color: rgba(115, 98, 148, 0.8); }
+/*選擇關卡與回首頁按鈕*/
+.selectPoints, .back{
+	width:60%;
+	padding:10px;
+	background-color:#fff;
+	box-shadow:0 0 3px #ccc;
+	margin:20px auto;
+	border-radius:5px;
+	font-size:16px;
+	cursor:pointer;
+}
+
+/*實際的遊戲介面區塊*/
+.main{
+	background-color: #ccc;
+	width: 300px;
+	height: 300px;
+	position: relative;
+	background-image: url(game1.jpg);
+	overflow:hidden;
+}
+/*生命與時間*/
+.life_view, .time_view{
+	display:inline-block;
+	font-size:12px;
+	background-color: rgba(0, 0, 0, 0.5);
+	color:#fff;
+	border-radius:3px;
+	padding:4px;
+	left:3px;
+	width:137px;
+	margin:2px 0 2px 3px;
+}
+
+
+/*場景中所有物件*/
+.user_icon, .success_icon, .rock_icon, .props_icon, .trap_icon{
+	width:50px;
+	height:50px;
+	position:absolute;
+	background-repeat: no-repeat;
+	background-position: center center;	
+	/*transition: all 0.1s ease-in-out 0s;*/
+}
+.user_icon{ background-image: url(game4.png); z-index:1; }/*小狗*/
+.success_icon{background-image: url(game2.png); }/*過關*/
+.rock_icon{ background-image: url(game3.png); }/*障礙物*/
+.props_icon{}/*道具*/
+.props_TIME{ background-image: url(game5.png); }/*道具-時間*/
+.props_LEFT{ background-image: url(game6.png); }/*道具-生命*/
+.trap_icon{}/*陷阱*/
+.trap_toxic{ background-image: url(game7.png); }/*毒藥*/
+
+/*下方遊戲資訊用*/
+.game_info{
+	background-color: rgba(0, 0, 0, 0.5);
+	color:#fff;
+	border-radius:3px;
+	padding:6px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="game_area">
+	<!--關卡選擇介面-->
+    <div class="game_first_view">
+    	選擇關卡
+        <div class="selectPoints" Points="1">第1關</div>
+        <div class="selectPoints" Points="2">第2關</div>
+    </div>
+    
+    <!--過關或失敗介面-->
+    <div class="win_view">恭喜你過關了 <div class="back">回關卡選擇</div> </div>
+    <div class="fail_view">喔喔你死掉了 <div class="back">回關卡選擇</div> </div>
+    
+	<!--實際遊戲介面-->
+    <div class="life_view">生命:<span>0</span></div><div class="time_view">時間:<span>0</span></div>
+    <div class="main">
+        <!--<div class="user_icon">user</div>-->
+        <!--<div class="success_icon">success</div>-->
+        <!--<div class="rock_icon"></div>-->
+        <!--<div class="props_icon" style="left:150px; top:150px;" >props</div>-->
+    </div>
+    <div class="game_info">遊戲資訊 <span></span></div>
+    <div style="text-align: center; padding: 10px 0;">
+        桌機請用箭頭移動, 手機請在遊戲範圍內滑動.
+    </div>
+    
+</div>
+
+</body>
+</html>

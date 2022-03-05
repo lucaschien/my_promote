@@ -1,0 +1,101 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+	margin:0px;
+	background-color: #e9e5e1;
+	background-image: url(../i/bg.gif);
+	background-repeat: repeat-x;
+	background-position: top;
+	font-family: Arial, Helvetica, sans-serif;
+}
+a:hover, a:active { position: relative; top: 1px;}
+
+.key_word{
+	font-size: xx-small;
+	color: #ffffff;
+	display:none;
+}
+.main{
+	width:1000px;
+	margin-top: 0px;
+	margin-right: auto;
+	margin-bottom: 0px;
+	margin-left: auto;
+}
+
+.logo_area{
+	background-image: url(../i/01.gif);
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+.btn_ch{float:right; margin:93px 1px 0 0;}
+.btn_ch a{
+    height: 24px; width: 59px;
+	background-image: url(../i/btn_ch.gif);
+	background-repeat: no-repeat;
+	background-position: left top;
+	display: block;
+}
+.btn_ch a:hover{background-position: left -24px; top: 0px;}
+.btn_en{float:right;  margin:93px 0px 0 0;}
+.btn_en a{
+    height: 24px; width: 59px;
+	background-image: url(../i/btn_en.gif);
+	background-repeat: no-repeat;
+	background-position: left top;
+	display: block;
+}
+.btn_en a:hover{background-position: left -24px; top: 0px;}
+.btn_logo{float:right;  margin:0px 10px 0 0;}
+.btn_logo a{
+	height: 117px;
+	width: 122px;
+	display: block;
+}
+.way{
+	background-image: url(../i/way.gif);
+	background-repeat: no-repeat;
+	padding:7px 0 0 47px;
+	height:33px;
+	font-size: 13px;
+	color: #1e438c;
+}
+.way span{color: #555555;}
+
+
+.footer{
+	font-size: 12px;
+	color: #555555;
+	border-top-width: ２px;
+	border-top-style: solid;
+	border-top-color: #aea295;
+	background-color:#FFFFFF;
+	text-align: center;
+}
+.left_area{
+	background-image: url(../i/left_bg.jpg);
+	background-repeat: no-repeat;
+	background-position: left top;
+	padding-bottom:30px;
+}
+.left_area a{
+	margin:15px 0 0 0;
+	display: inline-block;
+}
+.right_area{
+	font-size:13px;
+	background-image: url(../i/right_bg.gif);
+	background-repeat: repeat-y;
+	background-position: right top;
+	line-height: 26px;
+	padding-bottom:30px;
+}
+.right2_area{
+	background-image: url(../i/right2_bg.gif);
+	background-repeat: no-repeat;
+	background-position: right top;
+}
+
+
+.b_table strong{color:#1e438c;}
