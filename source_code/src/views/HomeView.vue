@@ -1,14 +1,16 @@
 <template>
   <div class="home works_area">
-    <div class="left-btn" @click="scroll('LEFT')"><i class="fa fa-angle-left" aria-hidden="true"></i></div>
-    <div class="right-btn" @click="scroll('RIGHT')"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
+    <div class="left-btn" v-if="listItem.length > 1"
+      @click="scroll('LEFT')"><i class="fa fa-angle-left" aria-hidden="true"></i></div>
+    <div class="right-btn" v-if="listItem.length > 1"
+      @click="scroll('RIGHT')"><i class="fa fa-angle-right" aria-hidden="true"></i></div>
 
     <!--作品列表大區塊-->
     <ul class="work-list-scroll-box" ref="scrollBox">
       <transition-group name="fade" >
         <li v-for="(item, i) in listItem" :key="'list'+i">
           <div class="photo_area" 
-            @click="look(item)">
+            @click="lookDetail(item)">
             <img :src="item.imgurl">
           </div>
           <div class="text_area">{{ item.worktxt }}</div>
@@ -28,6 +30,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const listType = computed(() => store.getters.getListType);
+    const detailSrc = computed(() => store.getters.getDetailSrc);
     const scrollBox = ref(null);
 
     const demoJson = [
@@ -41,15 +44,15 @@ export default defineComponent({
         { type: 'SYSTEM', imgurl: './worklist/system4.jpg', linkurl: './works/system/system4.html', worktxt: 'System' },
         { type: 'SYSTEM', imgurl: './worklist/system2.jpg', linkurl: './works/system/system2.html', worktxt: 'System' },
 
-        { type: 'WEB', imgurl : "./worklist/web0.jpg", linkurl : "./works/web0/index.html",     worktxt : "Web" },
-        { type: 'WEB', imgurl : "./worklist/web1.jpg", linkurl : "./works/web1/www/index.html", worktxt : "Web" },
-        { type: 'WEB', imgurl : "./worklist/web2.jpg", linkurl : "./works/web2/index.html",     worktxt : "Web" },
-        { type: 'WEB', imgurl : "./worklist/web3.jpg", linkurl : "./works/web3/index.html",     worktxt : "Web" },
+        //{ type: 'WEB', imgurl : "./worklist/web0.jpg", linkurl : "./works/web0/index.html",     worktxt : "Web" },
+        //{ type: 'WEB', imgurl : "./worklist/web1.jpg", linkurl : "./works/web1/www/index.html", worktxt : "Web" },
+        //{ type: 'WEB', imgurl : "./worklist/web2.jpg", linkurl : "./works/web2/index.html",     worktxt : "Web" },
+        //{ type: 'WEB', imgurl : "./worklist/web3.jpg", linkurl : "./works/web3/index.html",     worktxt : "Web" },
 
         { type: 'GAME', imgurl : "./worklist/game0.jpg", linkurl : "./works/html_game/game1.html",  worktxt : "Game" },
         { type: 'GAME', imgurl : "./worklist/game1.jpg", linkurl : "./works/html_game/game2.html",  worktxt : "Game Canvas" },
-        { type: 'GAME', imgurl : "./worklist/game2.jpg", linkurl : "./works/flash_game/game1.html", worktxt : "Game Flash" },
-        { type: 'GAME', imgurl : "./worklist/game3.jpg", linkurl : "./works/flash_game/game2.html", worktxt : "Game Flash" },
+        //{ type: 'GAME', imgurl : "./worklist/game2.jpg", linkurl : "./works/flash_game/game1.html", worktxt : "Game Flash" },
+        //{ type: 'GAME', imgurl : "./worklist/game3.jpg", linkurl : "./works/flash_game/game2.html", worktxt : "Game Flash" },
 
         { type: 'GRAPHIC', imgurl: "./worklist/p0.jpg",  linkurl: "./works/graphic/graphic0.html",  worktxt : "DM" },
         { type: 'GRAPHIC', imgurl: "./worklist/p1.jpg",  linkurl: "./works/graphic/graphic1.html",  worktxt : "DM" },
@@ -89,20 +92,24 @@ export default defineComponent({
       $scrollBox.scrollLeft = scrollLeft;
     };
 
-    const look = (item:any) => {
+    const lookDetail = (item:any) => {
       console.log('item.type: ', item.type);
       //遊戲做外部連結 or 網頁做外部連結
       if (item.type === "GAME" || item.type === "WEB") {
         window.open(item.linkurl);
       }
+      if (item.type === "SYSTEM" || item.type === "GRAPHIC") {
+        store.commit('setDetailSrc', item.linkurl);
+      }
     };
 
     return {
+      detailSrc,
       listType,
       listItem,
       scroll,
       scrollBox,
-      look
+      lookDetail,
     }
   }
 });
