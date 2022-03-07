@@ -76,8 +76,8 @@ export default defineComponent({
       setTimeout(() => {
         let temp:any = (newValue === 'ALL')? demoJson : demoJson.filter(item => item.type === newValue);
         temp.forEach((item: any, i: any) => {
-          setTimeout((tt: any) => {
-            listItem.value.push(tt);
+          setTimeout((jtem: any) => {
+            listItem.value.push(jtem);
           }, (100*i+1), item);
         });
         //listItem.value = listItem.value.concat(temp);
@@ -99,7 +99,12 @@ export default defineComponent({
         window.open(item.linkurl);
       }
       if (item.type === "SYSTEM" || item.type === "GRAPHIC") {
-        store.commit('setDetailSrc', item.linkurl);
+        // store.commit('setDetailSrc', item.linkurl);
+        fetch(window.location.href + item.linkurl).then((result) => {
+          return result.text()
+        }).then((result) => {
+          store.commit('setDetailSrc', result);
+        });
       }
     };
 

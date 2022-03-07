@@ -9,7 +9,7 @@
     <!--作品放大區塊-->
     <div class="work-detail-area" v-if="detailSrc">
       <div class="close-btn" @click="store.commit('setDetailSrc', null)"></div>
-      <iframe :src="detailSrc"></iframe>
+      <div class="detail-content" v-html="detailSrc"></div>
     </div>
 
     <!--產品分類按鈕區塊-->
@@ -46,7 +46,7 @@ export default defineComponent({
       store.commit('setListType', type);
     }
     const btns = [
-      {value: 'ALL', word: 'All'},
+      //{value: 'ALL', word: 'All'},
       {value: 'SYSTEM', word: 'System'},
       //{value: 'WEB', word: 'Web'},
       {value: 'GAME', word: 'Game'},

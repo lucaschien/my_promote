@@ -238,8 +238,7 @@ html, body {
     }
   }
 }
-
-// 作品集列表動態效果
+/* 作品集列表動態效果 */
 .fade-enter-active,
 .fade-leave-active {
 	opacity: 0;
@@ -249,7 +248,7 @@ html, body {
   opacity: 0;
 }
 
-/*作品放大區塊*/
+/* 作品放大區塊 */
 .work-detail-area {
 	position:fixed;
 	left:0px;
@@ -260,11 +259,14 @@ html, body {
 	z-index: 5;
 	background-color:rgba(0, 0, 0, 0.5);
 	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
 	.close-btn {
 		position: fixed;
-		right:15px;
-		top:15px;
+		right: 5px;
+		top: 5px;
 		width: 60px;
 		height: 60px;
 		z-index: 9999;
@@ -274,13 +276,14 @@ html, body {
 		cursor:pointer;
 	}
 
-	iframe {
-		width: 90%;
+	.detail-content {
 		max-width: 980px;
 		height: 100%;
-		border: 1px solid red;
+		padding: 20px;
 		margin: 0 auto;
-		display: block;
+		display: inline-block;
+		overflow: auto;
+		background-color:rgba(0, 0, 0, 0.5);
 	}
 }
 
