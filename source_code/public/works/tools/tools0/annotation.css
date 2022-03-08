@@ -1,0 +1,421 @@
+.annotation.rootArea * {
+  box-sizing: border-box;
+}
+.annotation.rootArea {
+  padding: 0; /* 提醒必須為0因為會影響內部的 element 計算 */
+  position: relative;
+  z-index: 7;
+}
+.annotation.rootArea.stop-user-select * { /* 不提供瀏覽器預設圈選文字的狀態 */
+  user-select: none;
+}
+
+/* 文章的一個段落區間 (注意 :after 已被用掉了) */
+.annotation .text {
+  position: relative;
+  margin: 0;
+  padding: 5px;
+  z-index: 5;
+}
+.annotation .text.question:before { /*該段落是 知識庫中的問題段落 */
+  content: 'Q ';
+  color: #4D8FC1;
+  font-weight: bold;
+}
+.annotation .text.answer:before { /*該段落是 知識庫中的答案段落 */
+  content: 'A ';
+  color: #639930;
+  font-weight: bold;
+}
+.annotation .text.title .word { /*該段落是 新聞詞彙的標題段落 */
+  color: #6fa6d5;
+}
+.annotation .text:nth-child(even):after { /* 段落的灰色背景 */
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+  background-color: rgba(232, 232, 232, 0.3);
+}
+.annotation .text.hasEntities { /* 這一個段落中是否有貼標的文字 */
+  padding-top: 23px;
+}
+
+/* 每一個段落中的每一個字元 */
+.annotation .word {
+  color: #000;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: text;
+  /* display: inline-block;
+  vertical-align: top; */
+}
+.annotation .word.user-select {/* 該文字是 user 按下圈選的狀態文字 */
+  background-color: rgb(73, 193, 91);
+}
+.annotation .word.space-word { /* 該文字是空白字元 */
+  /* width: 0;
+  padding: 0;
+  margin-right: 3px;
+  background-color: red; */
+}
+
+/* 文字是貼標的時候的樣式 (之後再依照不同的標籤做顏色上的變化)*/
+.annotation .entities {
+  position: relative;
+  /* padding: 0 1px; */
+  background-color: rgba(255, 166, 0, 0.5);
+  line-height: 20px;
+  cursor: pointer;
+  user-select: none; /* TODO... 已貼標的文字就不給選擇, 之後改成由js控制好了 */
+}
+.annotation .entitiesStart { /* 該貼標的第一個字元 */
+  padding-left: 3px;
+}
+.annotation .entitiesStart::before { /*偽元素借用來呈現該貼標的類別文字用*/
+  content: attr(data-ent-type); 
+  position: absolute;
+  font-size: 11px;
+  line-height: 14px;
+  color: #000;
+  white-space: nowrap;
+  background-color: rgb(255, 111, 0);
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 0 4px;
+  min-width: 30px;
+  text-align: center;
+  z-index: 1;
+  top: -20px;
+  left: 0;
+  transform-origin: 0 0;
+}
+.annotation .entitiesStart.isAiTag::before { /* 該貼標是屬於第一次智能貼標的樣式 */
+  background-color: rgb(139, 189, 232);
+}
+.annotation .entitiesEnd { /* 該貼標的最後一個字元 */
+  padding-right: 3px;
+}
+.annotation .entities.hasRejectStatus { /* 該貼標使用的領域與實體資料中是否有一筆是略過狀態 */
+  background-color: #96e89e;
+  color: #115d18 !important;
+}
+.annotation .entities.hasCheckStatus { /* 該貼標使用的領域與實體資料中是否有一筆是待審核狀態 */
+  background-color: #ffbdbd;
+  color: red !important;
+}
+.annotation .entities.hover { /* 滑鼠移入效果 */
+  background-color: rgba(255, 89, 0, 0.8);
+}
+.annotation .entities.hover.entitiesStart::before { /* 偽元素滑鼠移入效果 */
+  background-color: rgba(255, 25, 0, 0.8);
+  box-shadow: 0 2px 1px rgba(0, 0, 0, 0.35);
+  top: -21px;
+  z-index: 6;
+}
+.annotation .entities.hover.entitiesStart.isAiTag::before { /* 偽元素滑鼠移入效果(for 智能貼標) */
+  background-color: rgb(82, 155, 220);
+}
+
+.annotation .entitiesGap { /* 用以在貼標的文字範圍前後將空間撐開用 */
+  display: inline-block;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.annotation .entitiesStart.multiple::before { /* 該貼標有多個標籤定義時 */
+}
+
+
+/* 拖曳時產生的臨時ＤＯＭ對象 */
+.annotation #fromDropEntitie {
+  position: fixed;
+  user-select: none;
+  font-size: 11px;
+  color: #fff;
+  background-color: #000;
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 0 5px;
+  z-index: 8;
+  opacity: 0.5;
+  max-width: 100px;
+  max-height: 100px;
+  overflow: hidden;
+  text-overflow : ellipsis;
+  white-space : nowrap;
+  display: none;
+}
+
+/* 已關聯的標籤線條的頭尾點點 */
+.annotation .relationLinePoint {
+  position: absolute;
+  border-radius: 6px;
+  background-color: #868484;
+  width: 6px;
+  height: 6px;
+  z-index: 5;
+  transform: translateX(-1px);
+}
+.annotation .relationLinePoint.end { /* 線條的結束箭頭 */
+  background: transparent url('./arrow.svg') no-repeat center center;
+  background-size: 8px 8px; 
+  border-radius: 0;
+  width: 9px;
+  height: 9px;
+  transform-origin: top center;
+  transform: translateY(-1px)
+             translateX(-3px);
+}
+.annotation .relationLinePoint.left { /* 線條的結束箭頭箭向左 */
+  transform-origin: top center;
+  transform: translateY(-1px)
+             translateX(-2px)
+             scaleX(-1);
+}
+.annotation .relationLinePoint.hover { /* 滑鼠移入效果 */
+  background-color: red;
+  z-index: 6;
+}
+.annotation .relationLinePoint.hover.end { /* 滑鼠移入效果 */
+  background: transparent url('./arrow-hover.svg') no-repeat center center;
+  background-size: 8px 8px; 
+  z-index: 6;
+}
+.annotation .relationLinePoint.hide {/* 點點為影藏狀態 */
+  display: none;
+}
+
+/* 已關聯的標籤線條 */
+.annotation .relationLine {
+  position: absolute;
+  /* z-index: 6; */
+  /* width: 100px; */
+  height: 6px; /*TODO 之後由js計算給予*/
+  border-top: 1px dotted #868484;
+  border-left: 1px dotted #868484;
+  border-right: 1px dotted #868484;
+  border-radius: 8px 8px 0 0;
+  text-align: center;
+  font-size: 11px;
+  line-height: 11px;
+}
+.annotation .relationLine span { /* 呈現該關聯線所屬的type名稱 */
+  position: relative;
+  z-index: 6;
+  white-space: nowrap;
+  display: inline-block;
+  color: #aeaeae;
+  font-weight: 600;
+  transform-origin: center bottom;
+  transform: translateY(-14px) 
+             scale(0.8);
+  user-select: none;
+  text-shadow: #fff 0 0 5px, #fff 0 0 5px, #fff 0 0 5px,
+               #fff 0 0 5px, #fff 0 0 5px, #fff 0 0 5px,
+               #fff 0 0 5px, #fff 0 0 5px, #fff 0 0 5px,
+               #fff 0 0 5px, #fff 0 0 5px, #fff 0 0 5px,
+               #fff 0 0 5px, #fff 0 0 5px, #fff 0 0 5px,
+               #fff 0 0 5px, #fff 0 0 5px, #fff 0 0 5px,
+               #fff 0 0 5px, #fff 0 0 5px, #fff 0 0 5px;
+}
+.annotation .relationLine span:hover,
+.annotation .relationLine.hover span { /* 滑鼠移入效果 從css + js觸發 */
+  color: #fff;
+  background-color: red;
+  padding: 3px 4px;
+  transform: translateY(-18px)
+             scale(0.8);
+  text-shadow: none;
+  opacity: 1;
+  z-index: 7;
+}
+.annotation .relationLine.LRtoBottom { /* 左到右線條並且往下線條 */
+  border-left: 0;
+}
+.annotation .relationLine.RLtoBottom { /* 右到左線條並且往下線條 */
+  border-right: 0;
+}
+.annotation .relationLine.RLtoTop { /* 右到左並且往上線條 */
+  border-left: 0;
+}
+.annotation .relationLine.LRtoTop { /* 左到右並且往上線條 */
+  border-right: 0;
+}
+.annotation .relationLine.LRtoBottom::before, 
+.annotation .relationLine.RLtoTop::before { /* 左到右線條且有跨行的線,處理起頭斷線的問題 */
+  content: '';
+  border-right: 0;
+  border-left: 1px dotted #aeaeae;
+  position: absolute;
+  left: 0;
+  top: 2px;
+  height: 4px;
+}
+.annotation .relationLine.RLtoBottom::before, 
+.annotation .relationLine.LRtoTop::before { /* 右到左線條且有跨行的線,處理起頭斷線的問題 */
+  content: '';
+  border-right: 1px dotted #aeaeae;
+  border-left: 0;
+  position: absolute;
+  right: 0;
+  top: 2px;
+  height: 4px;
+}
+.annotation .relationLine.hover,
+.annotation .relationLine.hover:before { /* 滑鼠移入效果 從js觸發 */
+  border-top-color: red;
+  border-left-color: red;
+  border-right-color: red;
+  border-top-style: solid;
+  border-left-style: solid;
+  border-right-style: solid;
+  z-index: 7;
+}
+.annotation .relationLine.hide {/* 線條為影藏狀態 */
+  display: none;
+}
+
+.annotation .relationLine.forGapline { /* 用來處理跨欄位的關聯線條 */
+  border-radius: 0;
+  border-left: 0;
+  border-right: 0;
+}
+
+.annotation .preview-box { /*滑鼠移入標籤時預覽標籤資料用浮動小區塊介面*/
+  position: absolute;
+  z-index: -1;
+  background-color: rgba(6, 76, 114, 0.95);
+  box-shadow: 0 2px 20px rgba(9, 100, 145, 0.75);
+  color: #fff;
+  margin: 0;
+  padding: 0 10px;
+  border-radius: 3px;
+  visibility: hidden;
+  box-sizing: border-box;
+}
+.annotation .preview-box.show {
+  visibility: inherit;
+  z-index: 7;
+}
+.annotation .preview-box li {
+  list-style: none;
+  font-size: 11px;
+  margin: 0;
+  padding: 10px 0;
+  border-bottom: 1px dotted #fff;
+  box-sizing: border-box;
+  white-space:nowrap;
+}
+.annotation .preview-box li:last-child {
+  border-bottom: 0;
+}
+
+/* --- 套件額外控制面板 --- */
+.annotation .ctrl-box {
+  padding: 10px 20px;
+  text-align:  right;
+  font-size: 14px;
+  background-color: rgb(232, 232, 232);
+  user-select: none;
+}
+.annotation .ctrl-box:after {
+  content: '';
+  clear: both;
+  display: block;
+}
+.annotation .ctrl-box label.slice::after { /*控制面板的按鈕種類分隔線*/
+  content: '';
+  border-right: 1px solid #B2B2B2;
+  height: 12px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 6px;
+}
+.annotation .ctrl-box .ctrl-reDraw { /*重整按鈕*/
+  background-color: transparent !important;
+  border: 1px solid #ccc !important;
+  color: #666 !important;
+  margin-left: 20px !important;
+  outline:none !important;
+  cursor: pointer !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 5px !important;
+  font-size: 12px !important;
+  float: none !important;
+  border-radius: 3px !important;
+  font-weight: 400 !important;
+}
+.annotation .ctrl-box .ctrl-reDraw:hover {
+  background-color: rgb(244, 244, 244);
+}
+.annotation .ctrl-box .explanation-btn { /* 貼標顏色說明 */
+  font-size: 11px;
+  padding: 5px;
+  color: #666;
+  background-color: transparent;
+  border: 1px solid #ccc;
+  float: left;
+  position: relative;
+} 
+.annotation .ctrl-box .explanation-btn .explanation-view {
+  position: absolute;
+  left: -22px;
+  bottom: -5px;
+  padding: 30px 8px 8px 8px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  z-index: 1;
+  width: 330px;
+  text-align: left;
+  box-shadow: 0 1px 8px #9a9696;
+  border-radius: 6px;
+  display: none;
+}
+.annotation .ctrl-box .explanation-btn .explanation-view span {
+  margin: 0 6px;
+}
+.annotation .ctrl-box .explanation-btn:hover .explanation-view {
+  display: block;
+}
+
+/* 不呈現貼標 */
+.annotation.hide-entities .entitiesStart::before { 
+  display: none;
+}
+.annotation.hide-entities .entities {
+  user-select: auto !important;
+  cursor: auto !important;
+}
+
+/* 不呈現關聯標籤 */
+.annotation.hide-relations .relationLinePoint,
+.annotation.hide-relations .relationLine { 
+  display: none !important;
+}
+/* 刪除有關聯的貼標出現的提示訊息 */
+.annotation .msgBox {
+  position: absolute;
+  top: 80px;
+  padding: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 10px;
+  text-align: center;
+  width: 60%;
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
+  box-shadow: 0 0 6px #c9c9c9;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.annotation .msgBox.show {
+  z-index: 7;
+  opacity: 1;
+}

@@ -7,10 +7,12 @@
 
 
     <!--作品放大區塊-->
-    <div class="work-detail-area" v-if="detailSrc">
-      <div class="close-btn" @click="store.commit('setDetailSrc', null)"></div>
-      <div class="detail-content" v-html="detailSrc"></div>
-    </div>
+    <transition name="fade">
+      <div class="work-detail-area" v-if="detailSrc">
+        <div class="close-btn" @click="store.commit('setDetailSrc', null)"></div>
+        <div class="detail-content" v-html="detailSrc"></div>
+      </div>
+    </transition>
 
     <!--產品分類按鈕區塊-->
     <div class="worksType_btn_area" v-if="!detailSrc">
@@ -46,12 +48,12 @@ export default defineComponent({
       store.commit('setListType', type);
     }
     const btns = [
-      //{value: 'ALL', word: 'All'},
-      {value: 'SYSTEM', word: 'System'},
-      //{value: 'WEB', word: 'Web'},
-      {value: 'GAME', word: 'Game'},
+      //{value: 'ALL',   word: 'All'},
+      {value: 'SYSTEM',  word: 'System'},
+      //{value: 'WEB',   word: 'Web'},
+      {value: 'GAME',    word: 'Game'},
       {value: 'GRAPHIC', word: 'Graphic Design'},
-      {value: 'TOOL', word: 'Tool'},
+      {value: 'TOOLS',   word: 'Tools'},
     ];
     return {
       store,

@@ -64,25 +64,24 @@ export default defineComponent({
         { type: 'GRAPHIC', imgurl: "./worklist/p7.jpg",  linkurl: "./works/graphic/graphic7.html",  worktxt : "Poster" },
         { type: 'GRAPHIC', imgurl: "./worklist/p8.jpg",  linkurl: "./works/graphic/graphic8.html",  worktxt : "CI - logo" },
         { type: 'GRAPHIC', imgurl: "./worklist/p9.jpg",  linkurl: "./works/graphic/graphic9.html",  worktxt : "CI - BI" },
-        { type: 'GRAPHIC', imgurl: "./worklist/p10.jpg", linkurl: "./works/graphic/graphic10.html", worktxt : "CI - BI" }
+        { type: 'GRAPHIC', imgurl: "./worklist/p10.jpg", linkurl: "./works/graphic/graphic10.html", worktxt : "CI - BI" },
+
+        { type: 'TOOLS', imgurl: './worklist/tools0.jpg', linkurl: './works/tools/tools0/index.html', worktxt: 'jQuery plug-in' },
     ];
 
-    /* const listItem = computed(() => {
-      return (listType.value === 'ALL')? demoJson : demoJson.filter(item => item.type === listType.value);
-    }); */
-    const listItem = ref(JSON.parse(JSON.stringify(demoJson)));
+    const listItem = ref(demoJson.filter(item => item.type === listType.value));
+
     watch(() => listType.value, (newValue, oldValue) => {
       listItem.value.splice(0, listItem.value.length);
       setTimeout(() => {
         let temp:any = (newValue === 'ALL')? demoJson : demoJson.filter(item => item.type === newValue);
+        // 讓資料有一筆一筆載入的效果
         temp.forEach((item: any, i: any) => {
           setTimeout((jtem: any) => {
             listItem.value.push(jtem);
           }, (100*i+1), item);
         });
-        //listItem.value = listItem.value.concat(temp);
       }, 500);
-
     });
 
     const scroll = (type:string) => {
@@ -95,7 +94,7 @@ export default defineComponent({
     const lookDetail = (item:any) => {
       console.log('item.type: ', item.type);
       //遊戲做外部連結 or 網頁做外部連結
-      if (item.type === "GAME" || item.type === "WEB") {
+      if (item.type === "GAME" || item.type === "WEB" || item.type === "TOOLS") {
         window.open(item.linkurl);
       }
       if (item.type === "SYSTEM" || item.type === "GRAPHIC") {

@@ -1,0 +1,42 @@
+.eyemedia-rim-area{height:40px;position:fixed;bottom:0;left:0;right:0;z-index:999;opacity:0;animation:rimFadeIn .3s ease .3s forwards}
+.rim-close-btn,.rim-ctrl-box,.rim-words-box{position:absolute;right:0}
+@keyframes rimFadeIn{0%{opacity:0}
+100%{opacity:1}
+}
+.rim-words-box,.rim-words-box.rim-hide{visibility:hidden;opacity:0}
+.rim-ctrl-box{z-index:920;left:0;top:0;bottom:0}
+.rim-ctrl-box .rim-home-btn{display:none;height:40px;width:40px;cursor:pointer}
+.rim-ctrl-box .rim-home-btn img{height:100%;width:100%}
+.rim-ctrl-box .rim-ctrl-txt{text-align:center;display:inline-block;width:100%;height:100%;vertical-align:top;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;user-select:none}
+.rim-ctrl-box .rim-ctrl-txt span{cursor:pointer;display:block;padding-top:8px;height:100%}
+.rim-ctrl-box .rim-ctrl-txt span:after{content:'▲'}
+.rim-ctrl-box .rim-ctrl-txt.rim-hide span:after{content:'▼'}
+.rim-item-box::after,.rim-words-receive-box:after,.rim-words-send-box:after{content:'';display:block;clear:both}
+.rim-item-box.rim-absolute.rim-hide{bottom:-3500%;transition:bottom .3s linear}
+.rim-item-box.rim-absolute{z-index:900;position:absolute;bottom:100%;left:0;right:0;transition:bottom .3s linear}
+.rim-words-box.rim-hide,.rim-words-box.rim-show{transition:opacity .3s linear,visibility .3s linear}
+.rim-item-box{background:url() top center no-repeat;background-size:100% auto}
+.rim-item{float:left;box-sizing:border-box;height:0;padding-bottom:33.6%;cursor:pointer}
+.rim-item-1cell{width:100%}
+.rim-item-2cell{width:50%}
+.rim-item-3cell{width:33.3%}
+.rim-item-4cell{width:25%}
+.rim-item-H{padding-bottom:67.2%}
+.rim-words-box{z-index:901;bottom:40px;left:0;text-align:center;background-color:#fff;box-shadow:0 0 5px #4f628d;padding:40px 10px 10px;box-sizing:border-box;background-size:auto 95%;background-position:center bottom;background-repeat:no-repeat;overflow-y:auto}
+.rim-words-box.rim-show{visibility:visible;opacity:1}
+.rim-close-btn{top:0;width:30px;height:30px;cursor:pointer}
+.rim-words-send-box{text-align:right}
+.rim-words-receive-box,.rim-words-text{text-align:left}
+.eyemedia-rim-area.outSide .rim-home-btn,.rim-toIm a,.rim-words-text{display:inline-block}
+.rim-words-text{border:1px solid #d1d7e4;padding:8px 16px;color:#0c1d43;line-height:1.53;word-break:break-all;font-size:15px;max-width:67%;margin-bottom:10px}
+.rim-words-send-box .rim-words-text{border-radius:15px 0 15px 15px;background-color:#fff}
+.rim-words-receive-box .rim-words-text{border:0;border-radius:0 15px 15px;background-color:#c1dcff}
+.rim-words-times{font-size:10px;color:#8f9dbf;padding-bottom:2px}
+.rim-toIm a,.rim-words-bot-name{color:#0c1d43}
+.rim-words-bot{width:40px;height:40px;margin-right:5px;float:left}
+.rim-words-little-icon{display:inline-block;width:13px;height:13px;vertical-align:bottom;margin-bottom:12px}
+.rim-toIm{text-align:center;padding:10px 0 15px}
+.rim-toIm a{font-size:13px;text-decoration:none;border-radius:6px;border:1px solid #d1d7e4;padding:5px 15px;background-color:#fff}
+.eyemedia-rim-area.outSide .rim-ctrl-box .rim-ctrl-txt{width:calc(100% - 50px)}
+@media screen and (orientation:landscape){.rim-item-box{max-width:40%;margin:0 auto}
+}

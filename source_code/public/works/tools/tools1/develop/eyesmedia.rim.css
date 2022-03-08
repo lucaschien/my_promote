@@ -1,0 +1,254 @@
+.eyemedia-rim-area {
+  height: 40px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999; /*TODO... 思考是否要由js判斷該頁面最高的層級後再給值*/
+  opacity: 0;
+  animation: rimFadeIn 0.3s ease 0.3s forwards;
+}
+@keyframes rimFadeIn{
+  0% {
+    opacity: 0;
+    /* transform: translateY(50px); */
+  }
+  100% {
+    opacity: 1;
+    /* transform: translateY(0px); */
+  }
+}
+
+/* 漢堡 與 選單列顯示文字區塊 */
+.rim-ctrl-box {
+  z-index: 920;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  /* background-color: #4f628d;*/ /*改為js設定*/
+}
+.rim-ctrl-box .rim-home-btn {
+  display: none;
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+}
+.rim-ctrl-box .rim-home-btn img { /*返回我們 im 站台的按鈕*/
+  height: 100%;
+  width: 100%;
+}
+.rim-ctrl-box .rim-ctrl-txt { /*選單列顯示文字區塊*/
+  /* color: #fff; */ /*改為js設定*/
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  vertical-align: top;
+  font-size: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  user-select: none;
+}
+.rim-ctrl-box .rim-ctrl-txt span { /*作為感應的按鈕範圍*/
+  cursor: pointer;
+  display: block;
+  padding-top: 8px;
+  height: 100%;
+}
+.rim-ctrl-box .rim-ctrl-txt span:after { /*打開宮格選單*/
+  content: '▼';
+}
+.rim-ctrl-box .rim-ctrl-txt.rim-hide span:after { /*關閉宮格選單*/
+  content: '▲';
+}
+
+/* 宮格選單 與 格子 */
+.rim-item-box.rim-absolute.rim-hide { /*宮格選單為隱藏狀態*/
+  bottom: -3500%;
+  transition: bottom 0.3s linear;
+}
+.rim-item-box.rim-absolute { /*宮格選單為懸浮狀態*/
+  z-index: 900;
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  transition: bottom 0.3s linear;
+} 
+.rim-item-box { /*宮格選單*/
+  background: transparent url() no-repeat top center;
+  background-size: 100% auto;
+}
+.rim-item-box::after {
+  content: '';
+  clear: both;
+  display: block;
+}
+.rim-item {
+  position: relative;
+  float: left;
+  box-sizing: border-box;
+  height: 0;
+  padding-bottom: 33.6%;
+  cursor: pointer;
+}
+.rim-item a {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+.rim-item-1cell {
+  width: 100%;
+}
+.rim-item-2cell {
+  width: 50%;
+}
+.rim-item-3cell {
+  width: 33.3%;
+}
+.rim-item-4cell {
+  width: 25%;
+}
+.rim-item-H { /*高版*/
+  padding-bottom: 67.2%;
+}
+
+/* 收發話介面 */
+.rim-words-box {
+  z-index: 901;
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  background-color: #fff;
+  box-shadow: 0 0 5px #4f628d;
+  padding: 40px 10px 10px 10px;
+  box-sizing: border-box;
+  background-size: auto 95%;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  overflow-y: auto;
+  visibility: hidden;
+  opacity: 0;
+}
+.rim-words-box.rim-hide { /*收發話介面為隱藏狀態*/
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s linear, visibility 0.3s linear;
+}
+.rim-words-box.rim-show { /*收發話介面為呈現狀態*/
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.3s linear, visibility 0.3s linear;
+}
+.rim-close-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+.rim-words-send-box {
+  text-align: right;
+}
+.rim-words-receive-box {
+  text-align: left;
+}
+.rim-words-send-box:after, .rim-words-receive-box:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.rim-words-text { /*收發對話共用設定*/
+  text-align: left;
+  display: inline-block;
+  border: 1px solid #d1d7e4;
+  text-align: left;
+  padding: 8px 16px;
+  color: #0c1d43;
+  line-height: 1.53;
+  word-break: break-all;
+  font-size: 15px;
+  max-width: 67%;
+  margin-bottom: 10px;
+}
+.rim-words-send-box .rim-words-text { 
+  border-radius: 15px 0 15px 15px;
+  background-color: #fff;
+}
+.rim-words-receive-box .rim-words-text {
+  border: 0;
+  border-radius: 0 15px 15px;
+  background-color: #c1dcff;
+}
+.rim-words-times { /*收發話時間*/
+  font-size: 10px;
+  color: #8f9dbf;
+  padding-bottom: 2px;
+}
+.rim-words-bot { /*機器人頭像*/
+  width: 40px;
+  height: 40px;
+  margin-right: 5px;
+  float: left;
+}
+.rim-words-bot-name { /*機器人名稱*/
+  color: #0c1d43;
+}
+.rim-words-little-icon {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  vertical-align: bottom;
+  margin-bottom: 12px;
+}
+.rim-toIm {
+  text-align: center;
+  padding: 10px 0 15px 0;
+}
+.rim-toIm a {
+  font-size: 13px;
+  color: #0c1d43;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 6px;
+  border: 1px solid #d1d7e4;
+  padding: 5px 15px;
+  background-color: #fff;
+}
+
+
+/* 如果在第三方網站 */
+.eyemedia-rim-area.outSide {}
+.eyemedia-rim-area.outSide .rim-ctrl-box .rim-ctrl-txt {
+  width: calc(100% - 50px);
+}
+.eyemedia-rim-area.outSide .rim-home-btn {
+  display: inline-block;
+}
+
+@media screen and (orientation: portrait) { /*縱向*/	
+}
+@media screen and (orientation: landscape) { /*橫向*/
+  .rim-item-box {
+    /* display: none; */
+    max-width: 40%;
+    margin: 0 auto;
+  }
+}
+
+
+
+
+/* 以下是開發測試用 */
+/* .rim-item-box .rim-item {
+  border: 1px solid yellow;
+  background-color: rgba(0, 0, 0, 0.3);
+} */

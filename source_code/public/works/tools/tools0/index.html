@@ -1,0 +1,162 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <meta name=viewport content="width=device-width,initial-scale=1">
+    <title>實驗自己刻一個貼標工具</title>
+    <link rel="stylesheet" type="text/css" href="./annotation.css">
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      .wrapper {
+        padding: 20px;
+        margin: 0 auto;
+        max-width: 1000px;
+      }
+
+      h1 {
+        color: #559cac;
+        font-size: 20px;
+        text-align: center;
+        border-bottom: 2px solid #559cac;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+      }
+
+      button {
+        border-radius: 3px;
+        border: 1px solid #559cac;
+        color: #559cac;
+        background-color: #fff;
+        padding: 5px 20px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      p {
+        margin: 0;
+        padding: 0;
+      }
+
+      #test {
+        border: 1px solid #ccc;
+        width: 95%;
+        margin: 50px auto;
+        padding: 10px;
+      }
+
+      #testlookdata {
+        font-size: 12px; 
+        padding:10px; 
+        width: 95%; 
+        height: 200px; 
+        margin: 0 auto; 
+        display: block;
+        resize: vertical;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Annotation 貼標工具</h1>
+
+    <div class="wrapper">
+
+      <button id="testRemove" type="button" style="display: none;">移除套件</button>
+      <button id="testAgain" type="button" >給予套件</button>
+      <button id="testSet" type="button">給予套件資料</button>
+
+      <!-- <div id="testEntities"></div>
+      <div id="testRelations"></div> -->
+
+      <h5>套件套用位置</h5>
+      <div id="test"></div>
+
+      <h5>外部取得套件內部資料</h5>
+      <textarea id="testlookdata"></textarea>
+
+    </div>
+
+    <script type="text/javascript" src="./jquery.min.js"></script>
+    <script type="text/javascript" src="./annotation.js"></script>
+
+    <script>
+      $(function() {
+        var testDATAS = {},
+            $testEntities = $('#testEntities'),
+            $testRelations = $('#testRelations'),
+            $testlookdata = $('#testlookdata'),
+            $rootArea = null,
+            newTestData = `由於 梅西百貨 去年 假日 購物 季 的 銷售 令人失望，拖累 零售股 賣壓 出籠，美股 週四 (10 日) 開盤 走低，道瓊 一度大跌逾 160 點，是連續 5 個交易日中首次下跌。 梅西百貨 (M-US) 週四 (10 日) 盤前宣布，去年 11 月和 12 月的同店 銷售額 僅成長 1.1%，下修 2018 全年 獲利 前瞻過後，梅西百貨 盤前暴 跌逾 18%，開盤 更一度重挫逾 19%。截至週三 (9 日) 收盤時，梅西百貨 股價 在過去 12 個月中 漲幅 超過 28%。梅西百貨 股價 近一年 走勢圖 。梅西百貨 暴跌 重擊整個 零售類股 。週四 (10 日) SPDR 標普零售業 ETF (XRT) 跌幅超過 3%。美國 Kohl's 百貨 (KSS-US) 股價 開盤下跌 8.9%，Nordstrom (JWN-US) 開盤下跌 7.8%。梅西 執行長 Jeff Gennette 發布聲明中提到，雖然 去年 假日 購物季 黑色 星期五 週末 開始強勁起來，但卻在12 月中旬減弱，而且在 聖誕節 前都未如預期恢復，11 月和 12 月的同店 銷售額 僅成長 1.1%。  此外，梅西百貨 下修 2018 財年銷售預測，同店銷售額增長約 2%，低於此前預測的 2.3% - 2.5%。調整後獲利下修至每股 3.95 美元至 4 美元之間，而非先前的每股 4.10 美元 至 4.30 美元之間，亦低於 分析師 預期的每股 4.23 美元。  GlobalData 零售總經理 Neil Saunders 表示：「 假日 購物季 表現不佳讓人對梅西的復甦計畫提出了一個大問號。」  為了避免與現在破產的西爾斯相同的命運， 梅西百貨 近年商店測試擴增實境 (Augmented Reality) 體驗和其他 行動支付 和新 商店 布局來改善實體店銷售，以吸引 消費者 和增加 銷售。  面對令人失望的財測預估，Neil Saunders 補充稱：「梅西的復甦計畫內容一直增強，但 梅西百貨 未能將零售的基礎知識普及到其業務的所有領域，導致獲利令人感到失望。今天的數字突顯出一個事實，梅西需要在 2019 年更加努力，創造出更具吸引力的零售體驗。」  面對銷售挑戰，梅西首席 執行官 Jeff Gennette 週四 (10 日) 表示：「 梅西百貨 今年將繼續採取必要措施，以避免庫存積壓影響獲利。」  除了梅西百貨外，美國航空 (AAL-US) 亦下修去年第四季財測，開盤股價重挫 9%，更拖累航空股， 達美航空 、 捷藍航空 和 西南航空 週四 開盤跌幅超過 3%。`;
+
+        function usePlugub () {
+          $rootArea = $('#test').annotation({
+            souceData: testDATAS,
+            editEntities: function (resoult) {
+              alert(`[編輯貼標]\n套件回傳該筆資料, 由外部自己決定是否要存檔或是其它刪修等處理\n${JSON.stringify(resoult)}`);
+
+              // 假裝外部操作過後, 再次給予套件資料
+              //$rootArea.setSouceData({text: '55555'});
+              //$testlookdata.val(JSON.stringify({text: '55555'}));
+            },
+            editRelations: function (resoult) {
+              alert(`[編輯關聯標籤]\n套件回傳該筆資料, 由外部自己決定是否要存檔或是其它刪修等處理\n${JSON.stringify(resoult)}`);
+
+              // 假裝外部操作過後, 再次給予套件資料
+              //$rootArea.setSouceData({text: '666666666666'});
+              //$testlookdata.val(JSON.stringify({text: '666666666666'}));
+            },
+            callback: function (reone, reall) {
+              //console.log(reone);
+              //console.log(reall);
+              $testlookdata.val(JSON.stringify(reall));
+              //console.log($rootArea.getSouceData());
+              // 套件回傳整批的資料, 由外部自己決定是否要存檔或是其它的處理
+              //...
+            }
+          });
+          //console.log($rootArea);
+        }
+
+        // 假設一開始 ajax 拿取文章資料
+        /* $.ajax({
+          url : '999-complete.json',
+          success : function (result) {
+            testDATAS = result;
+            $testlookdata.val(JSON.stringify(result));
+            usePlugub(); //執行套件
+          }
+        }); */
+        
+        // 測試移除組件時套件的resize事件是否解除註冊用
+        $('#testRemove').click(() => {
+          $('#testAgain').show();
+          $('#testRemove').hide();
+          $rootArea = $rootArea.destroy();
+          $testlookdata.val('');
+        });
+
+        // 測試再次建立套件
+        $('#testAgain').click(() => {
+          $('#testAgain').hide();
+          $('#testRemove').show();
+          usePlugub(); //執行套件
+        });
+
+        // 測試給予資料
+        $('#testSet').click(() => {
+          if ($rootArea) {
+            $rootArea.setSouceData({
+              text: newTestData
+            });
+            $testlookdata.val(newTestData);
+          }
+        });
+
+      });
+    </script>
+  </body>
+</html>

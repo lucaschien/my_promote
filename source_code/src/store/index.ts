@@ -2,7 +2,7 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    listType: 'SYSTEM', // 哪種作品類型: ALL, SYSTEM, WEB, GAME, GRAPHIC
+    listType: 'SYSTEM', // 哪種作品類型: ALL, SYSTEM, WEB, GAME, GRAPHIC, TOOLS
     detailSrc: null, // 詳細作品網址
   },
   getters: {
