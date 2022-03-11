@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title></title>
+</head>
+
+<body>
+	這是本地端開發時,假裝是IM的網頁用.
+
+	<script>
+		(function ()  {
+			// 以下腳本是假裝自己是IM,通知泡泡套件IM已經完成相關的ajax與DOM用
+
+			// 利用泡泡套件提供的全域物件,讓IM自已先判斷是否被包在泡泡套件的iframe中.
+			var perentJustkaBubble = window.parent.JustkaBubble;
+			console.log('perentJustkaBubble...', perentJustkaBubble);
+			if (perentJustkaBubble) {
+				// 完成相關的ajax與DOM用...故意延遲一下
+				setTimeout(function() {
+					perentJustkaBubble.iframeOnload(true); // 使用泡泡套件IM已完成相關ajax與DOM
+				}, 3000);
+
+				// 如果之後有要統計IM被套用在哪些網址上面時可以這樣取
+				var parentUrl = window.parent.document.location.href;
+				console.log('parentUrl...', parentUrl);
+			}
+		})();
+	</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+@charset "UTF-8";
+.justka-bubble-area *{font-family:"Microsoft Jhenghei UI",Pmingliu,"Segoe UI",-apple-system,system-ui,Roboto,"Helvetica Neue",sans-serif}
+.justka-bubble-area{position:fixed;right:10px;bottom:10px;z-index:1;transform-origin:100% 100%;transform:scale(1);opacity:1;transition:all .5s}
+.justka-bubble-area.hide{transform:scale(0);opacity:0;visibility:hidden}
+.justka-bubble-area .description-box{position:absolute;right:90%;bottom:80%;background-color:rgba(255,255,255,.8);backdrop-filter:blur(10px);border-radius:7px 7px 0;border:1px solid #edeff2;font-size:13px;padding:5px 10px;width:100vw;max-width:150px;display:flex;align-items:start;transform-origin:100% 100%;transition:all .5s}
+.justka-bubble-area .description-box.hide{transform:scale(0);opacity:0}
+.justka-bubble-area .description-box.hide .close-btn{display:none}
+.justka-bubble-area .description-box .close-btn{flex:0 0 15px;height:15px;cursor:pointer}
+.justka-bubble-area .description-box .close-btn svg{pointer-events:none}
+.justka-bubble-area .justka-bubble-btn{width:50px;height:50px;transform-origin:100% 100%;transform:scale(1);transition:all .5s;cursor:pointer}
+.justka-bubble-area .justka-bubble-btn .bot-svg{position:absolute;left:0;top:0;z-index:1;transform-origin:35% 87%;transform:scale(.77)}
+.justka-bubble-area .justka-bubble-btn svg{cursor:pointer}
+.justka-bubble-area .justka-bubble-btn.S{width:50px;height:50px}
+.justka-bubble-area .justka-bubble-btn.M{width:80px;height:80px}
+.justka-bubble-area .justka-bubble-btn.L{width:120px;height:120px}
+.justka-bubble-area .justka-bubble-btn:hover{transform:scale(1.2);transition:all .17s}
+.justka-bubble-area .justka-bubble-btn.hide{transform:scale(0)}
+.justka-bubble-area .justka-bubble-btn.loading-iframe [data-name=close-eyes],.justka-bubble-area .justka-bubble-btn.loading-iframe [data-name=open-eyes]{visibility:hidden}
+.justka-bubble-area .justka-bubble-btn.loading-iframe [data-name=loading-eyes-face]{visibility:visible}
+@keyframes bodymove{0%,100%,92%{transform:rotate(0)}
+93%{transform:rotate(-5deg)}
+95%{transform:rotate(8deg)}
+98%{transform:rotate(-2deg)}
+99%{transform:rotate(1deg)}
+}
+.justka-bubble-area .justka-bubble-btn [data-name=m-svg-group]{transform-origin:right bottom;animation:bodymove 5s ease-in-out infinite}
+@keyframes openeyes{0%,100%,4%,8%{opacity:1}
+2%,6%{opacity:0}
+}
+@keyframes closeeyes{0%,100%,4%,8%{opacity:0}
+2%,6%{opacity:1}
+}
+.justka-bubble-area .justka-bubble-btn [data-name=open-eyes]{animation:openeyes 5s ease-in-out infinite}
+.justka-bubble-area .justka-bubble-btn [data-name=close-eyes]{animation:closeeyes 5s ease-in-out infinite}
+.justka-iframe-box{position:fixed;right:0;bottom:0;width:360px;height:580px;max-width:100vw;max-height:calc(100vh - 28px);background-color:#fff;box-shadow:0 0 20px rgba(0,0,0,.15);text-align:center;transform:scale(0);transform-origin:95% 95%;transition:all .5s}
+.justka-iframe-box iframe{border-radius:4px;width:100%;height:100%;border:0}
+.justka-iframe-box.iframeIn{transform:scale(1)}
+.justka-iframe-box .close-iframe-btn{background-color:#edeff2;border:1px solid #fff;border-radius:10px;position:fixed;right:0;bottom:calc(100% + 5px);width:44px;height:22px;display:flex;justify-content:center;align-items:center;cursor:pointer}
+.justka-iframe-box .close-iframe-btn:hover{background-color:#d8dade}
+.justka-iframe-box .close-iframe-btn:hover svg{fill:#545963}
+.justka-iframe-box .close-iframe-btn svg{pointer-events:none;height:80%;width:auto;fill:#858b98}
