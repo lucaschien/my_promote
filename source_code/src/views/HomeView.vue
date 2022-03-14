@@ -67,7 +67,7 @@ export default defineComponent({
         { type: 'GRAPHIC', imgurl: "./worklist/p10.jpg", linkurl: "./works/graphic/graphic10.html", worktxt : "CI - BI" },
 
         { type: 'TOOLS', imgurl: './worklist/tools0.jpg', linkurl: './works/tools/tools0/index.html', worktxt: 'jQuery plug-in' },
-        { type: 'TOOLS', imgurl: './worklist/tools0.jpg', linkurl: './works/tools/tools2/index.html', worktxt: 'Justka Bot SDK' },
+        { type: 'TOOLS', imgurl: './worklist/tools2.jpg', linkurl: './works/tools/tools2/index.html', worktxt: 'Justka Embed SDK' },
     ];
 
     const listItem = ref(demoJson.filter(item => item.type === listType.value));
