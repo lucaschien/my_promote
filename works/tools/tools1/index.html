@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>RICHMENU 規劃測試</title>
+<style>
+	html, body {
+		padding: 0;
+		margin: 0;
+		overflow: hidden;
+	}
+	.test-main {
+		padding: 0;
+
+	}
+	.test-main iframe {
+		height: 100vh;
+		width: 100vw;
+		border: 0;
+	}
+
+	.test-ctrl-box {
+		position: fixed;
+		right: 0;
+		top: 0;
+		padding: 10px;
+		background-color: rgba(0,0,0,0.5);
+	}
+</style>
+</head>
+
+<body>
+	<div class="test-ctrl-box">
+		<button type="buttin" onClick="RIM.init('1df22bc3-81f9-40bf-b0b4-e9d7829213fb')">初始化 richmenu</button>
+		<button type="buttin" onClick="testDestory()">解除 richmenu</button>
+	</div>
+	<div class="test-main" id="main">
+		<iframe src="https://www.cgmh.org.tw/"></iframe>
+	</div>
+
+	<script>
+		function testDestory() {
+			var status = RIM.destroy();
+			console.log('是否解除套件...', status);
+		}
+
+		(function() {
+			RIM = window.RIM || (window.RIM = {});
+			var s = document.createElement('script');
+			s.type = 'text/javascript';
+			s.src ='./dist/sit/v1.0.0/eyesmedia.rim.js';
+			s.async = true;
+			var x = document.getElementsByTagName('script')[0];
+			x.parentNode.insertBefore(s, x);
+			RIM.config = {
+				accountKey: 'd3f53a60-db70-11e9-8a34-2a2ae2dbcce4',
+				id: '1df22bc3-81f9-40bf-b0b4-e9d7829213fb',
+				autoInit: false, 
+				barFontColor: '#fff',
+				barBgColor: '#e68a0d',
+				barTopSpace: '50px',
+				spaceDOM: document.getElementById('main'),
+				//goImIcon: 'https://upload.wikimedia.org/wikipedia/en/thumb/e/e0/WPVG_icon_2016.svg/1024px-WPVG_icon_2016.svg.png',	
+			};
+			setTimeout(() => {
+				RIM.init('1df22bc3-81f9-40bf-b0b4-e9d7829213fb'); // 5c8962de-ae03-11e9-ac4e-0242ac110002
+			}, 500);
+		})();
+	</script>
+</body>
+</html>
